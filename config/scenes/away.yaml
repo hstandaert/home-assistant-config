@@ -1,0 +1,9 @@
+- name: Away
+  entities:
+    light.chandelier:
+      state: "off"
+    light.reading_lamp:
+      state: "off"
+    light.luchter:
+      state: "off"
+  icon: mdi:shield-lock

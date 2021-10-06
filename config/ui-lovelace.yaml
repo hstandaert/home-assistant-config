@@ -1,0 +1,321 @@
+title: Overview
+views:
+  # // DASHBOARD //
+  - title: ""
+    path: dashboard
+    icon: mdi:home-analytics
+    cards:
+      # Controls
+      - title: Controls
+        type: entities
+        entities:
+          - entity: light.reading_lamp
+          - entity: light.chandelier
+          - entity: light.luchter
+          - entity: cover.covers
+
+      # Weather
+      - type: vertical-stack
+        cards:
+          - type: entities
+            entities:
+              - entity: sensor.date
+              - entity: sensor.openweathermap_weather
+                name: Weather
+                icon: mdi:cloud
+              - entity: sun.sun
+            show_header_toggle: false
+            state_color: false
+          - type: weather-forecast
+            entity: weather.openweathermap
+
+      # Presence
+      - title: Presence
+        type: entities
+        entities:
+          - entity: person.helena_standaert
+            secondary_info: last-updated
+          - entity: person.nancy
+            secondary_info: last-updated
+        footer:
+          type: buttons
+          entities:
+            - scene.away
+
+      # Heating
+      - type: vertical-stack
+        cards:
+          - type: entity
+            entity: sensor.woonkamer_tado_mode
+            name: Tado mode
+            icon: mdi:thermometer
+          - title: Temperature
+            type: entities
+            entities:
+              - entity: sensor.woonkamer_temperature
+                name: Living room
+              - entity: sensor.badkamer_temperature
+                name: Badkamer
+              - entity: sensor.veranda_temperature
+                name: Veranda
+              - entity: sensor.slaapkamer_lore_temperature
+                name: Slaapkamer Lore
+              - entity: sensor.slaapkamer_ouders_temperature
+                name: Slaapkamer Ouders
+
+      # Scenes
+      - title: Scenes
+        type: entities
+        entities:
+          - entity: scene.dinner
+          - entity: scene.watching_tv
+          - entity: scene.away
+        show_header_toggle: false
+        state_color: false
+
+  # // LIVING ROOM //
+  - title: ""
+    icon: mdi:sofa
+    path: living-room
+    badges: []
+    cards:
+      # Lights
+      - title: Lights
+        type: entities
+        entities:
+          - entity: light.reading_lamp
+          - entity: light.luchter
+          - entity: light.chandelier
+        state_color: true
+
+      # Heating
+      - type: vertical-stack
+        cards:
+          - type: thermostat
+            entity: climate.woonkamer
+
+          - title: Temperature
+            type: entities
+            entities:
+              - entity: sensor.woonkamer_temperature
+                name: Temperature
+              - entity: sensor.woonkamer_humidity
+                name: Humidity
+              - entity: binary_sensor.woonkamer_open_window
+                name: Windows
+              - entity: sensor.woonkamer_heating
+                name: Heating
+            header:
+              type: graph
+              entity: sensor.woonkamer_temperature
+              hours_to_show: 24
+              detail: 1
+
+      # Aquarium
+      - type: picture-entity
+        entity: switch.53703774d8f15ba73237
+        image: >-
+          https://images.unsplash.com/photo-1516970739312-08b075784b71?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2352&q=80
+        show_state: true
+        show_name: true
+        hold_action:
+          action: more-info
+        tap_action:
+          action: toggle
+
+  # // OFFICE //
+  - title: ""
+    icon: mdi:desk
+    path: office
+    cards:
+      # Printer ink
+      - type: horizontal-stack
+        cards:
+          - type: gauge
+            entity: sensor.hp_envy_5000_series_airprint_black_ink
+            min: 0
+            max: 100
+            name: Black Ink
+            severity:
+              green: 0
+              yellow: 0
+              red: 0
+          - type: gauge
+            entity: sensor.hp_envy_5000_series_airprint_tri_color_ink
+            min: 0
+            max: 100
+            name: Color Ink
+            severity:
+              green: 0
+              yellow: 0
+              red: 100
+
+      # Sonarr (upcoming media)
+      - type: custom:upcoming-media-card
+        entity: sensor.sonarr_upcoming_media
+
+  # // UPSTAIRS //
+  - title: ""
+    icon: mdi:bed-empty
+    path: "upstairs"
+    cards:
+      # Blanket
+      - type: picture-entity
+        entity: switch.60053804840d8e63c409
+        image: >-
+          https://images.unsplash.com/photo-1572270947869-89e664b0792b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2344&q=80
+        show_state: true
+        show_name: true
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+
+      # Heating Kids
+      - type: vertical-stack
+        cards:
+          - type: thermostat
+            entity: climate.slaapkamer_lore
+          - title: Slaapkamer Kinderen
+            type: entities
+            entities:
+              - entity: sensor.slaapkamer_lore_temperature
+                name: Temperature
+              - entity: sensor.slaapkamer_lore_humidity
+                name: Humidity
+              - entity: binary_sensor.slaapkamer_lore_open_window
+                name: Windows
+              - entity: sensor.slaapkamer_lore_heating
+                name: Heating
+            header:
+              type: graph
+              entity: sensor.slaapkamer_lore_temperature
+              hours_to_show: 24
+              detail: 1
+
+      # Heating Parents
+      - type: vertical-stack
+        cards:
+          - type: thermostat
+            entity: climate.slaapkamer_ouders
+          - title: Slaapkamer Lore
+            type: entities
+            entities:
+              - entity: sensor.slaapkamer_ouders_temperature
+                name: Temperature
+              - entity: sensor.slaapkamer_ouders_humidity
+                name: Humidity
+              - entity: binary_sensor.slaapkamer_ouders_open_window
+                name: Windows
+              - entity: sensor.slaapkamer_ouders_heating
+                name: Heating
+            header:
+              type: graph
+              entity: sensor.slaapkamer_ouders_temperature
+              hours_to_show: 24
+              detail: 1
+
+  # // MONITORIING //
+  - title: ""
+    icon: mdi:incognito
+    path: monitoring
+    badges: []
+    cards:
+      # Speedtest
+      - type: vertical-stack
+        cards:
+          - type: button
+            tap_action:
+              action: call-service
+              service: speedtestdotnet.speedtest
+            name: Run speedtest
+            show_name: true
+            show_state: false
+            show_icon: true
+            icon: mdi:speedometer
+          - title: Internet Speed
+            type: entities
+            entities:
+              - entity: sensor.speedtest_download
+                name: Download
+                secondary_info: last-updated
+              - entity: sensor.speedtest_upload
+                name: Upload
+                secondary_info: last-updated
+              - entity: sensor.speedtest_ping
+                name: Ping
+
+      # NAS
+      - title: Synology DS218
+        type: entities
+        entities:
+          - entity: sensor.svnas_cpu_load_average_15_min
+            name: Load Average
+          - entity: binary_sensor.svnas_security_status
+            name: Security Status
+          - entity: sensor.svnas_temperature
+            name: Temperature
+          - entity: binary_sensor.svnas_update_available
+            name: Update Available
+          - entity: sensor.svnas_memory_usage_real
+            name: Memory Usage (Real)
+
+      # NAS Volume
+      - type: horizontal-stack
+        cards:
+          - type: gauge
+            entity: sensor.svnas_volume_1_volume_used
+            min: 0
+            max: 100
+            severity:
+              green: 0
+              yellow: 70
+              red: 80
+            name: Volume Used
+          - type: gauge
+            entity: sensor.svnas_cpu_utilization_total
+            min: 0
+            max: 100
+            severity:
+              green: 0
+              yellow: 50
+              red: 80
+            name: CPU Utilization
+
+      # NAS Drive 1
+      - title: Drive 1
+        type: entities
+        entities:
+          - entity: sensor.svnas_drive_1_status
+            name: Status
+          - entity: binary_sensor.svnas_drive_1_below_min_remaining_life
+            name: Remaining Life
+          - entity: binary_sensor.svnas_drive_1_exceeded_max_bad_sectors
+            name: Bad Sectors
+          - entity: sensor.svnas_drive_1_temperature
+            name: Temperature
+
+      # NAS Drive 2
+      - title: Drive 2
+        type: entities
+        entities:
+          - entity: sensor.svnas_drive_2_status
+            name: Status
+          - entity: binary_sensor.svnas_drive_2_below_min_remaining_life
+            name: Remaining Life
+          - entity: binary_sensor.svnas_drive_2_exceeded_max_bad_sectors
+            name: Bad Sectors
+          - entity: sensor.svnas_drive_2_temperature
+            name: Temperature
+
+      # NAS Network traffic
+      - type: vertical-stack
+        cards:
+          - type: sensor
+            entity: sensor.svnas_network_down
+            graph: line
+            name: Download
+          - type: sensor
+            entity: sensor.svnas_network_up
+            graph: line
+            name: Upload

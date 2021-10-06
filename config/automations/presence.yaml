@@ -1,5 +1,4 @@
-- id: "1633469587505"
-  alias: Leaving home
+- alias: Leaving home
   description: ""
   trigger:
     - platform: state

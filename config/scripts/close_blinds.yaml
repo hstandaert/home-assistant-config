@@ -1,0 +1,24 @@
+close_blinds:
+  alias: Close Blinds
+  sequence:
+    - service: switch.turn_on
+      target:
+        entity_id:
+          - switch.sonoff_1000bc8cb8_2
+          - switch.sonoff_1000bc8bca_2
+    - service: switch.turn_off
+      target:
+        entity_id:
+          - switch.sonoff_1000bc8cb8_1
+          - switch.sonoff_1000bc8bca_1
+    - delay:
+        hours: 0
+        seconds: 40
+        milliseconds: 0
+    - service: cover.set_cover_position
+      target:
+        entity_id: cover.covers
+      data:
+        position: 0
+    - service: script.pause_blinds
+  mode: single

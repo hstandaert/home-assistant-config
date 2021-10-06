@@ -1,0 +1,11 @@
+- name: Watching TV
+  entities:
+    light.reading_lamp:
+      state: "on"
+      brightness: 1
+      color_temp: 450
+    light.chandelier:
+      state: "off"
+    light.luchter:
+      state: "off"
+  icon: mdi:television-classic

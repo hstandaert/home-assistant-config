@@ -1,0 +1,11 @@
+pause_blinds:
+  alias: Pause Blinds
+  sequence:
+    - service: switch.turn_off
+      target:
+        entity_id:
+          - switch.sonoff_1000bc8cb8_2
+          - switch.sonoff_1000bc8bca_2
+          - switch.sonoff_1000bc8cb8_1
+          - switch.sonoff_1000bc8bca_1
+  mode: single

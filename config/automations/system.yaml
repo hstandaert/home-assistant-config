@@ -1,4 +1,3 @@
-# Set theme on HA start
 - alias: Set theme at startup
   initial_state: on
   trigger:
