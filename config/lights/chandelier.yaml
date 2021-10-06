@@ -1,0 +1,8 @@
+- platform: group
+  name: Chandelier
+  entities:
+    - light.bfd24fe498d97b1238osom
+    - light.bfc2fc0c0020e70856mh0j
+    - light.bf6368fe8b1c317f19p22q
+    - light.bffe8abc554ad079eedd5b
+    - light.bfad999c50c8189a1bbv1u

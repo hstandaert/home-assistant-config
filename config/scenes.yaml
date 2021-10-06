@@ -1,0 +1,45 @@
+- id: '1633442864975'
+  name: Dinner
+  entities:
+    media_player.tv:
+      state: 'off'
+    light.reading_lamp:
+      state: 'off'
+    light.bfd24fe498d97b1238osom:
+      brightness: 153
+      color_temp: 200
+      state: 'on'
+    light.bfc2fc0c0020e70856mh0j:
+      brightness: 153
+      color_temp: 200
+      state: 'on'
+    light.bf6368fe8b1c317f19p22q:
+      brightness: 153
+      color_temp: 200
+      state: 'on'
+    light.bffe8abc554ad079eedd5b:
+      brightness: 153
+      color_temp: 200
+      state: 'on'
+    light.bfad999c50c8189a1bbv1u:
+      brightness: 153
+      color_temp: 200
+      state: 'on'
+  icon: mdi:food-turkey
+- name: Away
+  entities:
+    light.chandelier:
+      state: 'off'
+    light.reading_lamp:
+      state: 'off'
+    light.luchter:
+      state: 'off'
+  icon: mdi:shield-lock
+- name: Television
+  entities:
+    media_player.tv:
+      state: 'off'
+    light.reading_lamp:
+      state: 'on'
+      brightness: 1
+      color_temp: 450

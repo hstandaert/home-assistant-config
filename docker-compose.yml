@@ -1,0 +1,11 @@
+version: "3"
+services:
+  homeassistant:
+    container_name: home-assistant
+    ports:
+      - 8123:8123
+    image: homeassistant/home-assistant:2021.8.8
+    volumes:
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped

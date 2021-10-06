@@ -1,0 +1,6 @@
+- platform: group
+  name: Reading lamp
+  entities:
+    - light.boven
+    - light.midden
+    - light.onder
