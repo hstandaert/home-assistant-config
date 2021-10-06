@@ -1,0 +1,18 @@
+{
+    "version": 1,
+    "key": "lovelace_resources",
+    "data": {
+        "items": [
+            {
+                "url": "/hacsfiles/lovelace-auto-entities/auto-entities.js?hacstag=167744584191",
+                "type": "module",
+                "id": "33c35e32ac124c41861004f29a8e5a78"
+            },
+            {
+                "url": "/hacsfiles/upcoming-media-card/upcoming-media-card.js?hacstag=146783593043",
+                "type": "module",
+                "id": "844348a694a548798e8088e0eef9e742"
+            }
+        ]
+    }
+}

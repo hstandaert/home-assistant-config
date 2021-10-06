@@ -1,0 +1,58 @@
+{
+    "version": 1,
+    "key": "lovelace.lovelace_developer",
+    "data": {
+        "config": {
+            "views": [
+                {
+                    "title": "Home",
+                    "cards": [
+                        {
+                            "type": "button",
+                            "tap_action": {
+                                "action": "call-service",
+                                "service": "homeassistant.restart",
+                                "service_data": {},
+                                "target": {}
+                            },
+                            "name": "Restart",
+                            "icon": "mdi:power",
+                            "show_state": false,
+                            "hold_action": {
+                                "action": "none"
+                            }
+                        },
+                        {
+                            "type": "button",
+                            "tap_action": {
+                                "action": "call-service",
+                                "service": "automation.reload",
+                                "service_data": {},
+                                "target": {}
+                            },
+                            "name": "Reload Automations",
+                            "hold_action": {
+                                "action": "none"
+                            },
+                            "icon": "mdi:robot"
+                        },
+                        {
+                            "type": "button",
+                            "tap_action": {
+                                "action": "call-service",
+                                "service": "scene.reload",
+                                "service_data": {},
+                                "target": {}
+                            },
+                            "name": "Reload Scenes",
+                            "hold_action": {
+                                "action": "none"
+                            },
+                            "icon": "mdi:palette"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
