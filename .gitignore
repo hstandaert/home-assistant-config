@@ -16,3 +16,6 @@ home-assistant_v2.db*
 ip_bans.yaml
 secrets.yaml
 known_devices.yaml
+
+# deployment files
+_hosts.sh
