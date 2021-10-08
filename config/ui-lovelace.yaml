@@ -30,48 +30,51 @@ views:
             entity: weather.openweathermap
 
       # Presence
-      - title: Presence
-        type: entities
-        entities:
-          - entity: person.helena_standaert
-            secondary_info: last-updated
-          - entity: person.nancy
-            secondary_info: last-updated
-        footer:
-          type: buttons
-          entities:
-            - scene.away
+      - type: vertical-stack
+        cards:
+          - type: entity
+            entity: group.everyone
+            name: Presence
+            icon: mdi:thermometer
+          - type: custom:auto-entities
+            card:
+              type: entities
+            filter:
+              include:
+                - domain: person
+                  options:
+                    secondary_info: last-updated
 
       # Heating
       - type: vertical-stack
         cards:
           - type: entity
             entity: sensor.woonkamer_tado_mode
-            name: Tado mode
+            name: Heating mode
             icon: mdi:thermometer
-          - title: Temperature
-            type: entities
-            entities:
-              - entity: sensor.woonkamer_temperature
-                name: Living room
-              - entity: sensor.badkamer_temperature
-                name: Badkamer
-              - entity: sensor.veranda_temperature
-                name: Veranda
-              - entity: sensor.slaapkamer_lore_temperature
-                name: Slaapkamer Lore
-              - entity: sensor.slaapkamer_ouders_temperature
-                name: Slaapkamer Ouders
+          - type: custom:auto-entities
+            show_empty: false
+            card:
+              type: entities
+              title: Temperature
+            filter:
+              include:
+                - group: group.room_temperature
+            sort:
+              method: state
+              reverse: true
 
       # Scenes
-      - title: Scenes
-        type: entities
-        entities:
-          - entity: scene.dinner
-          - entity: scene.watching_tv
-          - entity: scene.away
-        show_header_toggle: false
-        state_color: false
+      - type: custom:auto-entities
+        show_empty: false
+        card:
+          type: entities
+          title: Scenes
+        filter:
+          include:
+            - domain: scene
+        sort:
+          method: name
 
   # // LIVING ROOM //
   - title: ""

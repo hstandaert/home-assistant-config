@@ -6,4 +6,7 @@
       state: "off"
     light.luchter:
       state: "off"
+    group.thermostats:
+      state: "auto"
+      preset_mode: away
   icon: mdi:shield-lock

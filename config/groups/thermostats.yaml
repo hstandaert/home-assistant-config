@@ -1,0 +1,8 @@
+thermostats:
+  name: Thermostats
+  entities:
+    - climate.woonkamer
+    - climate.badkamer
+    - climate.veranda
+    - climate.slaapkamer_lore
+    - climate.slaapkamer_ouders
