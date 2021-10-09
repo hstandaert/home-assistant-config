@@ -2,8 +2,24 @@
 default_config:
 
 homeassistant:
+  name: Home
+  latitude: !secret homeassistant_latitude
+  longitude: !secret homeassistant_longitude
+  elevation: !secret homeassistant_elevation
+  unit_system: metric
+  currency: EUR
+  time_zone: "Europe/Amsterdam"
+  external_url: !secret homeassistant_external_url
+  internal_url: !secret homeassistant_internal_url
   auth_providers:
     - type: homeassistant
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - !secret http_reverse_proxy
+    - 127.0.0.1
+    - ::1
 
 tts:
   - platform: google_translate
@@ -25,6 +41,7 @@ light: !include_dir_merge_list lights
 script: !include_dir_merge_named scripts
 scene: !include_dir_merge_list scenes
 sensor: !include_dir_merge_list sensors
+binary_sensor: !include_dir_merge_list binary_sensors
 
 lovelace:
   mode: yaml
