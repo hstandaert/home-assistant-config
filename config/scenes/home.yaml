@@ -1,0 +1,8 @@
+- name: Home
+  entities:
+    light.chandelier:
+      state: "on"
+    group.thermostats:
+      state: "auto"
+      preset_mode: home
+  icon: mdi:shield-home

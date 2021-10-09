@@ -1,9 +1,18 @@
 - alias: Leaving home
+  description: "Activated when everyone is out of the house"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.anyone_home
+      to: "off"
+  action:
+    - scene: scene.away
+  mode: single
+- alias: Coming home
   description: ""
   trigger:
     - platform: state
-      entity_id: group.everyone
-      to: not_home
+      entity_id: binary_sensor.anyone_home
+      to: "on"
   action:
-    - scene: scene.away
+    - scene: scene.home
   mode: single

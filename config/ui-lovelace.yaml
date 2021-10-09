@@ -33,7 +33,7 @@ views:
       - type: vertical-stack
         cards:
           - type: entity
-            entity: group.everyone
+            entity: binary_sensor.anyone_home
             name: Presence
             icon: mdi:thermometer
           - type: custom:auto-entities
@@ -44,6 +44,8 @@ views:
                 - domain: person
                   options:
                     secondary_info: last-updated
+              exclude:
+                - entity_id: person.admin
 
       # Heating
       - type: vertical-stack

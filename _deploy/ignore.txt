@@ -2,3 +2,5 @@ config/.storage/
 config/home-assistant_v2.db
 config/home-assistant_v2.db-shm
 config/home-assistant_v2.db-wal
+config/home-assistant.log
+config/secrets.yaml
