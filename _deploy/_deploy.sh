@@ -81,8 +81,9 @@ printf "SendingTo: ${GREEN}$DESTINATION\n${NC}\n"
 RSYNC_PARAMS=${2:-''}
 
 # call rsync passing the directores, ignore list and ask to up using ssh
-
+ssh -p "$PORT" $CREDENTIALS "sudo chmod -R 777 $DESTINATION"
 cd $BASEDIR/../ && rsync -vrzuh $RSYNC_PARAMS -e 'ssh -p '"$PORT" --files-from=$BASEDIR/directories.txt --exclude-from=$BASEDIR/ignore.txt . $CREDENTIALS:$DESTINATION | tee log/deploy_$TODAY.log
+ssh -p "$PORT" $CREDENTIALS "sudo chown -R sc-homeassistant:sc-homeassistant $DESTINATION/*"
 
 # =================================================
 # RESTART HOME ASSISTANT
