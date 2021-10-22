@@ -1,0 +1,65 @@
+title: ""
+icon: mdi:tree
+path: outside
+cards:
+  # Garbage
+  - type: custom:auto-entities
+    show_empty: false
+    card:
+      type: entities
+      title: Garbage collection
+    filter:
+      include:
+        - entity_id: sensor.deafvalapp_*
+    sort:
+      method: name
+
+  # Car
+  - type: vertical-stack
+    cards:
+      - type: markdown
+        content: |
+          Lorem ipsum dolor sit amet
+      - type: picture-elements
+        image: /local/img/devices/car.jpg
+        elements:
+          - type: state-icon
+            entity: sensor.touran_odometer
+            style:
+              pointer-events: none
+              left: 6px
+              bottom: 6px
+              transform: initial
+
+          - type: state-label
+            entity: sensor.touran_odometer
+            style:
+              left: 0
+              bottom: 0
+              pointer-events: none
+              font-size: 16px
+              line-height: 32px
+              color: rgba(0, 0, 0, 1)
+              font-weight: bold
+              background-color: rgba(0, 0, 0, 0.3)
+              width: 100%
+              transform: initial
+              padding: 0 8px 0 40px
+
+          - type: conditional
+            conditions:
+              - entity: lock.touran_door_locked
+                state: unlocked
+            elements:
+              - type: icon
+                icon: mdi:lock
+                entity: lock.touran_door_locked
+                tap_action:
+                  action: call-service
+                  service: lock.lock
+                  service_data:
+                    entity_id: lock.touran_door_locked
+                style:
+                  right: 8px
+                  bottom: 12px
+                  transform: initial

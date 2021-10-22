@@ -1,0 +1,51 @@
+title: ""
+icon: mdi:desk
+path: office
+cards:
+  # Printer ink
+  - type: horizontal-stack
+    cards:
+      - type: gauge
+        entity: sensor.hp_envy_5000_series_black_ink
+        min: 0
+        max: 100
+        name: Black Ink
+        severity:
+          green: 0
+          yellow: 0
+          red: 0
+      - type: gauge
+        entity: sensor.hp_envy_5000_series_tri_color_ink
+        min: 0
+        max: 100
+        name: Color Ink
+        severity:
+          green: 0
+          yellow: 0
+          red: 100
+
+  # Sonarr (upcoming media)
+  - type: custom:upcoming-media-card
+    entity: sensor.sonarr_upcoming_media
+
+  # Heating
+  - type: vertical-stack
+    cards:
+      - type: thermostat
+        entity: climate.kantoor
+      - title: Kantoor
+        type: entities
+        entities:
+          - entity: sensor.kantoor_temperature
+            name: Temperature
+          - entity: sensor.kantoor_humidity
+            name: Humidity
+          - entity: binary_sensor.kantoor_open_window
+            name: Windows
+          - entity: sensor.kantoor_heating
+            name: Heating
+        header:
+          type: graph
+          entity: sensor.kantoor_temperature
+          hours_to_show: 24
+          detail: 1

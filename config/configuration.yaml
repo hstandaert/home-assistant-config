@@ -23,6 +23,7 @@ http:
 
 tts:
   - platform: google_translate
+    language: nl
 
 frontend:
   themes: !include_dir_merge_named themes
@@ -49,4 +50,8 @@ lovelace:
     - url: /hacsfiles/upcoming-media-card/upcoming-media-card.js
       type: module
     - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
+      type: module
+    - url: /hacsfiles/mini-media-player/mini-media-player-bundle.js
+      type: module
+    - url: /hacsfiles/lovelace-swipe-navigation/swipe-navigation.js
       type: module

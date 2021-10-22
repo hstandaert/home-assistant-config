@@ -1,0 +1,113 @@
+title: ""
+icon: mdi:sofa
+path: living-room
+badges: []
+cards:
+  # Lights
+  - title: Lights
+    type: entities
+    entities:
+      - entity: light.reading_lamp
+      - entity: light.luchter
+      - entity: light.chandelier
+    state_color: true
+
+  # Heating
+  - type: vertical-stack
+    cards:
+      - type: thermostat
+        entity: climate.woonkamer
+
+      - title: Temperature
+        type: entities
+        entities:
+          - entity: sensor.woonkamer_temperature
+            name: Temperature
+          - entity: sensor.woonkamer_humidity
+            name: Humidity
+          - entity: binary_sensor.woonkamer_open_window
+            name: Windows
+          - entity: sensor.woonkamer_heating
+            name: Heating
+        header:
+          type: graph
+          entity: sensor.woonkamer_temperature
+          hours_to_show: 24
+          detail: 1
+
+  # Aquarium
+  - type: picture-entity
+    entity: switch.53703774d8f15ba73237
+    image: /local/img/devices/aquarium.jpg
+    show_state: true
+    show_name: true
+    hold_action:
+      action: more-info
+    tap_action:
+      action: toggle
+
+  # Washer
+  - type: conditional
+    conditions:
+      - entity: switch.wasmachine
+        state: "on"
+    card:
+      type: picture-elements
+      image: /local/img/devices/washing-machine.jpg
+      elements:
+        # Titel und Programm
+        - type: state-label
+          entity: sensor.washer_label
+          style:
+            left: 0
+            bottom: 0
+            pointer-events: none
+            font-size: 16px
+            line-height: 32px
+            color: white
+            background-color: rgba(0, 0, 0, 0.3)
+            width: 100%
+            transform: initial
+            padding: 0 8px
+        - type: state-label
+          entity: "sensor.washer_time_left"
+          style:
+            bottom: 0
+            right: 0
+            pointer-events: none
+            font-size: 16px
+            transform: initial
+            color: white
+            line-height: 32px
+            padding: 0px 44px
+        - type: icon
+          icon: mdi:progress-clock
+          entity: sensor.washing_machine_status
+          style:
+            bottom: 0
+            right: 0
+            transform: initial
+            color: white
+            line-height: 32px
+            padding: 8px 16px
+        - type: state-label
+          entity: sensor.wasmachine_energy
+          style:
+            top: 0
+            right: 0
+            pointer-events: none
+            transform: initial
+            font-size: 12px
+            color: rgba(255,255,255,0.8)
+            line-height: 32px
+            padding: 1px 35px
+        - type: icon
+          icon: mdi:flash-circle
+          style:
+            top: 0
+            right: 0
+            pointer-events: none
+            transform: scale(0.8)
+            color: rgba(255,255,255,0.8)
+            line-height: 32px
+            padding: 8px 13px

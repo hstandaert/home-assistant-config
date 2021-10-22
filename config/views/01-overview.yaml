@@ -1,0 +1,94 @@
+title: ""
+path: dashboard
+icon: mdi:home-analytics
+cards:
+  # Controls
+  - title: Controls
+    type: entities
+    entities:
+      - entity: light.reading_lamp
+      - entity: light.chandelier
+      - entity: light.luchter
+      - entity: cover.covers
+
+  # Weather
+  - type: vertical-stack
+    cards:
+      - type: entities
+        entities:
+          - entity: sensor.date
+          - entity: sensor.openweathermap_weather
+            name: Weather
+            icon: mdi:cloud
+          - entity: sun.sun
+        show_header_toggle: false
+        state_color: false
+      - type: weather-forecast
+        entity: weather.openweathermap
+
+  # Media
+  - type: "custom:auto-entities"
+    show_empty: false
+    card:
+      show_header_toggle: false
+      type: entities
+    filter:
+      exclude:
+        - state: "off"
+        - state: unavailable
+        - entity_id: media_player.leefruimte
+        - entity_id: media_player.benedenverdieping
+      include:
+        - domain: media_player
+          options:
+            artwork: cover
+            group: true
+            hide:
+              power_state: false
+              source: true
+              volume: false
+            type: "custom:mini-media-player"
+
+  # Presence
+  - type: grid
+    columns: 2
+    cards:
+      - type: picture-entity
+        entity: person.helena_standaert
+        state_image:
+          home: /local/img/people/helena.png
+          not_home: /local/img/people/helena_gray.png
+          unknown: /local/img/people/helena_gray.png
+
+      - type: picture-entity
+        entity: person.nancy
+        state_image:
+          home: /local/img/people/nancy.png
+          not_home: /local/img/people/nancy_gray.png
+          unknown: /local/img/people/nancy_gray.png
+
+  # Heating
+  - type: custom:auto-entities
+    show_empty: false
+    card:
+      type: entities
+      title: Heating
+    filter:
+      include:
+        - entity_id: climate.*
+    sort:
+      method: attribute
+      attribute: current_temperature
+      reverse: true
+
+  # Scenes
+  - type: custom:auto-entities
+    show_empty: false
+    card:
+      type: entities
+      title: Scenes
+    filter:
+      include:
+        - domain: scene
+    sort:
+      method: name

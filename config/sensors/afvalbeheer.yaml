@@ -1,0 +1,8 @@
+- platform: afvalbeheer
+  wastecollector: DeAfvalApp
+  resources:
+    - restafval
+    - gft
+    - papier
+  postcode: 4576AN
+  streetnumber: 110
