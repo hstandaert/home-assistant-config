@@ -8,11 +8,17 @@ homeassistant:
   elevation: !secret homeassistant_elevation
   unit_system: metric
   currency: EUR
-  time_zone: "Europe/Amsterdam"
+  time_zone: Europe/Amsterdam
+  temperature_unit: C
   external_url: !secret homeassistant_external_url
   internal_url: !secret homeassistant_internal_url
   auth_providers:
     - type: homeassistant
+  customize:
+    person.helena:
+      entity_picture: "/local/img/people/helena.png"
+    person.nancy:
+      entity_picture: "/local/img/people/nancy.png"
 
 http:
   use_x_forwarded_for: true
@@ -43,10 +49,45 @@ script: !include_dir_merge_named scripts
 scene: !include_dir_merge_list scenes
 sensor: !include_dir_merge_list sensors
 binary_sensor: !include_dir_merge_list binary_sensors
+template:
+  - sensor: !include_dir_merge_list templates/sensors
+
+person:
+  - name: Helena
+    id: helena
+    user_id: !secret user_id_helena
+    device_trackers:
+      - device_tracker.helena_gsm
+  - name: Nancy
+    id: nancy
+    user_id: !secret user_id_nancy
+    device_trackers:
+      - device_tracker.redmi_note_8_pro
+
+input_select:
+  conditional_media:
+    initial: Upcoming media
+    options:
+      - Upcoming media
+      - Emby
+      - Spotify
+
+spotify:
+  client_id: !secret spotify_client_id
+  client_secret: !secret spotify_client_secret
+
+media_player:
+  - platform: emby
+    host: 192.168.11.24
+    api_key: 41d5616f29854f498805e4a8be27160b
 
 lovelace:
   mode: yaml
   resources:
+    - url: /local/font.css
+      type: css
+
+    # HACS
     - url: /hacsfiles/upcoming-media-card/upcoming-media-card.js
       type: module
     - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
@@ -54,4 +95,14 @@ lovelace:
     - url: /hacsfiles/mini-media-player/mini-media-player-bundle.js
       type: module
     - url: /hacsfiles/lovelace-swipe-navigation/swipe-navigation.js
+      type: module
+    - url: /hacsfiles/lovelace-card-mod/card-mod.js
+      type: module
+    - url: /hacsfiles/lovelace-layout-card/layout-card.js
+      type: module
+    - url: /hacsfiles/button-card/button-card.js
+      type: module
+    - url: /hacsfiles/kiosk-mode/kiosk-mode.js
+      type: module
+    - url: /hacsfiles/swipe-card/swipe-card.js
       type: module

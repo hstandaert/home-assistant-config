@@ -4,7 +4,7 @@ path: "upstairs"
 cards:
   # Blanket
   - type: picture-entity
-    entity: switch.60053804840d8e63c409
+    entity: switch.blanket
     image: >-
       https://images.unsplash.com/photo-1572270947869-89e664b0792b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2344&q=80
     show_state: true

@@ -1,94 +1,262 @@
 title: ""
 path: dashboard
 icon: mdi:home-analytics
+type: custom:grid-layout
+layout:
+  #default
+  grid-gap: var(--custom-layout-card-padding)
+  grid-template-columns: repeat(4, 1fr) 0
+  grid-template-rows: 0 repeat(2, fit-content(100%)) 0fr
+  grid-template-areas: |
+    "sidebar  .           .         .         ."
+    "sidebar  woonkamer   eetkamer  upstairs  ."
+    "sidebar  media       house     other     ."
+    "sidebar  footer      footer    footer    ."
+  mediaquery:
+    #phone
+    "(max-width: 800px)":
+      grid-gap: calc(var(--custom-layout-card-padding) * 1.5)
+      grid-template-columns: 0 repeat(2, 1fr) 0
+      grid-template-rows: 0 repeat(5, fit-content(100%)) 0fr
+      grid-template-areas: |
+        ".  .           .         ."
+        ".  sidebar     sidebar   ."
+        ".  woonkamer   upstairs  ."
+        ".  eetkamer    media     ."
+        ".  house       other     ."
+        ".  footer      footer    ."
+        ".  .           .         ."
+    #portrait
+    "(max-width: 1200px)":
+      grid-gap: var(--custom-layout-card-padding)
+      grid-template-columns: repeat(3, 1fr) 0
+      grid-template-rows: 0 repeat(3, fit-content(100%)) 0fr
+      grid-template-areas: |
+        "sidebar  .           .         ."
+        "sidebar  woonkamer   upstairs  ."
+        "sidebar  eetkamer    media     ."
+        "sidebar  house       other     ."
+        "sidebar  footer      footer    ."
+        "sidebar  .           .         ."
 cards:
-  # Controls
-  - title: Controls
-    type: entities
-    entities:
-      - entity: light.reading_lamp
-      - entity: light.chandelier
-      - entity: light.luchter
-      - entity: cover.covers
+  - type: custom:button-card #extra_styles fix
 
-  # Weather
+  #################################################
+  #                                               #
+  #                    SIDEBAR                    #
+  #                                               #
+  #################################################
+
   - type: vertical-stack
+    view_layout:
+      grid-area: sidebar
     cards:
-      - type: entities
-        entities:
-          - entity: sensor.date
-          - entity: sensor.openweathermap_weather
-            name: Weather
-            icon: mdi:cloud
-          - entity: sun.sun
-        show_header_toggle: false
-        state_color: false
-      - type: weather-forecast
-        entity: weather.openweathermap
+      - type: custom:button-card
+        entity: sensor.template_sidebar
+        template: sidebar_template
 
-  # Media
-  - type: "custom:auto-entities"
-    show_empty: false
-    card:
-      show_header_toggle: false
-      type: entities
-    filter:
-      exclude:
-        - state: "off"
-        - state: unavailable
-        - entity_id: media_player.leefruimte
-        - entity_id: media_player.benedenverdieping
-      include:
-        - domain: media_player
-          options:
-            artwork: cover
-            group: true
-            hide:
-              power_state: false
-              source: true
-              volume: false
-            type: "custom:mini-media-player"
+      - type: conditional
+        conditions:
+          - entity: switch.wasmachine
+            state: "on"
+        card:
+          type: custom:button-card
+          entity: sensor.washer_time_left
+          template: laundry
 
-  # Presence
+      - type: grid
+        columns: 5
+        cards:
+          - type: button
+            icon: mdi:cog
+            tap_action:
+              action: navigate
+              navigation_path: /config
+            hold_action:
+              action: none
+
+  #################################################
+  #                                               #
+  #                  WOONKAMER                    #
+  #                                               #
+  #################################################
+
   - type: grid
+    title: Woonkamer
+    view_layout:
+      grid-area: woonkamer
     columns: 2
     cards:
-      - type: picture-entity
-        entity: person.helena_standaert
-        state_image:
-          home: /local/img/people/helena.png
-          not_home: /local/img/people/helena_gray.png
-          unknown: /local/img/people/helena_gray.png
+      - type: custom:button-card
+        entity: light.luchter
+        hold_action:
+          action: more-info
+        template:
+          - light
+          - icon_hue
+      - type: custom:button-card
+        entity: light.reading_lamp
+        hold_action:
+          action: more-info
+        template:
+          - light
+          - icon_hue
+      - type: custom:button-card
+        entity: media_player.samsung_tv
+        hold_action:
+          action: more-info
+        template:
+          - base
+          - icon_tv
+          - loader
 
-      - type: picture-entity
+  #################################################
+  #                                               #
+  #                  EETKAMER                     #
+  #                                               #
+  #################################################
+
+  - type: grid
+    title: Eetkamer
+    view_layout:
+      grid-area: eetkamer
+    columns: 2
+    cards:
+      - type: custom:button-card
+        entity: light.chandelier
+        hold_action:
+          action: more-info
+        template:
+          - light
+          - icon_hue
+      - type: custom:button-card
+        entity: switch.aquarium
+        hold_action:
+          action: more-info
+        template:
+          - base
+          - icon_aquarium
+
+  #################################################
+  #                                               #
+  #                    BOVEN                      #
+  #                                               #
+  #################################################
+
+  - type: grid
+    title: Boven
+    view_layout:
+      grid-area: upstairs
+    columns: 2
+    cards:
+      - type: custom:button-card
+        entity: switch.blanket
+        hold_action:
+          action: more-info
+        template:
+          - base
+          - icon_blanket
+
+  #################################################
+  #                                               #
+  #                    HUIS                       #
+  #                                               #
+  #################################################
+
+  - type: grid
+    title: Huis
+    view_layout:
+      grid-area: house
+    columns: 2
+    cards:
+      - type: custom:button-card
+        entity: person.helena
+        name: Helena
+        template: person
+        tap_action:
+          action: more-info
+
+      - type: custom:button-card
         entity: person.nancy
-        state_image:
-          home: /local/img/people/nancy.png
-          not_home: /local/img/people/nancy_gray.png
-          unknown: /local/img/people/nancy_gray.png
+        name: Nancy
+        template: person
+        tap_action:
+          action: more-info
 
-  # Heating
-  - type: custom:auto-entities
-    show_empty: false
-    card:
-      type: entities
-      title: Heating
-    filter:
-      include:
-        - entity_id: climate.*
-    sort:
-      method: attribute
-      attribute: current_temperature
-      reverse: true
+      - type: custom:button-card
+        entity: scene.away
+        name: Weg
+        hold_action:
+          action: none
+        template:
+          - base
+          - icon_away
 
-  # Scenes
-  - type: custom:auto-entities
-    show_empty: false
-    card:
-      type: entities
-      title: Scenes
-    filter:
-      include:
-        - domain: scene
-    sort:
-      method: name
+      - type: custom:button-card
+        entity: scene.home
+        name: Thuis
+        hold_action:
+          action: none
+        template:
+          - base
+          - icon_home
+
+  #################################################
+  #                                               #
+  #                    MEDIA                      #
+  #                                               #
+  #################################################
+
+  - type: grid
+    title: Media
+    view_layout:
+      grid-area: media
+    columns: 1
+    cards:
+      - type: custom:swipe-card
+        start_card: 1
+        parameters:
+          roundLengths: true
+          effect: coverflow
+          speed: 650
+          spaceBetween: 20
+          threshold: 7
+          coverflowEffect:
+            rotate: 80
+            depth: 300
+        cards:
+          - type: conditional
+            conditions:
+              - entity: input_select.conditional_media
+                state: Upcoming media
+            card:
+              type: custom:button-card
+              entity: sensor.sonarr_upcoming_media
+              tap_action:
+                action: none
+              template:
+                - conditional_media
+                - upcoming_media
+                - icon_sonarr
+
+          - type: conditional
+            conditions:
+              - entity: input_select.conditional_media
+                state: Spotify
+            card:
+              type: custom:button-card
+              entity: media_player.spotify
+              template:
+                - conditional_media
+                - icon_spotify
+
+          - type: conditional
+            conditions:
+              - entity: input_select.conditional_media
+                state: Emby
+            card:
+              type: custom:button-card
+              entity: media_player.emby_chrome_2
+              template:
+                - conditional_media
+                - icon_emby

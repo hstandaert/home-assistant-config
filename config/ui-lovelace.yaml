@@ -2,4 +2,9 @@ title: Overview
 swipe_nav:
   wrap: false
   animate: swipe
+kiosk_mode:
+  hide_sidebar: true
+  hide_menubutton: true
+  # hide_overflow: true
+button_card_templates: !include button-card-templates.yaml
 views: !include_dir_list views

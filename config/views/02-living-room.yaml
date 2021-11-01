@@ -37,7 +37,7 @@ cards:
 
   # Aquarium
   - type: picture-entity
-    entity: switch.53703774d8f15ba73237
+    entity: switch.aquarium
     image: /local/img/devices/aquarium.jpg
     show_state: true
     show_name: true

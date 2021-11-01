@@ -1,5 +1,5 @@
 everyone:
   name: Everyone
   entities:
-    - person.helena_standaert
+    - person.helena
     - person.nancy

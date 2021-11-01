@@ -20,6 +20,7 @@ cards:
       - type: markdown
         content: |
           Lorem ipsum dolor sit amet
+
       - type: picture-elements
         image: /local/img/devices/car.jpg
         elements:
