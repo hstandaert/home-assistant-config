@@ -12,9 +12,7 @@ close_blinds:
           - switch.sonoff_1000bc8cb8_1
           - switch.sonoff_1000bc8bca_1
     - delay:
-        hours: 0
         seconds: 40
-        milliseconds: 0
     - service: cover.set_cover_position
       target:
         entity_id: cover.covers

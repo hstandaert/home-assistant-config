@@ -22,7 +22,8 @@ layout:
         ".  .           .         ."
         ".  sidebar     sidebar   ."
         ".  woonkamer   upstairs  ."
-        ".  eetkamer    media     ."
+        ".  eetkamer    .         ."
+        ".  media       media     ."
         ".  house       other     ."
         ".  footer      footer    ."
         ".  .           .         ."
@@ -68,10 +69,16 @@ cards:
         columns: 5
         cards:
           - type: button
-            icon: mdi:cog
+            icon: mdi:information-outline
+            tap_action: !include ../popup/sidebar-information.yaml
+            hold_action:
+              action: none
+
+          - type: button
+            icon: mdi:account
             tap_action:
               action: navigate
-              navigation_path: /config
+              navigation_path: /profile
             hold_action:
               action: none
 
@@ -89,25 +96,34 @@ cards:
     cards:
       - type: custom:button-card
         entity: light.luchter
-        hold_action:
-          action: more-info
         template:
           - light
           - icon_hue
       - type: custom:button-card
         entity: light.reading_lamp
-        hold_action:
-          action: more-info
         template:
           - light
           - icon_hue
       - type: custom:button-card
         entity: media_player.samsung_tv
-        hold_action:
-          action: more-info
+        name: Tv
+        state_display: >
+          [[[
+            if (variables.state == 'playing') {
+              return 'Aan';
+            }
+          ]]]
+        hold_action: !include ../popup/tv.yaml
         template:
           - base
           - icon_tv
+          - loader
+
+      - type: custom:button-card
+        entity: cover.covers
+        name: Rolluiken
+        template:
+          - covers
           - loader
 
   #################################################
@@ -124,15 +140,11 @@ cards:
     cards:
       - type: custom:button-card
         entity: light.chandelier
-        hold_action:
-          action: more-info
         template:
           - light
           - icon_hue
       - type: custom:button-card
         entity: switch.aquarium
-        hold_action:
-          action: more-info
         template:
           - base
           - icon_aquarium
@@ -151,8 +163,6 @@ cards:
     cards:
       - type: custom:button-card
         entity: switch.blanket
-        hold_action:
-          action: more-info
         template:
           - base
           - icon_blanket
@@ -170,7 +180,7 @@ cards:
     columns: 2
     cards:
       - type: custom:button-card
-        entity: person.helena
+        entity: person.helena_user
         name: Helena
         template: person
         tap_action:
@@ -231,13 +241,24 @@ cards:
                 state: Upcoming media
             card:
               type: custom:button-card
-              entity: sensor.sonarr_upcoming_media
+              entity: sensor.trakt_upcoming_shows
               tap_action:
                 action: none
               template:
                 - conditional_media
                 - upcoming_media
                 - icon_sonarr
+
+          - type: conditional
+            conditions:
+              - entity: input_select.conditional_media
+                state: Tv
+            card:
+              type: custom:button-card
+              entity: media_player.tv
+              template:
+                - conditional_media
+                - icon_cast
 
           - type: conditional
             conditions:

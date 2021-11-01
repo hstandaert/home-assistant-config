@@ -10,6 +10,7 @@ base:
         return (
           state == 'on' ||
           state == 'home' ||
+          state == 'open' ||
           state == 'cool' ||
           state == 'fan_only' ||
           state == 'playing'
@@ -21,26 +22,6 @@ base:
   state_display: >
     [[[ if (variables.state === true) return 'Unknown'; ]]]
   tap_action:
-    ui_sound_tablet: |
-      [[[
-        const screensaver = states['switch.galaxy_tab_a_screensaver'] === undefined ||
-          states['switch.galaxy_tab_a_screensaver'].state;
-
-        if (variables.state === 'off' && screensaver === 'off') {
-          hass.callService('media_player', 'play_media', {
-            entity_id: 'media_player.c2080cea_6627150a',
-            media_content_id: '/local/sound/on.m4a',
-            media_content_type: 'music'
-          });
-        }
-        if (variables.state === 'on' && screensaver === 'off') {
-          hass.callService('media_player', 'play_media', {
-            entity_id: 'media_player.c2080cea_6627150a',
-            media_content_id: '/local/sound/off.m4a',
-            media_content_type: 'music'
-          });
-        }
-      ]]]
     animation_card: |
       [[[
         const animation_speed_ms = 900;
@@ -52,6 +33,8 @@ base:
       ]]]
     action: toggle
     haptic: medium
+  hold_action:
+    action: more-info
   styles:
     grid:
       - grid-template-areas: |
@@ -531,6 +514,106 @@ light:
 
 #################################################
 #                                               #
+#                    COVERS                     #
+#                                               #
+#################################################
+
+covers:
+  template:
+    - base
+    - icon_blinds
+  tap_action:
+    action: call-service
+    service: >
+      [[[
+        return variables.state === 'open' ? 'cover.close_cover' : 'cover.open_cover';
+      ]]]
+    service_data:
+      entity_id: >
+        [[[ return entity.entity_id; ]]]
+  hold_action:
+    action: fire-dom-event
+    browser_mod:
+      command: popup
+      title: >
+        [[[ return entity.attributes.friendly_name; ]]]
+      card:
+        type: entities
+        entities:
+          - type: conditional
+            conditions:
+              - entity: sun.sun
+                state: above_horizon
+            row:
+              type: attribute
+              entity: sun.sun
+              attribute: next_setting
+              format: relative
+              name: Next sunset
+
+          - type: conditional
+            conditions:
+              - entity: sun.sun
+                state: below_horizon
+            row:
+              type: attribute
+              entity: sun.sun
+              attribute: next_rising
+              format: relative
+              name: Next sunrise
+
+          - type: attribute
+            entity: >
+              [[[ return entity.entity_id ]]]
+            attribute: /
+            secondary_info: last-changed
+            name: Last changed
+
+          - type: custom:hui-horizontal-stack-card
+            style: >
+              #root {
+                justify-content: center;
+                margin-top: 2em;
+              }
+            cards:
+              - type: custom:button-card
+                entity: >
+                  [[[ return entity.entity_id ]]]
+                icon: mdi:arrow-up
+                tap_action:
+                  action: call-service
+                  service: cover.open_cover
+                  service_data:
+                    entity_id: >
+                      [[[ return entity.entity_id; ]]]
+                template: icon_only
+
+              - type: custom:button-card
+                entity: >
+                  [[[ return entity.entity_id ]]]
+                icon: mdi:stop
+                tap_action:
+                  action: call-service
+                  service: cover.stop_cover
+                  service_data:
+                    entity_id: >
+                      [[[ return entity.entity_id; ]]]
+                template: icon_only
+
+              - type: custom:button-card
+                entity: >
+                  [[[ return entity.entity_id ]]]
+                icon: mdi:arrow-down
+                tap_action:
+                  action: call-service
+                  service: cover.close_cover
+                  service_data:
+                    entity_id: >
+                      [[[ return entity.entity_id; ]]]
+                template: icon_only
+
+#################################################
+#                                               #
 #                    PERSON                     #
 #                                               #
 #################################################
@@ -540,7 +623,7 @@ person:
     - base
     - circle
   state_display: >
-    [[[ return variables.state === 'home' ? 'Ja' : 'Nej'; ]]]
+    [[[ return variables.state === 'home' ? 'Thuis' : 'Op stap'; ]]]
   triggers_update: sensor.time
   styles:
     custom_fields:
@@ -668,9 +751,9 @@ conditional_media:
   state_display: >
     [[[
       if (entity.attributes.media_title === 'Nothing playing' || entity.attributes.media_title === 'No title' && variables.state === 'paused') {
-        return 'Inget spelas';
+        return 'Er wordt niets afgespeeld';
       }
-      return entity.attributes.media_title === 'No title' && variables.state === 'playing' ? 'Ingen titel' : entity.attributes.media_title;
+      return entity.attributes.media_title === 'No title' && variables.state === 'playing' ? 'Geen titel' : entity.attributes.media_title;
     ]]]
   custom_fields:
     blur: >
@@ -1012,6 +1095,13 @@ icon_emby:
     icon: >
       <svg viewBox="0 0 24 24">
         <path d="M11.041 0c-.007 0-1.456 1.43-3.219 3.176L4.615 6.352l.512.513.512.512-2.819 2.791L0 12.961l1.83 1.848c1.006 1.016 2.438 2.46 3.182 3.209l1.351 1.359.508-.496c.28-.273.515-.498.524-.498.008 0 1.266 1.264 2.794 2.808L12.97 24l.187-.182c.23-.225 5.007-4.95 5.717-5.656l.52-.516-.502-.513c-.276-.282-.5-.52-.496-.53.003-.009 1.264-1.26 2.802-2.783 1.538-1.522 2.8-2.776 2.803-2.785.005-.012-3.617-3.684-6.107-6.193L17.65 4.6l-.505.505c-.279.278-.517.501-.53.497-.013-.005-1.27-1.267-2.793-2.805A449.655 449.655 0 0011.041 0zM9.223 7.367c.091.038 7.951 4.608 7.957 4.627.003.013-1.781 1.056-3.965 2.32a999.898 999.898 0 01-3.996 2.307c-.019.006-.026-1.266-.026-4.629 0-3.7.007-4.634.03-4.625Z"/>
+      </svg>
+
+icon_cast:
+  custom_fields:
+    icon: >
+      <svg viewBox="0 0 32 32">
+        <path d="M 6 6 C 4.897 6 4 6.897 4 8 L 4 12 L 6 12 L 6 8 L 26 8 L 26 24 L 18 24 L 18 26 L 26 26 C 27.103 26 28 25.103 28 24 L 28 8 C 28 6.897 27.103 6 26 6 L 6 6 z M 4 14 L 4 16 C 9.169375 16 13.436179 19.942273 13.949219 24.978516 C 13.983421 25.314265 14 25.655375 14 26 L 16 26 C 16 19.383 10.617 14 4 14 z M 4 18 L 4 20 C 7.309 20 10 22.691 10 26 L 12 26 C 12 21.589 8.411 18 4 18 z M 4 22 L 4 26 L 8 26 C 8 23.791 6.209 22 4 22 z"/>
       </svg>
 
 icon_sonarr:
@@ -2084,6 +2174,22 @@ icon_home:
           </svg>
         `;
       ]]]
+
+icon_blinds:
+  styles:
+    card:
+      - transition: all 0.3s ease-out
+    custom_fields:
+      icon:
+        - width: 70%
+        - fill: >
+            [[[ return variables.state === 'open' ? '#72757c' : '#9da0a2'; ]]]
+
+  custom_fields:
+    icon: >
+      <svg viewBox="0 0 438 438">
+        <path d="m399,381h-21.5v-157h8.5c4.143,0 7.5-3.358 7.5-7.5v-177.972c7.32-2.975 12.5-10.153 12.5-18.528 0-11.028-8.972-20-20-20s-20,8.972-20,20c0,8.375 5.18,15.553 12.5,18.528v20.472h-319v-20.472c7.32-2.975 12.5-10.153 12.5-18.528 0-11.028-8.972-20-20-20s-20,8.972-20,20c0,8.375 5.18,15.553 12.5,18.528v177.972c0,4.142 3.357,7.5 7.5,7.5h8.5v157h-21.5c-4.143,0-7.5,3.358-7.5,7.5v42c0,4.142 3.357,7.5 7.5,7.5h360c4.143,0 7.5-3.358 7.5-7.5v-42c0-4.142-3.357-7.5-7.5-7.5zm-339.5-269.5h319v22.5h-319v-22.5zm0,37.5h319v22.5h-319v-22.5zm326.5-134c2.757,0 5,2.243 5,5s-2.243,5-5,5-5-2.243-5-5 2.243-5 5-5zm-7.5,59v22.5h-319v-22.5h319zm-326.5-59c2.757,0 5,2.243 5,5s-2.243,5-5,5-5-2.243-5-5 2.243-5 5-5zm7.5,171.5h319v22.5h-319v-22.5zm277,95.876l-94.571,60.417v-118.793h94.571v58.376zm0,17.801v52.823h-82.685l82.685-52.823zm-140.429-17.786l-94.571,60.418v-16.2l94.571-60.417v16.199zm0,17.8v52.809h-82.661l82.661-52.809zm0-51.8l-94.571,60.418v-84.809h94.571v24.391zm-120.571-24.391h11v136.5c0,4.142 3.357,7.5 7.5,7.5h109.571c4.143,0 7.5-3.358 7.5-7.5v-136.5h15.857v136.5c0,4.142 3.357,7.5 7.5,7.5h109.572c4.143,0 7.5-3.358 7.5-7.5v-136.5h11v157h-287v-157zm316,199h-345v-27h345v27z"/>
+      </svg>
 
 marked.js:
   variables:

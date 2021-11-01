@@ -34,6 +34,7 @@ tts:
 frontend:
   themes: !include_dir_merge_named themes
 
+browser_mod:
 sun:
 
 sonoff:
@@ -54,7 +55,7 @@ template:
 
 person:
   - name: Helena
-    id: helena
+    id: helena_user
     user_id: !secret user_id_helena
     device_trackers:
       - device_tracker.helena_gsm
@@ -71,6 +72,7 @@ input_select:
       - Upcoming media
       - Emby
       - Spotify
+      - Tv
 
 spotify:
   client_id: !secret spotify_client_id
@@ -80,6 +82,14 @@ media_player:
   - platform: emby
     host: 192.168.11.24
     api_key: 41d5616f29854f498805e4a8be27160b
+
+trakt_tv:
+  language: nl
+  sensors:
+    upcoming:
+      show:
+        days_to_fetch: 90
+        max_medias: 10
 
 lovelace:
   mode: yaml
@@ -105,4 +115,12 @@ lovelace:
     - url: /hacsfiles/kiosk-mode/kiosk-mode.js
       type: module
     - url: /hacsfiles/swipe-card/swipe-card.js
+      type: module
+    - url: /hacsfiles/bar-card/bar-card.js
+      type: module
+    - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
+      type: module
+    - url: /hacsfiles/light-entity-card/light-entity-card.js
+      type: module
+    - url: /hacsfiles/light-popup-card/light-popup-card.js
       type: module

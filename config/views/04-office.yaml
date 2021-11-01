@@ -27,6 +27,7 @@ cards:
   # Sonarr (upcoming media)
   - type: custom:upcoming-media-card
     entity: sensor.sonarr_upcoming_media
+    image_style: fanart
 
   # Heating
   - type: vertical-stack

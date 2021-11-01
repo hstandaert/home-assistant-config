@@ -1,0 +1,18 @@
+- platform: template
+  sensors:
+    nas_net_down:
+      value_template: " "
+      icon_template: mdi:arrow-down-bold
+      friendly_name_template: >
+        {% set down = states('sensor.svnas_network_down') | float(default=0) %}
+        {% if down < 1000 %} {{ down | round(0) }} kb/s
+        {% elif down >= 1000 %} {{ ((down / 1000) | round(2) | string).rstrip('.0') }} Mb/s
+        {% endif %}
+    nas_net_up:
+      value_template: " "
+      icon_template: mdi:arrow-up-bold
+      friendly_name_template: >
+        {% set up = states('sensor.svnas_network_up') | float(default=0) %}
+        {% if up < 1000 %} {{ up | round(0) }} kb/s
+        {% elif up >= 1000 %} {{ ((up / 1000) | round(2) | string).rstrip('.0') }} Mb/s
+        {% endif %}

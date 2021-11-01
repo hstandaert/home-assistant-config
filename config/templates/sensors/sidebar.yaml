@@ -35,4 +35,3 @@
       {%- else %} Goeieavond {{'\U0001F974'}}
       {%- endif -%}
       </b>
-    user: "{{ user }}"
