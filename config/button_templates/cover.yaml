@@ -1,0 +1,93 @@
+covers:
+  template:
+    - base
+    - icon_blinds
+  tap_action:
+    action: call-service
+    service: >
+      [[[
+        return variables.state === 'open' ? 'cover.close_cover' : 'cover.open_cover';
+      ]]]
+    service_data:
+      entity_id: >
+        [[[ return entity.entity_id; ]]]
+  hold_action:
+    action: fire-dom-event
+    browser_mod:
+      command: popup
+      title: >
+        [[[ return entity.attributes.friendly_name; ]]]
+      card:
+        type: entities
+        entities:
+          - type: conditional
+            conditions:
+              - entity: sun.sun
+                state: above_horizon
+            row:
+              type: attribute
+              entity: sun.sun
+              attribute: next_setting
+              format: relative
+              name: Next sunset
+
+          - type: conditional
+            conditions:
+              - entity: sun.sun
+                state: below_horizon
+            row:
+              type: attribute
+              entity: sun.sun
+              attribute: next_rising
+              format: relative
+              name: Next sunrise
+
+          - type: attribute
+            entity: >
+              [[[ return entity.entity_id ]]]
+            attribute: /
+            secondary_info: last-changed
+            name: Last changed
+
+          - type: custom:hui-horizontal-stack-card
+            style: >
+              #root {
+                justify-content: center;
+                margin-top: 2em;
+              }
+            cards:
+              - type: custom:button-card
+                entity: >
+                  [[[ return entity.entity_id ]]]
+                icon: mdi:arrow-up
+                tap_action:
+                  action: call-service
+                  service: cover.open_cover
+                  service_data:
+                    entity_id: >
+                      [[[ return entity.entity_id; ]]]
+                template: icon_only
+
+              - type: custom:button-card
+                entity: >
+                  [[[ return entity.entity_id ]]]
+                icon: mdi:stop
+                tap_action:
+                  action: call-service
+                  service: cover.stop_cover
+                  service_data:
+                    entity_id: >
+                      [[[ return entity.entity_id; ]]]
+                template: icon_only
+
+              - type: custom:button-card
+                entity: >
+                  [[[ return entity.entity_id ]]]
+                icon: mdi:arrow-down
+                tap_action:
+                  action: call-service
+                  service: cover.close_cover
+                  service_data:
+                    entity_id: >
+                      [[[ return entity.entity_id; ]]]
+                template: icon_only

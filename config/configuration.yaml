@@ -124,3 +124,5 @@ lovelace:
       type: module
     - url: /hacsfiles/light-popup-card/light-popup-card.js
       type: module
+    - url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js
+      type: module

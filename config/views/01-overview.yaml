@@ -54,16 +54,7 @@ cards:
     cards:
       - type: custom:button-card
         entity: sensor.template_sidebar
-        template: sidebar_template
-
-      - type: conditional
-        conditions:
-          - entity: switch.wasmachine
-            state: "on"
-        card:
-          type: custom:button-card
-          entity: sensor.washer_time_left
-          template: laundry
+        template: sidebar
 
       - type: grid
         columns: 5
@@ -126,6 +117,11 @@ cards:
           - covers
           - loader
 
+      - type: custom:button-card
+        entity: climate.woonkamer
+        template:
+          - heating
+
   #################################################
   #                                               #
   #                  EETKAMER                     #
@@ -166,6 +162,16 @@ cards:
         template:
           - base
           - icon_blanket
+
+      - type: custom:button-card
+        entity: climate.slaapkamer_lore
+        template:
+          - heating
+
+      - type: custom:button-card
+        entity: climate.slaapkamer_ouders
+        template:
+          - heating
 
   #################################################
   #                                               #

@@ -15,7 +15,7 @@ tablet:
   #edited
   ha-card-box-shadow: none
   ha-card-background: none
-  grid-card-gap: 5%
+  grid-card-gap: 15px
   masonry-view-card-margin: 0px
   state-icon-color: "#9da0a2"
   state-icon-active-color: "#3182b7"
