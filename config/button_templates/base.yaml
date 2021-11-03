@@ -102,8 +102,7 @@ base:
         }
 
         #name, #state {
-          font-size: 1.34vw;
-          letter-spacing: 0.05vw;
+          font-size: 1.1vw;
         }
         /* portrait */
         @media screen and (max-width: 1200px) {

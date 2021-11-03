@@ -10,7 +10,7 @@ layout:
   grid-template-areas: |
     "sidebar  .           .         .         ."
     "sidebar  woonkamer   eetkamer  upstairs  ."
-    "sidebar  media       house     other     ."
+    "sidebar  media       other     house     ."
     "sidebar  footer      footer    footer    ."
   mediaquery:
     #phone
@@ -21,10 +21,10 @@ layout:
       grid-template-areas: |
         ".  .           .         ."
         ".  sidebar     sidebar   ."
-        ".  woonkamer   upstairs  ."
-        ".  eetkamer    .         ."
+        ".  woonkamer   eetkamer  ."
+        ".  upstairs    .         ."
         ".  media       media     ."
-        ".  house       other     ."
+        ".  other       house     ."
         ".  footer      footer    ."
         ".  .           .         ."
     #portrait
@@ -36,7 +36,7 @@ layout:
         "sidebar  .           .         ."
         "sidebar  woonkamer   upstairs  ."
         "sidebar  eetkamer    media     ."
-        "sidebar  house       other     ."
+        "sidebar  other       house     ."
         "sidebar  footer      footer    ."
         "sidebar  .           .         ."
 cards:
@@ -175,6 +175,33 @@ cards:
 
   #################################################
   #                                               #
+  #                   OVERIGE                     #
+  #                                               #
+  #################################################
+
+  - type: grid
+    title: Overige
+    view_layout:
+      grid-area: other
+    columns: 2
+    cards:
+      - type: custom:button-card
+        entity: climate.kantoor
+        template:
+          - heating
+
+      - type: custom:button-card
+        entity: climate.veranda
+        template:
+          - heating
+
+      - type: custom:button-card
+        entity: climate.badkamer
+        template:
+          - heating
+
+  #################################################
+  #                                               #
   #                    HUIS                       #
   #                                               #
   #################################################
@@ -240,25 +267,13 @@ cards:
           coverflowEffect:
             rotate: 80
             depth: 300
+          autoplay:
+            delay: 20000
         cards:
           - type: conditional
             conditions:
-              - entity: input_select.conditional_media
-                state: Upcoming media
-            card:
-              type: custom:button-card
-              entity: sensor.trakt_upcoming_shows
-              tap_action:
-                action: none
-              template:
-                - conditional_media
-                - upcoming_media
-                - icon_sonarr
-
-          - type: conditional
-            conditions:
-              - entity: input_select.conditional_media
-                state: Tv
+              - entity: media_player.tv
+                state: playing
             card:
               type: custom:button-card
               entity: media_player.tv
@@ -268,8 +283,52 @@ cards:
 
           - type: conditional
             conditions:
-              - entity: input_select.conditional_media
-                state: Spotify
+              - entity: media_player.badkamer
+                state: playing
+            card:
+              type: custom:button-card
+              entity: media_player.badkamer
+              template:
+                - conditional_media
+                - icon_cast
+
+          - type: conditional
+            conditions:
+              - entity: media_player.hub
+                state: playing
+            card:
+              type: custom:button-card
+              entity: media_player.hub
+              template:
+                - conditional_media
+                - icon_cast
+
+          - type: conditional
+            conditions:
+              - entity: media_player.kantoor
+                state: playing
+            card:
+              type: custom:button-card
+              entity: media_player.kantoor
+              template:
+                - conditional_media
+                - icon_cast
+
+          - type: conditional
+            conditions:
+              - entity: media_player.living_speaker
+                state: playing
+            card:
+              type: custom:button-card
+              entity: media_player.living_speaker
+              template:
+                - conditional_media
+                - icon_cast
+
+          - type: conditional
+            conditions:
+              - entity: media_player.spotify
+                state: playing
             card:
               type: custom:button-card
               entity: media_player.spotify
@@ -279,11 +338,27 @@ cards:
 
           - type: conditional
             conditions:
-              - entity: input_select.conditional_media
-                state: Emby
+              - entity: media_player.emby_tv
+                state: playing
             card:
               type: custom:button-card
-              entity: media_player.emby_chrome_2
+              entity: media_player.emby_tv
               template:
                 - conditional_media
                 - icon_emby
+
+          - type: custom:upcoming-media-card
+            entity: sensor.trakt_upcoming_shows
+            image_style: fanart
+            date: ddmm
+            clock: 24
+            max: 4
+            hide_empty: true
+            title_text: $title
+            line1_text: $episode
+            line2_text: $number
+            line3_text: $day, $date $time
+            line4_text: $empty
+            accent_color: rgba(255, 255, 255, 0.3)
+            border_color: rgba(255, 255, 255, 0)
+            box_shadows: false

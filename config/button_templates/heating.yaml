@@ -65,8 +65,7 @@ heating:
         - width: >
             [[[ return variables.state === 'unavailable' ? '40%' : '70%' ]]]
         - fill: "#aa4500"
-
-  hold_action:
+  tap_action:
     action: fire-dom-event
     browser_mod:
       command: popup
@@ -120,11 +119,11 @@ heating:
 
           - entity: >
               [[[ return `binary_sensor.${variables.identifier}_open_window`; ]]]
-            name: Open raam
+            name: Raam
 
           - entity: >
               [[[ return `binary_sensor.${variables.identifier}_link`; ]]]
-            name: Verbonden
+            name: Connectiviteit
 
           - type: custom:bar-card
             width: 30%
@@ -187,3 +186,32 @@ heating:
                         [[[ return entity.entity_id; ]]]
                       hvac_mode: auto
                   template: icon_name
+
+        footer:
+          type: custom:mini-graph-card
+          entities:
+            - color: "#ffc500"
+              entity: >
+                [[[ return `sensor.${variables.identifier}_temperature`; ]]]
+          align_state: left
+          group: false
+          points_per_hour: 1
+          line_width: 3
+          hour24: true
+          show:
+            {
+              fill: fade,
+              icon: false,
+              name: false,
+              state: false,
+              name_adaptive_color: true,
+              points: false,
+              extrema: false,
+              legend: false,
+              average: false,
+            }
+          tap_action:
+            action: none
+
+  hold_action:
+    action: none
