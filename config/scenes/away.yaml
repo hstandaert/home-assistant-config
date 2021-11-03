@@ -6,6 +6,16 @@
       state: "off"
     light.luchter:
       state: "off"
+    media_player.badkamer:
+      state: "off"
+    media_player.living_speaker:
+      state: "off"
+    media_player.samsung_tv:
+      state: "off"
+    media_player.kantoor:
+      state: "off"
+    media_player.hub:
+      state: "off"
     group.thermostats:
       state: "auto"
       preset_mode: away

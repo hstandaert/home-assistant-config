@@ -82,6 +82,11 @@ trakt_tv:
         days_to_fetch: 1
         max_medias: 10
 
+input_boolean:
+  prevent_away:
+    name: Prevent the away scene from being triggered when empty house is detected
+    icon: mdi:home-account
+
 lovelace:
   mode: yaml
   resources:

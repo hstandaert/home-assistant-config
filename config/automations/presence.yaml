@@ -5,8 +5,67 @@
       entity_id: binary_sensor.anyone_home
       to: "off"
   action:
+    - service: browser_mod.popup
+      data:
+        title: Is iedereen vertrokken?
+        style:
+          hui-vertical-stack-card:
+            $: |
+              #root {
+                padding-bottom: 2em;
+              }
+
+            $hui-horizontal-stack-card$: |
+              #root {
+                justify-content: space-evenly;
+                margin-left: 0.8em;
+              }
+        card:
+          type: vertical-stack
+          cards:
+            - type: markdown
+              content: >
+                We hebben gedetecteerd dat er niemand meer in huis is. Indien je deze boodschap leest, is dit waarschijnlijk verkeerd.
+                Wil je het uitschakelen van alle apparaten annuleren?
+
+            - type: custom:hui-horizontal-stack-card
+              cards:
+                - type: custom:button-card
+                  size: 1.4em
+                  color: "#9da0a2"
+                  styles:
+                    grid:
+                      - grid-template-areas: '"i n"'
+                      - grid-column-gap: 0.3em
+                    name:
+                      - font-size: 1.06em
+                      - letter-spacing: 0.015em
+                    card:
+                      - color: "#9da0a2"
+                      - border-radius: 0.6em
+                      - padding: 1em 1.4em 1em 1.2em
+                      - width: max-content
+                      - font-size: 1.06em
+                      - font-weight: 500
+                      - letter-spacing: 0.015em
+                      - background: "#FFFFFF10"
+                  name: Graag, ik ben thuis
+                  icon: mdi:home-account
+                  tap_action:
+                    action: call-service
+                    service: script.prevent_away
+
+    - delay:
+        minutes: 1
+
+    - condition: state
+      entity_id: input_boolean.prevent_away
+      state: "off"
+
+    - service: browser_mod.blackout
+    - service: browser_mod.close_popup
     - scene: scene.away
-  mode: single
+
 - alias: Coming home
   description: ""
   trigger:
@@ -14,5 +73,9 @@
       entity_id: binary_sensor.anyone_home
       to: "on"
   action:
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.prevent_away
+
     - scene: scene.home
   mode: single
