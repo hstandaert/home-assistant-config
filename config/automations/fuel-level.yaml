@@ -1,0 +1,11 @@
+- alias: Fuel level
+  description: Warn when fuel level is below 25
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.touran_fuel_level
+      below: "25"
+  action:
+    - service: browser_mod.toast
+      data:
+        message: De Touran heeft een tankbeurt nodig
+        duration: 0
