@@ -1,0 +1,112 @@
+type: grid
+title: Media
+view_layout:
+  grid-area: media
+columns: 1
+cards:
+  - type: custom:swipe-card
+    start_card: 1
+    parameters:
+      roundLengths: true
+      effect: coverflow
+      speed: 650
+      spaceBetween: 20
+      threshold: 7
+      coverflowEffect:
+        rotate: 80
+        depth: 300
+      autoplay:
+        delay: 20000
+    cards:
+      - type: conditional
+        conditions:
+          - entity: media_player.tv
+            state: playing
+        card:
+          type: custom:button-card
+          entity: media_player.tv
+          template:
+            - conditional_media
+            - icon_cast
+
+      - type: conditional
+        conditions:
+          - entity: media_player.badkamer
+            state: playing
+        card:
+          type: custom:button-card
+          entity: media_player.badkamer
+          template:
+            - conditional_media
+            - icon_cast
+
+      - type: conditional
+        conditions:
+          - entity: media_player.hub
+            state: playing
+        card:
+          type: custom:button-card
+          entity: media_player.hub
+          template:
+            - conditional_media
+            - icon_cast
+
+      - type: conditional
+        conditions:
+          - entity: media_player.kantoor
+            state: playing
+        card:
+          type: custom:button-card
+          entity: media_player.kantoor
+          template:
+            - conditional_media
+            - icon_cast
+
+      - type: conditional
+        conditions:
+          - entity: media_player.living_speaker
+            state: playing
+        card:
+          type: custom:button-card
+          entity: media_player.living_speaker
+          template:
+            - conditional_media
+            - icon_cast
+
+      - type: conditional
+        conditions:
+          - entity: media_player.spotify
+            state: playing
+        card:
+          type: custom:button-card
+          entity: media_player.spotify
+          template:
+            - conditional_media
+            - icon_spotify
+
+      - type: conditional
+        conditions:
+          - entity: media_player.emby_tv
+            state: playing
+        card:
+          type: custom:button-card
+          entity: media_player.emby_tv
+          template:
+            - conditional_media
+            - icon_emby
+
+      - type: custom:upcoming-media-card
+        entity: sensor.trakt_upcoming_shows
+        image_style: fanart
+        date: ddmm
+        clock: 24
+        max: 4
+        hide_empty: true
+        title_text: $title
+        line1_text: $episode
+        line2_text: $number
+        line3_text: $day, $date $time
+        line4_text: $empty
+        accent_color: rgba(255, 255, 255, 0.3)
+        border_color: rgba(255, 255, 255, 0)
+        box_shadows: false

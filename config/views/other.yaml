@@ -1,0 +1,31 @@
+type: grid
+title: Overige
+view_layout:
+  grid-area: other
+columns: 2
+cards:
+  - type: custom:button-card
+    entity: climate.kantoor
+    template:
+      - heating
+
+  - type: custom:button-card
+    entity: sensor.hp_envy_5000_series
+    template:
+      - printer
+
+  - type: custom:button-card
+    entity: climate.veranda
+    template:
+      - heating
+
+  - type: custom:button-card
+    entity: climate.badkamer
+    template:
+      - heating
+
+  - type: custom:button-card
+    entity: sensor.touran_odometer
+    name: Car
+    template:
+      - car

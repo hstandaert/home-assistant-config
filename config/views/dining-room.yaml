@@ -1,0 +1,16 @@
+type: grid
+title: Eetkamer
+view_layout:
+  grid-area: eetkamer
+columns: 2
+cards:
+  - type: custom:button-card
+    entity: light.chandelier
+    template:
+      - light
+      - icon_hue
+  - type: custom:button-card
+    entity: switch.aquarium
+    template:
+      - base
+      - icon_aquarium

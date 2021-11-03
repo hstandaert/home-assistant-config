@@ -1,0 +1,42 @@
+type: grid
+title: Woonkamer
+view_layout:
+  grid-area: woonkamer
+columns: 2
+cards:
+  - type: custom:button-card
+    entity: light.luchter
+    template:
+      - light
+      - icon_hue
+  - type: custom:button-card
+    entity: light.reading_lamp
+    template:
+      - light
+      - icon_hue
+  - type: custom:button-card
+    entity: media_player.samsung_tv
+    name: Tv
+    state_display: >
+      [[[
+        if (variables.state == 'playing') {
+          return 'Aan';
+        }
+      ]]]
+    hold_action: !include ../popup/tv.yaml
+    template:
+      - base
+      - icon_tv
+      - loader
+
+  - type: custom:button-card
+    entity: cover.covers
+    name: Rolluiken
+    template:
+      - covers
+      - loader
+
+  - type: custom:button-card
+    entity: climate.woonkamer
+    template:
+      - heating

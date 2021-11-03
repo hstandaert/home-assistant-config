@@ -8,4 +8,45 @@ kiosk_mode:
     hide_menubutton: true
     hide_overflow: true
 button_card_templates: !include_dir_merge_named button_templates
-views: !include_dir_list views
+views:
+  - title: ""
+    path: dashboard
+    type: custom:grid-layout
+    layout:
+      #default
+      grid-gap: var(--custom-layout-card-padding)
+      grid-template-columns: repeat(4, 1fr) 0
+      grid-template-rows: 0 repeat(2, fit-content(100%)) 0fr
+      grid-template-areas: |
+        "sidebar  .           .         .         ."
+        "sidebar  woonkamer   eetkamer  upstairs  ."
+        "sidebar  media       other     house     ."
+        "sidebar  footer      footer    footer    ."
+      mediaquery:
+        #phone
+        "(max-width: 800px)":
+          grid-gap: calc(var(--custom-layout-card-padding) * 1.5)
+          grid-template-columns: 0 repeat(2, 1fr) 0
+          grid-template-rows: 0 repeat(5, fit-content(100%)) 0fr
+          grid-template-areas: |
+            ".  .           .         ."
+            ".  sidebar     sidebar   ."
+            ".  woonkamer   eetkamer  ."
+            ".  upstairs    .         ."
+            ".  media       media     ."
+            ".  other       house     ."
+            ".  footer      footer    ."
+            ".  .           .         ."
+        #portrait
+        "(max-width: 1200px)":
+          grid-gap: var(--custom-layout-card-padding)
+          grid-template-columns: repeat(3, 1fr) 0
+          grid-template-rows: 0 repeat(3, fit-content(100%)) 0fr
+          grid-template-areas: |
+            "sidebar  .           .         ."
+            "sidebar  woonkamer   upstairs  ."
+            "sidebar  eetkamer    media     ."
+            "sidebar  other       house     ."
+            "sidebar  footer      footer    ."
+            "sidebar  .           .         ."
+    cards: !include_dir_list views

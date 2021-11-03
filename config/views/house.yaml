@@ -1,0 +1,37 @@
+type: grid
+title: Huis
+view_layout:
+  grid-area: house
+columns: 2
+cards:
+  - type: custom:button-card
+    entity: person.helena_user
+    name: Helena
+    template: person
+    tap_action:
+      action: more-info
+
+  - type: custom:button-card
+    entity: person.nancy
+    name: Nancy
+    template: person
+    tap_action:
+      action: more-info
+
+  - type: custom:button-card
+    entity: scene.away
+    name: Weg
+    hold_action:
+      action: none
+    template:
+      - base
+      - icon_away
+
+  - type: custom:button-card
+    entity: scene.home
+    name: Thuis
+    hold_action:
+      action: none
+    template:
+      - base
+      - icon_home

@@ -1,0 +1,24 @@
+type: vertical-stack
+view_layout:
+  grid-area: sidebar
+cards:
+  - type: custom:button-card
+    entity: sensor.template_sidebar
+    template: sidebar
+
+  - type: grid
+    columns: 5
+    cards:
+      - type: button
+        icon: mdi:information-outline
+        tap_action: !include ../popup/sidebar-information.yaml
+        hold_action:
+          action: none
+
+      - type: button
+        icon: mdi:account
+        tap_action:
+          action: navigate
+          navigation_path: /profile
+        hold_action:
+          action: none
