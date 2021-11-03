@@ -1,0 +1,26 @@
+- alias: notify_and_remove_completed_torrent
+  mode: parallel
+  max: 25
+  initial_state: true
+  trigger:
+    - platform: event
+      event_type: transmission_downloaded_torrent
+  action:
+    - service: browser_mod.toast
+      data:
+        title: Torrent downloaded
+        duration: 60000
+        message: >
+          {{ trigger.event.data.name }}
+    - service: transmission.stop_torrent
+      data:
+        name: Transmission
+        id: >
+          {{ trigger.event.data.id }}
+    - delay:
+        minutes: 15
+    - service: transmission.remove_torrent
+      data:
+        name: Transmission
+        id: >
+          {{ trigger.event.data.id }}
