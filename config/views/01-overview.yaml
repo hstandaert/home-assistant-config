@@ -205,6 +205,12 @@ cards:
         template:
           - heating
 
+      - type: custom:button-card
+        entity: sensor.touran_odometer
+        name: Car
+        template:
+          - car
+
   #################################################
   #                                               #
   #                    HUIS                       #

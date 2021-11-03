@@ -1,0 +1,185 @@
+car:
+  template:
+    - base
+    - icon_car
+
+  variables:
+    identifier: >
+      [[[
+        return entity.entity_id.split('.').pop().split('_').shift()
+      ]]]
+    consider_on: >
+      [[[
+        const identifier = entity.entity_id.split('.').pop().split('_').shift()
+        return states[`lock.${identifier}_door_locked`].state == 'locked'
+      ]]]
+
+  tap_action:
+    #   action: none
+
+    # hold_action:
+    action: fire-dom-event
+    browser_mod:
+      command: popup
+      title: >
+        [[[ return entity.attributes.model; ]]]
+
+      style:
+        .: |
+          :host .content {
+            width: calc(385px + 385px);
+            max-width: 90vw;
+          }
+        layout-card:
+          $grid-layout$:
+            hui-entities-card:
+              $: |
+                .card-content {
+                  padding: 1.5em 2.7em 2.3em 2em;
+                }
+                ha-card {
+                  animation: border 1s forwards;
+                  border-radius: 0;
+                }
+                @keyframes border {
+                  0%, 100% {
+                    border-right: 1px solid rgba(0, 0, 0, 0.3);
+                  }
+                }
+                /* phone */
+                @media screen and (max-width: 800px) {
+                  ha-card {
+                    animation: none;
+                  }
+                }
+      card:
+        type: custom:layout-card
+        layout_type: custom:grid-layout
+        layout:
+          grid-template-columns: repeat(2, 1fr)
+          grid-template-rows: 1fr
+          grid-template-areas: |
+            "info map"
+          mediaquery:
+            #phone
+            "(max-width: 800px)":
+              grid-template-columns: 1fr
+              grid-template-rows: repeat(2, 1fr)
+              grid-template-areas: |
+                "info"
+                "map"
+        cards:
+          #################################################
+          #                                               #
+          #                     INFO                      #
+          #                                               #
+          #################################################
+
+          - type: entities
+            view_layout:
+              grid-area: info
+            show_header_toggle: false
+            card_mod:
+              class: header
+              style: |
+                ha-card {
+                  margin: 0px !important;
+                }
+            entities:
+              - entity: >
+                  [[[ return `sensor.${variables.identifier}_last_connected`; ]]]
+                format: relative
+                name: Laatst verbonden
+
+              - entity: >
+                  [[[ return entity.entity_id; ]]]
+                name: Kilometerstand
+
+              - entity: >
+                  [[[ return `binary_sensor.${variables.identifier}_parking_light`; ]]]
+                name: Parkeerlicht
+
+              - type: divider
+
+              - type: custom:bar-card
+                width: 30%
+                height: 2em
+                decimal: 0
+                unit_of_measurement: "%"
+                positions:
+                  icon: outside
+                  indicator: "off"
+                  name: outside
+                severity:
+                  - color: "#6d2525"
+                    from: 0
+                    to: 89
+                  - color: "#303435"
+                    from: 90
+                    to: 200
+                entity_row: true
+                entities:
+                  - entity: >
+                      [[[ return `sensor.${variables.identifier}_fuel_level`; ]]]
+                    name: Brandstof
+                    tap_action:
+                      action: call-service
+                      service: homeassistant.update_entity
+                      service_data:
+                        entity_id: >
+                          [[[ return `sensor.${variables.identifier}_black_ink`; ]]]
+
+              - entity: >
+                  [[[ return `sensor.${variables.identifier}_combustion_range`; ]]]
+                name: Bereik
+
+              - entity: >
+                  [[[ return `sensor.${variables.identifier}_adblue_level`; ]]]
+                name: Bereik Adblue
+
+              - type: divider
+
+              - entity: >
+                  [[[ return `binary_sensor.${variables.identifier}_hood_closed`; ]]]
+                name: Motorkap
+
+              - entity: >
+                  [[[ return `binary_sensor.${variables.identifier}_trunk_closed`; ]]]
+                name: Koffer
+
+              - entity: >
+                  [[[ return `binary_sensor.${variables.identifier}_windows_closed`; ]]]
+                name: Ramen
+
+              - type: divider
+
+              - entity: >
+                  [[[ return `sensor.${variables.identifier}_oil_inspection_days`; ]]]
+                name: Olie inspectie (dagen)
+
+              - entity: >
+                  [[[ return `sensor.${variables.identifier}_oil_inspection_distance`; ]]]
+                name: Olie inspectie (afstand)
+
+              - entity: >
+                  [[[ return `sensor.${variables.identifier}_service_inspection_days`; ]]]
+                name: Onderhoud (dagen)
+
+              - entity: >
+                  [[[ return `sensor.${variables.identifier}_service_inspection_distance`; ]]]
+                name: Onderhoud (afstand)
+
+          #################################################
+          #                                               #
+          #                      MAP                      #
+          #                                               #
+          #################################################
+          - type: grid
+            view_layout:
+              grid-area: map
+            columns: 1
+            # title: Map
+            cards:
+              - type: map
+                entities:
+                  - device_tracker.touran_position
