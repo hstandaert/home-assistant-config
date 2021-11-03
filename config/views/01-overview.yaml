@@ -191,6 +191,11 @@ cards:
           - heating
 
       - type: custom:button-card
+        entity: sensor.hp_envy_5000_series
+        template:
+          - printer
+
+      - type: custom:button-card
         entity: climate.veranda
         template:
           - heating

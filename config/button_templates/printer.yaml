@@ -1,0 +1,68 @@
+printer:
+  template:
+    - base
+    - icon_printer
+  variables:
+    consider_on: >
+      [[[
+        const state = entity === undefined || entity.state;
+        return state != 'idle' && state != 'off' && state != 'unavailable'
+      ]]]
+    identifier: >
+      [[[
+        return entity.entity_id.split('.').pop()
+      ]]]
+  tap_action:
+    action: fire-dom-event
+    browser_mod:
+      command: popup
+      title: >
+        [[[ return entity.attributes.friendly_name; ]]]
+      card:
+        type: entities
+        entities:
+          - entity: >
+              [[[ return entity.entity_id; ]]]
+            name: Status
+
+          - entity: >
+              [[[ return `sensor.${variables.identifier}_uptime`; ]]]
+            name: Tijd online
+
+          - type: custom:bar-card
+            width: 30%
+            height: 2em
+            decimal: 0
+            unit_of_measurement: "%"
+            positions:
+              icon: outside
+              indicator: "off"
+              name: outside
+            severity:
+              - color: "#6d2525"
+                from: 0
+                to: 89
+              - color: "#303435"
+                from: 90
+                to: 200
+            entity_row: true
+            entities:
+              - entity: >
+                  [[[ return `sensor.${variables.identifier}_black_ink`; ]]]
+                name: Zwarte inkt
+                tap_action:
+                  action: call-service
+                  service: homeassistant.update_entity
+                  service_data:
+                    entity_id: >
+                      [[[ return `sensor.${variables.identifier}_black_ink`; ]]]
+
+              - entity: >
+                  [[[ return `sensor.${variables.identifier}_tri_color_ink`; ]]]
+                name: Kleuren inkt
+                tap_action:
+                  action: call-service
+                  service: homeassistant.update_entity
+                  service_data:
+                    entity_id: >
+                      [[[ return `sensor.${variables.identifier}_tri_color_ink`; ]]]
