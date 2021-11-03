@@ -4,9 +4,7 @@ swipe_nav:
   animate: swipe
 kiosk_mode:
   non_admin_settings:
-    hide_sidebar: true
-    hide_menubutton: true
-    hide_overflow: true
+    kiosk: true
 button_card_templates: !include_dir_merge_named button_templates
 views:
   - title: ""
@@ -19,7 +17,7 @@ views:
       grid-template-rows: 0 repeat(2, fit-content(100%)) 0fr
       grid-template-areas: |
         "sidebar  .           .         .         ."
-        "sidebar  woonkamer   eetkamer  upstairs  ."
+        "sidebar  living-room living-room  upstairs  ."
         "sidebar  media       other     house     ."
         "sidebar  footer      footer    footer    ."
       mediaquery:
@@ -31,7 +29,7 @@ views:
           grid-template-areas: |
             ".  .           .         ."
             ".  sidebar     sidebar   ."
-            ".  woonkamer   eetkamer  ."
+            ".  living-room   living-room  ."
             ".  upstairs    .         ."
             ".  media       media     ."
             ".  other       house     ."
@@ -44,8 +42,8 @@ views:
           grid-template-rows: 0 repeat(3, fit-content(100%)) 0fr
           grid-template-areas: |
             "sidebar  .           .         ."
-            "sidebar  woonkamer   upstairs  ."
-            "sidebar  eetkamer    media     ."
+            "sidebar  living-room   living-room  ."
+            "sidebar  upstairs    media     ."
             "sidebar  other       house     ."
             "sidebar  footer      footer    ."
             "sidebar  .           .         ."

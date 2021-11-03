@@ -19,8 +19,12 @@ cards:
       action: more-info
 
   - type: custom:button-card
-    entity: scene.away
     name: Weg
+    tap_action:
+      action: call-service
+      service: scene.turn_on
+      service_data:
+        entity_id: scene.away
     hold_action:
       action: none
     template:
@@ -28,8 +32,12 @@ cards:
       - icon_away
 
   - type: custom:button-card
-    entity: scene.home
     name: Thuis
+    tap_action:
+      action: call-service
+      service: scene.turn_on
+      service_data:
+        entity_id: scene.home
     hold_action:
       action: none
     template:

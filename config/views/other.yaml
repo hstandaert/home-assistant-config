@@ -20,11 +20,6 @@ cards:
       - heating
 
   - type: custom:button-card
-    entity: climate.badkamer
-    template:
-      - heating
-
-  - type: custom:button-card
     entity: sensor.touran_odometer
     name: Car
     template:
