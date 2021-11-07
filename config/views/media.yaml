@@ -98,7 +98,7 @@ cards:
         image_style: fanart
         date: ddmm
         clock: 24
-        max: 4
+        max: 3
         hide_empty: true
         title_text: $title
         line1_text: $episode

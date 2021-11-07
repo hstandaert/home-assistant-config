@@ -1,5 +1,5 @@
 - platform: group
-  name: Chandelier
+  name: Eettafel
   entities:
     - light.bfd24fe498d97b1238osom
     - light.bfc2fc0c0020e70856mh0j

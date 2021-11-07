@@ -1,8 +1,8 @@
 - name: Away
   entities:
-    light.chandelier:
+    light.eettafel:
       state: "off"
-    light.reading_lamp:
+    light.leeslamp:
       state: "off"
     light.luchter:
       state: "off"

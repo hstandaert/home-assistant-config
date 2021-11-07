@@ -1,6 +1,6 @@
 - name: Home
   entities:
-    light.chandelier:
+    light.eettafel:
       state: "on"
     group.thermostats:
       state: "auto"

@@ -1,5 +1,5 @@
 - platform: group
-  name: Reading lamp
+  name: Leeslamp
   entities:
     - light.boven
     - light.midden

@@ -1,12 +1,12 @@
-- alias: Chandelier brightness
+- alias: eettafel brightness
   trigger:
     platform: state
-    entity_id: light.chandelier
+    entity_id: light.eettafel
     from: "off"
     to: "on"
   action:
     service: light.turn_on
-    entity_id: light.chandelier
+    entity_id: light.eettafel
     data_template:
       brightness: >
         {% if now().hour > 20 %}50

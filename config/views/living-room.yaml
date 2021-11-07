@@ -9,11 +9,13 @@ cards:
     template:
       - light
       - icon_hue
+
   - type: custom:button-card
-    entity: light.reading_lamp
+    entity: light.leeslamp
     template:
       - light
       - icon_hue
+
   - type: custom:button-card
     entity: media_player.samsung_tv
     name: Tv
@@ -42,7 +44,7 @@ cards:
       - heating
 
   - type: custom:button-card
-    entity: light.chandelier
+    entity: light.eettafel
     template:
       - light
       - icon_hue

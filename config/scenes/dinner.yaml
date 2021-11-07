@@ -1,6 +1,6 @@
 - name: Dinner
   entities:
-    light.reading_lamp:
+    light.leeslamp:
       state: "off"
     light.bfd24fe498d97b1238osom:
       brightness: 153

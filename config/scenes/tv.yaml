@@ -1,10 +1,10 @@
 - name: Watching TV
   entities:
-    light.reading_lamp:
+    light.leeslamp:
       state: "on"
       brightness: 1
       color_temp: 450
-    light.chandelier:
+    light.eettafel:
       state: "off"
     light.luchter:
       state: "off"
