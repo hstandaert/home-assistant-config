@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+scp -r ha-deploy_nas:/volume1/@appdata/homeassistant/config .
