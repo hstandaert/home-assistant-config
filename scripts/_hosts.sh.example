@@ -20,5 +20,3 @@ declare -a default=(
 	root@127.0.0.0
 	/path/to/project/root/on/server
 	https://yourprojecturl.com
-	long_lived_access_token
-)
