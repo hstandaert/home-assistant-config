@@ -4,7 +4,7 @@ services:
     container_name: home-assistant
     ports:
       - 8123:8123
-    image: homeassistant/home-assistant:2021.8.8
+    image: homeassistant/home-assistant:2021.9.7
     volumes:
       - ./config:/config
       - /etc/localtime:/etc/localtime:ro
