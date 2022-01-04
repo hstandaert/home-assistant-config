@@ -1,5 +1,5 @@
-- alias: Set HA theme
-  id: set_theme
+- alias: Set HA theme for day and night
+  id: set_theme_for_day_and_night
   trigger:
     - platform: homeassistant
       event: start

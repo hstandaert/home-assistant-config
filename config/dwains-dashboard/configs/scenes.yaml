@@ -1,0 +1,10 @@
+scenes:
+  entities:
+    - entity: scene.home
+      icon: mdi:home-lock-open
+    - entity: scene.away
+      icon: mdi:home-lock
+    - entity: scene.dinner
+      icon: mdi:food-turkey
+    - entity: scene.watching_tv
+      icon: mdi:television

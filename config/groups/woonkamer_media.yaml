@@ -1,0 +1,6 @@
+woonkamer_media:
+  name: Woonkamer Media
+  entities:
+    - media_player.tv
+    - media_player.hub
+    - media_player.living_speaker

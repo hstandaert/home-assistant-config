@@ -1,0 +1,43 @@
+# https://dwainscheeren.github.io/dwains-lovelace-dashboard/configuration/rooms.html
+
+rooms:
+  - name: Woonkamer
+    icon: mdi:sofa
+    light: group.woonkamer_lights
+    temperature: sensor.woonkamer_temperature
+    climate: climate.woonkamer
+    media_player: group.woonkamer_media
+    cover: cover.covers
+
+  - name: Eetkamer
+    icon: mdi:table-chair
+    light: light.eettafel
+    device: switch.aquarium
+
+  - name: Badkamer
+    icon: mdi:shower
+    temperature: sensor.badkamer_temperature
+    climate: climate.badkamer
+    media_player: media_player.badkamer
+
+  - name: Kantoor
+    icon: mdi:desk
+    temperature: sensor.kantoor_temperature
+    climate: climate.kantoor
+    media_player: media_player.kantoor
+
+  - name: Veranda
+    icon: mdi:window-closed-variant
+    temperature: sensor.veranda_temperature
+    climate: climate.veranda
+
+  - name: Slaapkamer Kids
+    icon: mdi:bunk-bed
+    temperature: sensor.slaapkamer_lore_temperature
+    climate: climate.slaapkamer_lore
+
+  - name: Slaapkamer Ouders
+    icon: mdi:bed-king
+    temperature: sensor.slaapkamer_ouders_temperature
+    climate: climate.slaapkamer_ouders
+    device: switch.blanket
