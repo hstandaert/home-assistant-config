@@ -24,7 +24,7 @@
     - device_id: gezin
       ignore_availability: true
       name: Gezin
-      track: false
+      track: true
 
 - cal_id: helena.standaert@gmail.com
   entities:
