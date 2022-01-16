@@ -7,7 +7,7 @@ entity_registry.yaml
 known_devices.yaml
 custom_components
 tts
-home-assistant.log
+home-assistant.log*
 home-assistant_v2.db*
 .sonoff.json
 

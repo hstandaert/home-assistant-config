@@ -7,7 +7,7 @@ rooms:
     temperature: sensor.woonkamer_temperature
     climate: climate.woonkamer
     media_player: group.woonkamer_media
-    cover: cover.covers
+    cover: cover.living_room
 
   - name: Eetkamer
     icon: mdi:table-chair

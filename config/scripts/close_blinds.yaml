@@ -15,7 +15,7 @@ close_blinds:
         seconds: 40
     - service: cover.set_cover_position
       target:
-        entity_id: cover.covers
+        entity_id: cover.living_room
       data:
         position: 0
     - service: script.pause_blinds

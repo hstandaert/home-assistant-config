@@ -32,7 +32,7 @@ cards:
       - loader
 
   - type: custom:button-card
-    entity: cover.covers
+    entity: cover.living_room
     name: Rolluiken
     template:
       - covers

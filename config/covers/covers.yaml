@@ -1,8 +1,8 @@
 - platform: template
   covers:
-    covers:
+    living_room:
       device_class: blind
-      icon_template: "{{ 'mdi:window-shutter-open' if is_state('cover.covers', 'open') else 'mdi:window-shutter' }}"
+      icon_template: "{{ 'mdi:window-shutter-open' if is_state('cover.living_room', 'open') else 'mdi:window-shutter' }}"
       friendly_name: "Blinds"
       open_cover:
         service: script.open_blinds
