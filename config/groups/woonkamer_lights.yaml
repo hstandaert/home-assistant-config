@@ -3,3 +3,4 @@ woonkamer_lights:
   entities:
     - light.leeslamp
     - light.luchter
+    - light.led
