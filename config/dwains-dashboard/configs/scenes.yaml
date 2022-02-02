@@ -8,3 +8,5 @@ scenes:
       icon: mdi:food-turkey
     - entity: scene.watching_tv
       icon: mdi:television
+    - entity: scene.goodnight
+      icon: mdi:weather-night

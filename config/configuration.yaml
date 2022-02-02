@@ -60,7 +60,7 @@ template:
 camera:
   - platform: mjpeg
     name: Tablet
-    mjpeg_url: http://192.168.11.25:2971/camera/stream
+    mjpeg_url: http://192.168.68.110:2971/camera/stream
 
 person:
   - name: Helena

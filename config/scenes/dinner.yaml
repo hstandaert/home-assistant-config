@@ -2,23 +2,7 @@
   entities:
     light.leeslamp:
       state: "off"
-    light.bfd24fe498d97b1238osom:
-      brightness: 153
-      color_temp: 200
-      state: "on"
-    light.bfc2fc0c0020e70856mh0j:
-      brightness: 153
-      color_temp: 200
-      state: "on"
-    light.bf6368fe8b1c317f19p22q:
-      brightness: 153
-      color_temp: 200
-      state: "on"
-    light.bffe8abc554ad079eedd5b:
-      brightness: 153
-      color_temp: 200
-      state: "on"
-    light.bfad999c50c8189a1bbv1u:
+    light.eettafel:
       brightness: 153
       color_temp: 200
       state: "on"

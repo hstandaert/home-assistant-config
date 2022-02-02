@@ -1,0 +1,7 @@
+- name: Goodnight
+  entities:
+    group.woonkamer_lights:
+      state: "off"
+    light.eettafel:
+      state: "off"
+  icon: mdi:weather-night
