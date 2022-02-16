@@ -8,9 +8,8 @@ on:
       - feature/github-actions
 
 env:
-  artifact-name: dev-build
-  package-name: com.wgkwondzorg.dev
   working-directory: config
+  remote-path: /var/services/homes/ha-deploy/test
 
 jobs:
   deploy:
@@ -38,6 +37,10 @@ jobs:
         with:
           path: ${{ env.FILENAME }}
 
-      - name: Check ssh connection
+      - name: Copy files to server
         run: |
-          ssh -q -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }}
+          tar zcvf - ${{ env.FILENAME }}/${{ env.working-directory }} | ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }} "
+            cat > ${{ env.remote-path }}/build.tar.gz
+            tar -xzf ${{ env.remote-path }}/build.tar.gz -C ${{ env.remote-path }}
+            rm ${{ env.remote-path }}/build.tar.gz
+          "
