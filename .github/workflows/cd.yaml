@@ -1,0 +1,43 @@
+name: Continuous Delivery
+
+on:
+  push:
+    branches:
+      # TO DO: replace branch before merging to main
+      # - main
+      - feature/github-actions
+
+env:
+  artifact-name: dev-build
+  package-name: com.wgkwondzorg.dev
+  working-directory: config
+
+jobs:
+  deploy:
+    name: Deploy code to server
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up environment variables
+        run: |
+          echo "FILENAME=build.$(date +'%Y%m%d-%H%M%S')-${{github.sha}}" >> $GITHUB_ENV
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PRIVATE_DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 700 ~/.ssh/id_rsa
+          cat > ~/.ssh/config <<'EOF'
+          Host *
+              StrictHostKeyChecking no
+              UserKnownHostsFile=/dev/null
+          EOF
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: ${{ env.FILENAME }}
+
+      - name: Check ssh connection
+        run: |
+          ssh -q -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }}
