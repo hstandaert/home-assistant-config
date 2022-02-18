@@ -72,7 +72,7 @@ person:
     id: nancy
     user_id: !secret user_id_nancy
     device_trackers:
-      - device_tracker.redmi_note_8_pro
+      - device_tracker.nokia_x20
 
 spotify:
   client_id: !secret spotify_client_id
