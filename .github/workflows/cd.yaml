@@ -3,9 +3,7 @@ name: Continuous Delivery
 on:
   push:
     branches:
-      # TO DO: replace branch before merging to main
-      # - main
-      - feature/github-actions
+      - main
 
 env:
   working-directory: config
