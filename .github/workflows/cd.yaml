@@ -9,7 +9,7 @@ on:
 
 env:
   working-directory: config
-  remote-path: /var/services/homes/ha-deploy/test
+  remote-path: /var/services/homes/ha-deploy/builds
 
 jobs:
   deploy:
@@ -40,7 +40,11 @@ jobs:
       - name: Copy files to server
         run: |
           tar zcvf - ${{ env.FILENAME }}/${{ env.working-directory }} | ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }} "
+            sudo chmod -R 777 ${{ env.remote-path }}
             cat > ${{ env.remote-path }}/build.tar.gz
             tar -xzf ${{ env.remote-path }}/build.tar.gz -C ${{ env.remote-path }}
             rm ${{ env.remote-path }}/build.tar.gz
+            cp -r ${{ env.FILENAME }}/config /volume1/homeassistant
+            sudo chown -R sc-homeassistant:sc-homeassistant ${{ env.remote-path }}/*
+            sudo systemctl restart pkgctl-homeassistant.service
           "
