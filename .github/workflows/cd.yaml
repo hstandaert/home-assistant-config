@@ -1,0 +1,48 @@
+name: Continuous Delivery
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  working-directory: config
+  remote-path: /var/services/homes/ha-deploy/builds
+
+jobs:
+  deploy:
+    name: Deploy code to server
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up environment variables
+        run: |
+          echo "FILENAME=build.$(date +'%Y%m%d-%H%M%S')-${{github.sha}}" >> $GITHUB_ENV
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PRIVATE_DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 700 ~/.ssh/id_rsa
+          cat > ~/.ssh/config <<'EOF'
+          Host *
+              StrictHostKeyChecking no
+              UserKnownHostsFile=/dev/null
+          EOF
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: ${{ env.FILENAME }}
+
+      - name: Copy files to server
+        run: |
+          tar zcvf - ${{ env.FILENAME }}/${{ env.working-directory }} | ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }} "
+            sudo chmod -R 777 ${{ env.remote-path }}
+            cat > ${{ env.remote-path }}/build.tar.gz
+            tar -xzf ${{ env.remote-path }}/build.tar.gz -C ${{ env.remote-path }}
+            rm ${{ env.remote-path }}/build.tar.gz
+            cp -r ${{ env.FILENAME }}/config /volume1/homeassistant
+            sudo chown -R sc-homeassistant:sc-homeassistant ${{ env.remote-path }}/*
+            sudo systemctl restart pkgctl-homeassistant.service
+          "
