@@ -15,4 +15,4 @@ cards:
         template: chip_presence_detection
         variables:
           ulm_chip_presence_counter_residents: sensor.people_home
-          ulm_chip_presence_counter_guests: input_number.guests_home
+          ulm_chip_presence_counter_guests: sensor.guests_home
