@@ -45,6 +45,7 @@ jobs:
           host: ${{ secrets.SSH_DOMAIN }}
           user: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.PRIVATE_DEPLOY_KEY }}
 
       - name: Copy files to server
         run: |
@@ -63,6 +64,7 @@ jobs:
           host: ${{ secrets.SSH_DOMAIN }}
           user: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.PRIVATE_DEPLOY_KEY }}
 
       - name: Restart Home Assistant server
         uses: fifsky/ssh-action@master
@@ -72,3 +74,4 @@ jobs:
           host: ${{ secrets.SSH_DOMAIN }}
           user: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.PRIVATE_DEPLOY_KEY }}
