@@ -59,7 +59,7 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            rsync -avhW --no-compress --progress ${{ env.builds-directory }}/${{ env.FILENAME }}/config ${{ env.remote-path }}
+            rsync -avrzuhW --no-compress --progress ${{ env.builds-directory }}/${{ env.FILENAME }}/config ${{ env.remote-path }}
             sudo chown -R sc-homeassistant:sc-homeassistant ${{ env.remote-path }}/*
           host: ${{ secrets.SSH_DOMAIN }}
           user: ${{ secrets.SSH_USER }}
