@@ -101,6 +101,7 @@ input_number:
   guests_home:
     name: Number of guests at home"
     min: 0
+    max: 99
 
 lovelace:
   mode: yaml
