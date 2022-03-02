@@ -7,7 +7,8 @@ on:
 
 env:
   working-directory: config
-  remote-path: /var/services/homes/ha-deploy/builds
+  builds-directory: /var/services/homes/${{ secrets.SSH_USER }}/builds
+  remote-path: /volume1/homeassistant
 
 jobs:
   deploy:
@@ -19,7 +20,12 @@ jobs:
         run: |
           echo "FILENAME=build.$(date +'%Y%m%d-%H%M%S')-${{github.sha}}" >> $GITHUB_ENV
 
-      - name: Set up SSH
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: ${{ env.FILENAME }}
+
+      - name: Set up private deploy key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.PRIVATE_DEPLOY_KEY }}" > ~/.ssh/id_rsa
@@ -30,20 +36,39 @@ jobs:
               UserKnownHostsFile=/dev/null
           EOF
 
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Change permissions on remote server
+        uses: fifsky/ssh-action@master
         with:
-          path: ${{ env.FILENAME }}
+          command: |
+            sudo mount --bind /volume1/@appdata/homeassistant ${{ env.remote-path }}
+            sudo chmod -R 777 ${{ env.remote-path }}
+          host: ${{ secrets.SSH_DOMAIN }}
+          user: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
 
       - name: Copy files to server
         run: |
           tar zcvf - ${{ env.FILENAME }}/${{ env.working-directory }} | ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }} "
-            sudo chmod -R 777 ${{ env.remote-path }}
-            sudo mount --bind /volume1/@appdata/homeassistant /volume1/homeassistant
-            cat > ${{ env.remote-path }}/build.tar.gz
-            tar -xzf ${{ env.remote-path }}/build.tar.gz -C ${{ env.remote-path }}
-            rm ${{ env.remote-path }}/build.tar.gz
-            rsync -avhW --no-compress --progress ${{ env.FILENAME }}/config /volume1/homeassistant
-            sudo chown -R sc-homeassistant:sc-homeassistant /volume1/homeassistant/*
-            sudo systemctl restart pkgctl-homeassistant.service
+            cat > ${{ env.builds-directory }}/build.tar.gz
+            tar -xzf ${{ env.builds-directory }}/build.tar.gz -C ${{ env.builds-directory }}
+            rm ${{ env.builds-directory }}/build.tar.gz
           "
+
+      - name: Move files to appdata
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            rsync -avhW --no-compress --progress ${{ env.builds-directory }}/${{ env.FILENAME }}/config ${{ env.remote-path }}
+            sudo chown -R sc-homeassistant:sc-homeassistant ${{ env.remote-path }}/*
+          host: ${{ secrets.SSH_DOMAIN }}
+          user: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+
+      - name: Restart Home Assistant server
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            sudo systemctl restart pkgctl-homeassistant.service
+          host: ${{ secrets.SSH_DOMAIN }}
+          user: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
