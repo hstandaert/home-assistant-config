@@ -1,7 +1,6 @@
 title: ""
 icon: mdi:house
 path: overview
-type: masonry
 cards:
   - type: markdown
     title: Lovelace
