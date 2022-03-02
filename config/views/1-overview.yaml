@@ -1,9 +1,18 @@
 title: ""
 path: Overview
 icon: mdi:home-analytics
-type: masonry
 cards:
-  - type: markdown
-    title: Lovelace
-    content: >
-      Welcome to your **Lovelace UI**.
+  type: horizontal-stack
+  cards:
+    - type: "custom:button-card"
+      template: chip_temperature
+      variables:
+        ulm_chip_temperature_inside: sensor.woonkamer_temperature
+        ulm_chip_temperature_outside: sensor.openweathermap_temperature
+        ulm_chip_temperature_weather: weather.openweathermap
+
+    - type: "custom:button-card"
+      template: chip_presence_detection
+      variables:
+        ulm_chip_presence_counter_residents: sensor.people_home
+        ulm_chip_presence_counter_guests: input_number.guests_home

@@ -97,6 +97,11 @@ input_boolean:
     name: Prevent the away scene from being triggered when empty house is detected
     icon: mdi:home-account
 
+input_number:
+  guests_home:
+    name: Number of guests at home"
+    min: 0
+
 lovelace:
   mode: yaml
   resources:
