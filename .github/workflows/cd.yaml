@@ -39,10 +39,11 @@ jobs:
         run: |
           tar zcvf - ${{ env.FILENAME }}/${{ env.working-directory }} | ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }} "
             sudo chmod -R 777 ${{ env.remote-path }}
+            sudo mount --bind /volume1/@appdata/homeassistant /volume1/homeassistant
             cat > ${{ env.remote-path }}/build.tar.gz
             tar -xzf ${{ env.remote-path }}/build.tar.gz -C ${{ env.remote-path }}
             rm ${{ env.remote-path }}/build.tar.gz
-            cp -r ${{ env.FILENAME }}/config /volume1/homeassistant
-            sudo chown -R sc-homeassistant:sc-homeassistant ${{ env.remote-path }}/*
+            rsync -avhW --no-compress --progress ${{ env.FILENAME }}/config /volume1/homeassistant
+            sudo chown -R sc-homeassistant:sc-homeassistant /volume1/homeassistant/*
             sudo systemctl restart pkgctl-homeassistant.service
           "
