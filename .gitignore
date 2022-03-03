@@ -1,6 +1,7 @@
 # Ignore folders.
 .storage
 .cloud
+custom_components
 .google.token
 secrets.yaml
 entity_registry.yaml
