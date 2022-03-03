@@ -94,7 +94,7 @@ trakt_tv:
 
 input_boolean:
   guest_mode:
-    name: Indicates whether we have guests in the house
+    name: Guest mode
     icon: mdi:account
   prevent_away:
     name: Prevent the away scene from being triggered when empty house is detected

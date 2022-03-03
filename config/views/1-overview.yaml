@@ -24,10 +24,11 @@ cards:
           ulm_chip_temperature_weather: weather.openweathermap
 
       - type: "custom:button-card"
-        template: chip_icon_state
+        template: chip_icon_double_state
         variables:
-          ulm_chip_icon_state_icon: "🏠"
-          ulm_chip_icon_state_entity: sensor.people_home
+          ulm_chip_icon_double_state_icon: "🏠"
+          ulm_chip_icon_double_state_entity_1: sensor.people_home
+          ulm_chip_icon_double_state_entity_2: sensor.guest_mode
           ulm_chip_navigate_path: /lovelace/presence
 
   - type: vertical-stack

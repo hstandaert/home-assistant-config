@@ -1,6 +1,6 @@
 title: ""
 path: presence
-icon: mdi:account
+visible: false
 cards:
   - type: vertical-stack
     cards:
