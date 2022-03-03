@@ -93,15 +93,19 @@ trakt_tv:
         max_medias: 10
 
 input_boolean:
+  guest_mode:
+    name: Indicates whether we have guests in the house
+    icon: mdi:account
   prevent_away:
     name: Prevent the away scene from being triggered when empty house is detected
     icon: mdi:home-account
 
-input_number:
-  guests_home:
-    name: Number of guests at home"
-    min: 0
-    max: 99
+input_select:
+  active_scene:
+    options:
+      - Watching TV
+      - Dinner
+      - Goodnight
 
 lovelace:
   mode: yaml

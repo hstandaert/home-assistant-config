@@ -1,0 +1,30 @@
+title: ""
+path: presence
+icon: mdi:account
+cards:
+  - type: vertical-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_title
+        name: Personen
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_person
+            variables:
+              ulm_card_person_entity: person.helena_user
+              ulm_card_person_use_entity_picture: true
+
+          - type: "custom:button-card"
+            template: card_person
+            variables:
+              ulm_card_person_entity: person.nancy
+              ulm_card_person_use_entity_picture: true
+
+          - type: "custom:button-card"
+            template: card_input_boolean
+            entity: input_boolean.guest_mode
+            name: Gasten aanwezig

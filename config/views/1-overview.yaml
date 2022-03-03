@@ -1,9 +1,21 @@
 title: ""
 path: Overview
 icon: mdi:home-analytics
+type: custom:grid-layout
+layout:
+  grid-template-columns: 1fr 1fr
+  grid-template-rows: auto
+  grid-template-areas: |
+    "header header"
+    "scenes devices"
 cards:
   - type: horizontal-stack
+    view_layout:
+      grid-area: header
     cards:
+      - type: "custom:button-card"
+        template: edge
+
       - type: "custom:button-card"
         template: chip_temperature
         variables:
@@ -12,7 +24,95 @@ cards:
           ulm_chip_temperature_weather: weather.openweathermap
 
       - type: "custom:button-card"
-        template: chip_presence_detection
+        template: chip_icon_state
         variables:
-          ulm_chip_presence_counter_residents: sensor.people_home
-          ulm_chip_presence_counter_guests: sensor.guests_home
+          ulm_chip_icon_state_icon: "🏠"
+          ulm_chip_icon_state_entity: sensor.people_home
+          ulm_chip_navigate_path: /lovelace/presence
+
+  - type: vertical-stack
+    view_layout:
+      grid-area: scenes
+    cards:
+      - type: "custom:button-card"
+        template: card_title
+        name: Scènes
+        label: "Om snel de sfeer in huis aan te passen"
+
+      - type: grid
+        columns: 4
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_vertical_button
+            entity: input_select.active_scene
+            name: Watching TV
+            icon: mdi:television-classic
+            show_last_changed: false
+            variables:
+              ulm_card_vertical_button_state: Watching TV
+              ulm_card_vertical_button_color: purple
+
+          - type: "custom:button-card"
+            template: card_vertical_button
+            entity: input_select.active_scene
+            name: Dinner
+            icon: mdi:food-turkey
+            show_last_changed: false
+            variables:
+              ulm_card_vertical_button_state: Dinner
+              ulm_card_vertical_button_color: yellow
+
+          - type: "custom:button-card"
+            template: card_vertical_button
+            entity: input_select.active_scene
+            name: Goodnight
+            icon: mdi:weather-night
+            show_last_changed: false
+            variables:
+              ulm_card_vertical_button_state: Goodnight
+              ulm_card_vertical_button_color: blue
+
+  - type: vertical-stack
+    view_layout:
+      grid-area: devices
+    cards:
+      - type: "custom:button-card"
+        template: card_title
+        name: Apparaten
+        label: Verander de status van de meest gebruikte slimme apparaten
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.eettafel
+            variables:
+              ulm_card_light_enable_color: true
+              ulm_card_light_enable_popup: true
+
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.leeslamp
+            variables:
+              ulm_card_light_enable_color: true
+              ulm_card_light_enable_popup: true
+
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.luchter
+            variables:
+              ulm_card_light_enable_color: true
+              ulm_card_light_enable_popup: true
+
+          - type: "custom:button-card"
+            template: card_power_outlet
+            entity: switch.blanket
+
+          - type: "custom:button-card"
+            template: card_thermostat
+            entity: climate.woonkamer
+            variables:
+              ulm_card_thermostat_enable_popup: true
