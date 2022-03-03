@@ -7,6 +7,7 @@ layout:
   grid-template-rows: auto
   grid-template-areas: |
     "header header"
+    "categories devices"
     "scenes devices"
 cards:
   - type: horizontal-stack
@@ -24,12 +25,29 @@ cards:
           ulm_chip_temperature_weather: weather.openweathermap
 
       - type: "custom:button-card"
-        template: chip_icon_double_state
+        template: chip_presence_detection
         variables:
-          ulm_chip_icon_double_state_icon: "🏠"
-          ulm_chip_icon_double_state_entity_1: sensor.people_home
-          ulm_chip_icon_double_state_entity_2: sensor.guest_mode
-          ulm_chip_navigate_path: /lovelace/presence
+          ulm_chip_presence_counter_residents: sensor.people_home
+          ulm_chip_presence_counter_guests: sensor.guest_mode
+
+  - type: vertical-stack
+    view_layout:
+      grid-area: categories
+    cards:
+      - type: "custom:button-card"
+        template: card_title
+        name: Categorieën
+
+      - type: grid
+        columns: 4
+        square: false
+        cards:
+          - type: custom:button-card
+            template: card_navigate
+            variables:
+              ulm_card_navigate_path: /lovelace/presence
+              ulm_card_navigate_title: Mensen
+              ulm_card_navigate_icon: mdi:account
 
   - type: vertical-stack
     view_layout:

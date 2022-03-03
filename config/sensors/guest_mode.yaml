@@ -3,4 +3,4 @@
     guest_mode:
       friendly_name: "Guests"
       value_template: >
-        {{ "Guests" if states('input_boolean.guest_mode') else false }}
+        {{ "Gast" if is_state("input_boolean.guest_mode", "on") else 0 }}
