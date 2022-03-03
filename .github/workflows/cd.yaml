@@ -70,7 +70,7 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            sudo systemctl restart pkgctl-homeassistant.service
+            synopkg restart homeassistant
           host: ${{ secrets.SSH_DOMAIN }}
           user: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}

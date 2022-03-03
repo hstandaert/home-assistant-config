@@ -81,7 +81,7 @@ spotify:
 
 media_player:
   - platform: emby
-    host: 192.168.11.24
+    host: !secret nas_ip
     api_key: 41d5616f29854f498805e4a8be27160b
 
 trakt_tv:
@@ -139,4 +139,6 @@ lovelace:
     - url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js
       type: module
     - url: /hacsfiles/atomic-calendar-revive/atomic-calendar-revive.js
+      type: module
+    - url: /hacsfiles/config-editor-card/config-editor-card.js
       type: module

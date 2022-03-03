@@ -3,4 +3,4 @@
     guests_home:
       friendly_name: Total number of guests at home
       value_template: >
-        {{ states('input_number.guests_home') | float}}
+        {{ states('input_number.guests_home') | int }}
