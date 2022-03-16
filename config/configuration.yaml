@@ -68,7 +68,7 @@ person:
     id: helena_user
     user_id: !secret user_id_helena
     device_trackers:
-      - device_tracker.helena_gsm
+      - device_tracker.dn2103
   - name: Nancy
     id: nancy
     user_id: !secret user_id_nancy
