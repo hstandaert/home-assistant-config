@@ -2,8 +2,6 @@
   entities:
     light.leeslamp:
       state: "on"
-      brightness: 1
-      color_temp: 450
     light.eettafel:
       state: "off"
     light.luchter:

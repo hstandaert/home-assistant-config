@@ -3,6 +3,8 @@
   trigger:
     - platform: homeassistant
       event: start
+    - platform: event
+      event_type: automation_reload
     - platform: state
       entity_id: sun.sun
       to: above_horizon
@@ -12,9 +14,10 @@
   action:
     - service: frontend.set_theme
       data:
-        name: >
+        name: minimalist-mobile
+        mode: >
           {% if states.sun.sun.state == "above_horizon" %}
-            Dwains Light Theme
+            light
           {% else %}
-            Dwains Dark Theme
+            dark
           {% endif %}

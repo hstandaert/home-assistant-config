@@ -1,5 +1,5 @@
 title: ""
-path: Overview
+path: overview
 icon: mdi:home-analytics
 type: custom:grid-layout
 layout:
@@ -9,6 +9,16 @@ layout:
     "header header"
     "categories devices"
     "scenes devices"
+  mediaquery:
+    #phone
+    "(max-width: 800px)":
+      grid-template-columns: 1fr
+      grid-template-rows: auto
+      grid-template-areas: |
+        "header"
+        "scenes"
+        "categories"
+        "devices"
 cards:
   - type: horizontal-stack
     view_layout:
@@ -25,10 +35,20 @@ cards:
           ulm_chip_temperature_weather: weather.openweathermap
 
       - type: "custom:button-card"
-        template: chip_presence_detection
+        template: chip_icon_state
         variables:
-          ulm_chip_presence_counter_residents: sensor.people_home
-          ulm_chip_presence_counter_guests: sensor.guest_mode
+          ulm_chip_icon_state_icon: 🏠
+          ulm_chip_icon_state_entity: sensor.people_home
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.guest_mode
+            state: "on"
+        card:
+          type: "custom:button-card"
+          template: chip_icon_only
+          variables:
+            ulm_chip_icon_only: 👪
 
   - type: vertical-stack
     view_layout:
@@ -38,9 +58,14 @@ cards:
         template: card_title
         name: Categorieën
 
-      - type: grid
-        columns: 4
-        square: false
+      - type: custom:layout-card
+        layout_type: custom:grid-layout
+        layout:
+          grid-template-columns: repeat(4, 1fr)
+          grid-template-rows: auto
+          mediaquery:
+            "(max-width: 1024px)":
+              grid-template-columns: repeat(2, 1fr)
         cards:
           - type: custom:button-card
             template: card_navigate
@@ -48,6 +73,20 @@ cards:
               ulm_card_navigate_path: /lovelace/presence
               ulm_card_navigate_title: Mensen
               ulm_card_navigate_icon: mdi:account
+
+          - type: custom:button-card
+            template: card_navigate
+            variables:
+              ulm_card_navigate_path: /lovelace/lights
+              ulm_card_navigate_title: Lichten
+              ulm_card_navigate_icon: mdi:lightbulb
+
+          - type: custom:button-card
+            template: card_navigate
+            variables:
+              ulm_card_navigate_path: /lovelace/climate
+              ulm_card_navigate_title: Klimaat
+              ulm_card_navigate_icon: mdi:cloud
 
   - type: vertical-stack
     view_layout:
@@ -59,13 +98,33 @@ cards:
         label: "Om snel de sfeer in huis aan te passen"
 
       - type: grid
-        columns: 4
+        columns: 6
         square: false
         cards:
           - type: "custom:button-card"
             template: card_vertical_button
             entity: input_select.active_scene
-            name: Watching TV
+            name: Thuis
+            icon: mdi:home-lock-open
+            show_last_changed: false
+            variables:
+              ulm_card_vertical_button_state: Home
+              ulm_card_vertical_button_color: green
+
+          - type: "custom:button-card"
+            template: card_vertical_button
+            entity: input_select.active_scene
+            name: Weg
+            icon: mdi:home-lock
+            show_last_changed: false
+            variables:
+              ulm_card_vertical_button_state: Away
+              ulm_card_vertical_button_color: red
+
+          - type: "custom:button-card"
+            template: card_vertical_button
+            entity: input_select.active_scene
+            name: TV kijken
             icon: mdi:television-classic
             show_last_changed: false
             variables:
@@ -75,7 +134,7 @@ cards:
           - type: "custom:button-card"
             template: card_vertical_button
             entity: input_select.active_scene
-            name: Dinner
+            name: Aan tafel
             icon: mdi:food-turkey
             show_last_changed: false
             variables:
@@ -85,7 +144,7 @@ cards:
           - type: "custom:button-card"
             template: card_vertical_button
             entity: input_select.active_scene
-            name: Goodnight
+            name: Slaapwel
             icon: mdi:weather-night
             show_last_changed: false
             variables:
@@ -101,9 +160,14 @@ cards:
         name: Apparaten
         label: Verander de status van de meest gebruikte slimme apparaten
 
-      - type: grid
-        columns: 2
-        square: false
+      - type: custom:layout-card
+        layout_type: custom:grid-layout
+        layout:
+          grid-template-columns: repeat(2, 1fr)
+          grid-template-rows: auto
+          mediaquery:
+            "(max-width: 1024px)":
+              grid-template-columns: repeat(2, 1fr)
         cards:
           - type: "custom:button-card"
             template: card_light
@@ -134,4 +198,10 @@ cards:
             template: card_thermostat
             entity: climate.woonkamer
             variables:
-              ulm_card_thermostat_enable_popup: true
+              ulm_card_thermostat_enable_controls: true
+
+          - type: "custom:button-card"
+            template: card_cover_buttons
+            variables:
+              ulm_card_cover_buttons_name: Rolluiken
+              ulm_card_cover_buttons_entity: cover.living_room

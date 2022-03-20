@@ -10,6 +10,22 @@ cards:
         variables:
           ulm_chip_back_path: /lovelace/overview
 
+      - type: "custom:button-card"
+        template: chip_icon_state
+        variables:
+          ulm_chip_icon_state_icon: 🏠
+          ulm_chip_icon_state_entity: sensor.people_home
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.guest_mode
+            state: "on"
+        card:
+          type: "custom:button-card"
+          template: chip_icon_only
+          variables:
+            ulm_chip_icon_only: 👪
+
   - type: vertical-stack
     cards:
       - type: "custom:button-card"

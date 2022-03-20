@@ -1,0 +1,59 @@
+- alias: Home scene selected
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: input_select.active_scene
+      to: Home
+  condition: []
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.home
+
+- alias: Away scene selected
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: input_select.active_scene
+      to: Away
+  condition: []
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.away
+
+- alias: Watching TV scene selected
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: input_select.active_scene
+      to: Watching TV
+  condition: []
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.watching_tv
+
+- alias: Dinner scene selected
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: input_select.active_scene
+      to: Dinner
+  condition: []
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.dinner
+
+- alias: Goodnight scene selected
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: input_select.active_scene
+      to: Goodnight
+  condition: []
+  action:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.goodnight

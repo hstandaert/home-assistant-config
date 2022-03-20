@@ -103,6 +103,8 @@ input_boolean:
 input_select:
   active_scene:
     options:
+      - Home
+      - Away
       - Watching TV
       - Dinner
       - Goodnight
