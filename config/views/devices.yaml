@@ -1,0 +1,87 @@
+title: ""
+path: devices
+visible: false
+icon: mdi:laptop
+type: custom:vertical-layout
+cards:
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: chip_back
+        variables:
+          ulm_chip_back_path: /lovelace/overview
+
+  - type: vertical-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_title
+        name: Woonkamer
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.tv
+            name: Tv
+
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.home
+            name: Google Home
+
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.hub
+            name: Google Hub
+
+          - type: "custom:button-card"
+            template: card_power_outlet
+            entity: switch.aquarium
+
+          - type: "custom:button-card"
+            template: card_cover_buttons
+            variables:
+              ulm_card_cover_buttons_name: Rolluiken
+              ulm_card_cover_buttons_entity: cover.living_room
+
+      - type: "custom:button-card"
+        template: card_title
+        name: Kantoor
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.kantoor
+            name: Nest mini
+
+      - type: "custom:button-card"
+        template: card_title
+        name: Badkamer
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_media_player
+            entity: media_player.badkamer
+            name: Home mini
+
+  - type: vertical-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_title
+        name: Slaapkamer ouders
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_power_outlet
+            entity: switch.blanket
