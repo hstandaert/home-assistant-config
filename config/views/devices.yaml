@@ -1,7 +1,7 @@
 title: ""
 path: devices
 visible: false
-icon: mdi:laptop
+icon: mdi:devices
 type: custom:vertical-layout
 cards:
   - type: horizontal-stack
@@ -22,26 +22,42 @@ cards:
         square: false
         cards:
           - type: "custom:button-card"
+            template: card_power_outlet
+            entity: switch.tv
+
+          - type: "custom:button-card"
+            template: card_power_outlet
+            entity: switch.aquarium
+
+          - type: "custom:button-card"
             template: card_media_player
             entity: media_player.tv
-            name: Tv
+            name: Chromecast
             variables:
+              ulm_card_media_player_name: Chromecast
+              ulm_card_media_player_icon: mdi:television
+              ulm_card_media_player_enable_controls: true
               ulm_card_media_player_enable_art: true
-              ulm_card_media_player_enable_popup: true
 
           - type: "custom:button-card"
             template: card_media_player
             entity: media_player.home
             name: Google Home
+            variables:
+              ulm_card_media_player_name: Google Home
+              ulm_card_media_player_enable_controls: true
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_volume_slider: true
 
           - type: "custom:button-card"
             template: card_media_player
             entity: media_player.hub
             name: Google Hub
-
-          - type: "custom:button-card"
-            template: card_power_outlet
-            entity: switch.aquarium
+            variables:
+              ulm_card_media_player_name: Google Hub
+              ulm_card_media_player_enable_controls: true
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_volume_slider: true
 
           - type: "custom:button-card"
             template: card_cover_buttons
@@ -61,6 +77,11 @@ cards:
             template: card_media_player
             entity: media_player.kantoor
             name: Nest mini
+            variables:
+              ulm_card_media_player_name: Nest mini
+              ulm_card_media_player_enable_controls: true
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_volume_slider: true
 
       - type: "custom:button-card"
         template: card_title
@@ -74,6 +95,11 @@ cards:
             template: card_media_player
             entity: media_player.badkamer
             name: Home mini
+            variables:
+              ulm_card_media_player_name: Home mini
+              ulm_card_media_player_enable_controls: true
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_volume_slider: true
 
   - type: vertical-stack
     cards:

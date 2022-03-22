@@ -93,7 +93,7 @@ cards:
             variables:
               ulm_card_navigate_path: /lovelace/devices
               ulm_card_navigate_title: Apparaten
-              ulm_card_navigate_icon: mdi:laptop
+              ulm_card_navigate_icon: mdi:devices
 
   - type: vertical-stack
     view_layout:
