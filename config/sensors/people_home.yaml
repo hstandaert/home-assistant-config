@@ -3,4 +3,4 @@
     people_home:
       friendly_name: "Number of people at home"
       value_template: >
-        {{ [states.person.helena, states.person.nancy] | selectattr('state', '==', 'home') | list | count }}
+        {{ [states.person.helena_user, states.person.nancy] | selectattr('state', '==', 'home') | list | count }}

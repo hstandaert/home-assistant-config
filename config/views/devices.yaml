@@ -25,6 +25,9 @@ cards:
             template: card_media_player
             entity: media_player.tv
             name: Tv
+            variables:
+              ulm_card_media_player_enable_art: true
+              ulm_card_media_player_enable_popup: true
 
           - type: "custom:button-card"
             template: card_media_player
