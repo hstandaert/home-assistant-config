@@ -1,0 +1,22 @@
+project_id: !secret google_assistant_project_id
+service_account:
+  private_key: !secret google_assistant_private_key
+  client_email: !secret google_assistant_client_email
+report_state: true
+exposed_domains:
+  - climate
+  - cover
+  - scene
+entity_config:
+  switch.aquarium:
+    name: Aquarium
+  switch.blanket:
+    name: Elektrisch deken
+  light.eettafel:
+    name: Eettafel
+  light.led:
+    name: LED strip
+  light.leeslamp:
+    name: Leeslamp
+  light.luchter:
+    name: Luchter

@@ -35,6 +35,8 @@ google:
   client_id: !secret google_client_id
   client_secret: !secret google_client_secret
 
+google_assistant: !include google_assistant.yaml
+
 frontend:
   themes: !include_dir_merge_named themes
 
@@ -97,6 +99,9 @@ input_boolean:
   guest_mode:
     name: Guest mode
     icon: mdi:account
+  working_from_home_mode:
+    name: Working from home
+    icon: mdi:home-map-marker
   prevent_away:
     name: Prevent the away scene from being triggered when empty house is detected
     icon: mdi:home-account

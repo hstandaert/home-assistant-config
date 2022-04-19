@@ -45,4 +45,4 @@
     - device_id: work
       ignore_availability: true
       name: Work
-      track: false
+      track: true
