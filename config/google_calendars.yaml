@@ -46,3 +46,8 @@
       ignore_availability: true
       name: Work
       track: true
+    - device_id: working_in_office
+      ignore_availability: true
+      name: Working from home
+      search: "In the office"
+      track: true

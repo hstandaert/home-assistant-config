@@ -1,0 +1,33 @@
+- alias: Working in the office (by location)
+  mode: single
+  trigger:
+    - platform: zone
+      entity_id: device_tracker.dn2103
+      zone: zone.pau_hq
+      event: enter
+  action:
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.working_from_home_mode
+
+- alias: Working in the office (from calendar)
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: calendar.working_in_office
+      to: "on"
+  action:
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.working_from_home_mode
+
+- alias: Working at home (from calendar)
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: calendar.working_in_office
+      to: "off"
+  action:
+    - service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.working_from_home_mode
