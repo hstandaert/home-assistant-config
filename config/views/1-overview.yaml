@@ -3,22 +3,22 @@ path: overview
 icon: mdi:home-analytics
 type: custom:grid-layout
 layout:
-  grid-template-columns: 1fr 1fr
+  grid-template-columns: 1fr
   grid-template-rows: auto
   grid-template-areas: |
-    "header header"
-    "categories devices"
-    "scenes devices"
+    "header"
+    "scenes"
+    "categories"
+    "devices"
   mediaquery:
-    #phone
-    "(max-width: 800px)":
-      grid-template-columns: 1fr
+    #tablet
+    "(min-width: 800px)":
+      grid-template-columns: repeat(2, 1fr)
       grid-template-rows: auto
       grid-template-areas: |
-        "header"
-        "scenes"
-        "categories"
-        "devices"
+        "header header"
+        "scenes devices"
+        "categories devices"
 cards:
   - type: horizontal-stack
     view_layout:
@@ -170,10 +170,11 @@ cards:
       - type: custom:layout-card
         layout_type: custom:grid-layout
         layout:
-          grid-template-columns: repeat(2, 1fr)
+          grid-template-columns: 1fr
           grid-template-rows: auto
           mediaquery:
-            "(max-width: 1024px)":
+            #tablet
+            "(min-width: 800px)":
               grid-template-columns: repeat(2, 1fr)
         cards:
           - type: "custom:button-card"

@@ -4,29 +4,29 @@ visible: false
 icon: mdi:cloud
 type: custom:grid-layout
 layout:
-  grid-template-columns: 1fr 1fr 1fr
+  grid-template-columns: 1fr
   grid-template-rows: auto
   grid-template-areas: |
-    "header header header"
-    "thermostat thermostat ."
-    "weather . ."
-    "living_room bathroom office"
-    "veranda parents kids"
+    "header"
+    "thermostat"
+    "weather"
+    "living_room"
+    "bathroom"
+    "office"
+    "veranda"
+    "parents"
+    "kids"
   mediaquery:
-    #phone
-    "(max-width: 800px)":
-      grid-template-columns: 1fr
+    #tablet
+    "(min-width: 800px)":
+      grid-template-columns: 1fr 1fr 1fr
       grid-template-rows: auto
       grid-template-areas: |
-        "header"
-        "thermostat"
-        "weather"
-        "living_room"
-        "bathroom"
-        "office"
-        "veranda"
-        "parents"
-        "kids"
+        "header header header"
+        "thermostat thermostat ."
+        "weather . ."
+        "living_room bathroom office"
+        "veranda parents kids"
 cards:
   - type: horizontal-stack
     view_layout:
@@ -68,13 +68,14 @@ cards:
       - type: custom:layout-card
         layout_type: custom:grid-layout
         layout:
-          grid-template-columns: repeat(3, 1fr)
+          grid-template-columns: 1fr
           grid-template-rows: auto
           mediaquery:
-            #phone
-            "(max-width: 800px)":
+            #tablet
+            "(min-width: 800px)":
               grid-template-columns: repeat(2, 1fr)
-              grid-template-rows: auto
+            "(min-width: 1024)":
+              grid-template-columns: repeat(3, 1fr)
         cards:
           - type: "custom:button-card"
             template: card_thermostat

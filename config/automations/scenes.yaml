@@ -9,6 +9,11 @@
     - service: scene.turn_on
       target:
         entity_id: scene.home
+    - delay:
+        minutes: 5
+    - service: input_select.select_option
+      data:
+        option: None
 
 - alias: Away scene selected
   mode: single
@@ -21,6 +26,11 @@
     - service: scene.turn_on
       target:
         entity_id: scene.away
+    - delay:
+        minutes: 5
+    - service: input_select.select_option
+      data:
+        option: None
 
 - alias: Watching TV scene selected
   mode: single
@@ -33,6 +43,11 @@
     - service: scene.turn_on
       target:
         entity_id: scene.watching_tv
+    - delay:
+        minutes: 5
+    - service: input_select.select_option
+      data:
+        option: None
 
 - alias: Dinner scene selected
   mode: single
@@ -45,6 +60,11 @@
     - service: scene.turn_on
       target:
         entity_id: scene.dinner
+    - delay:
+        minutes: 5
+    - service: input_select.select_option
+      data:
+        option: None
 
 - alias: Goodnight scene selected
   mode: single
@@ -57,3 +77,8 @@
     - service: scene.turn_on
       target:
         entity_id: scene.goodnight
+    - delay:
+        minutes: 5
+    - service: input_select.select_option
+      data:
+        option: None

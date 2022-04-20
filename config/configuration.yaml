@@ -109,6 +109,7 @@ input_boolean:
 input_select:
   active_scene:
     options:
+      - None
       - Home
       - Away
       - Watching TV

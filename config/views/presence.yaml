@@ -61,3 +61,7 @@ cards:
             template: card_input_boolean
             entity: input_boolean.guest_mode
             name: Gasten aanwezig
+          - type: "custom:button-card"
+            template: card_input_boolean
+            entity: input_boolean.working_from_home_mode
+            name: Thuiswerken

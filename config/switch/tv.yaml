@@ -13,7 +13,7 @@
           entity_id: media_player.living_room
       icon_template: >-
         {% if is_state('media_player.living_room', 'on') %}
-          mdi:televsion
+          mdi:television
         {% else %}
           mdi:television-off
         {% endif %}
