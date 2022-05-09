@@ -1,0 +1,43 @@
+name: Deployment
+
+on:
+  workflow_dispatch:
+
+env:
+  working-directory: config
+  builds-directory: /data/data/com.termux/files/builds
+  remote-path: ~/homeassistant
+
+jobs:
+  deploy:
+    name: Deploy code to server
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up environment variables
+        run: |
+          echo "FILENAME=build.$(date +'%Y%m%d-%H%M%S')-${{github.sha}}" >> $GITHUB_ENV
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: ${{ env.FILENAME }}
+
+      - name: Set up private deploy key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PRIVATE_DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 700 ~/.ssh/id_rsa
+          cat > ~/.ssh/config <<'EOF'
+          Host *
+              StrictHostKeyChecking no
+              UserKnownHostsFile=/dev/null
+          EOF
+
+      - name: Copy files to server
+        run: |
+          tar zcvf - ${{ env.FILENAME }}/${{ env.working-directory }} | ssh -p ${{ secrets.PORT }} ${{ secrets.SSH_HOST }} "
+            cat > ${{ env.builds-directory }}/build.tar.gz
+            tar -xzf ${{ env.builds-directory }}/build.tar.gz -C ${{ env.builds-directory }}
+            rm ${{ env.builds-directory }}/build.tar.gz
+          "
