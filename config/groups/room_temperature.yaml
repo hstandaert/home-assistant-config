@@ -1,8 +1,0 @@
-room_temperature:
-  name: Room Temperatures
-  entities:
-    - sensor.woonkamer_temperature
-    - sensor.badkamer_temperature
-    - sensor.veranda_temperature
-    - sensor.slaapkamer_lore_temperature
-    - sensor.slaapkamer_ouders_temperature

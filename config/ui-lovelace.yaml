@@ -1,7 +1,0 @@
-title: Dashboard
-swipe_nav:
-  wrap: false
-  animate: swipe
-# Button cards location
-button_card_templates: !include_dir_merge_named "custom_components/ui_lovelace_minimalist/__ui_minimalist__/ulm_templates/"
-views: !include_dir_list views

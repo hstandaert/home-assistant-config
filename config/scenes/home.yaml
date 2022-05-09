@@ -1,8 +1,0 @@
-- name: Home
-  entities:
-    light.eettafel:
-      state: "on"
-    group.thermostats:
-      state: "auto"
-      preset_mode: home
-  icon: mdi:shield-home

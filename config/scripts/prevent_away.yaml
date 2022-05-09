@@ -1,8 +1,0 @@
-prevent_away:
-  alias: Prevent away scene from getting triggered
-  sequence:
-    - service: input_boolean.turn_on
-      target:
-        entity_id: input_boolean.turn_off
-
-    - service: browser_mod.close_popup

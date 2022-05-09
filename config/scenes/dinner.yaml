@@ -1,9 +1,0 @@
-- name: Dinner
-  entities:
-    light.leeslamp:
-      state: "off"
-    light.eettafel:
-      brightness: 153
-      color_temp: 200
-      state: "on"
-  icon: mdi:food-turkey
