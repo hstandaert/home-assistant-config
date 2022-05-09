@@ -1,9 +1,0 @@
-- name: Goodnight
-  entities:
-    group.woonkamer_lights:
-      state: "off"
-    light.eettafel:
-      state: "off"
-    media_player.living_room:
-      state: "off"
-  icon: mdi:weather-night

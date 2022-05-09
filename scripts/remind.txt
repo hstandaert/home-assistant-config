@@ -1,3 +1,0 @@
-The new config will be deployed to the server
-and the Home Assistant service will be restarted
-automatically.

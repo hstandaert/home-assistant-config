@@ -1,5 +1,0 @@
-# https://dwainscheeren.github.io/dwains-lovelace-dashboard/configuration/cameras.html
-
-cameras:
-  entities:
-    - camera.tablet

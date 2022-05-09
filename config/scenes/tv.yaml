@@ -1,9 +1,0 @@
-- name: Watching TV
-  entities:
-    light.leeslamp:
-      state: "on"
-    light.eettafel:
-      state: "off"
-    light.luchter:
-      state: "off"
-  icon: mdi:television-classic

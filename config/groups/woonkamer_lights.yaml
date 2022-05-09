@@ -1,6 +1,0 @@
-woonkamer_lights:
-  name: Woonkamer Lights
-  entities:
-    - light.leeslamp
-    - light.luchter
-    - light.led
