@@ -1,6 +1,12 @@
-
 # Loads default set of integrations. Do not remove.
 default_config:
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - !secret http_reverse_proxy
+    - 127.0.0.1
+    - ::1
 
 # Text to speech
 tts:
