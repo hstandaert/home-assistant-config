@@ -1,0 +1,82 @@
+name: Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      level:
+        description: Version bump level
+        required: true
+        default: patch
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+
+env:
+  working-directory: config
+  builds-directory: /data/data/com.termux/files/builds
+  remote-path: ~/.homeassistant
+  store-builds: 5
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up environment variables
+        run: |
+          echo "FILENAME=build.$(date +'%Y%m%d-%H%M%S')-${{github.sha}}" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v3
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PRIVATE_DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 700 ~/.ssh/id_rsa
+          cat > ~/.ssh/config <<'EOF'
+          Host *
+              StrictHostKeyChecking no
+              UserKnownHostsFile=/dev/null
+          EOF
+
+      - name: Copy files to server
+        run: |
+          tar zcvf - -C ${{ env.working-directory }} . | ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }} "
+            cat > ${{ env.builds-directory }}/build.tar.gz
+            mkdir -p ${{ env.builds-directory }}/${{ env.FILENAME }}
+            tar -xzf ${{ env.builds-directory }}/build.tar.gz -C ${{ env.builds-directory }}/${{ env.FILENAME }}
+            rm ${{ env.builds-directory }}/build.tar.gz
+
+            ${{ env.builds-directory }}/_symlink
+
+            find ${{ env.remote-path }} -type l -delete
+            cp -rsf ${{ env.builds-directory }}/current/* ${{ env.remote-path }}
+
+            pkill -9 hass
+          "
+
+  create-release:
+    name: Create Release
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions-ecosystem/action-get-latest-tag@v1
+        id: get-latest-tag
+
+      - uses: actions-ecosystem/action-bump-semver@v1
+        id: bump-semver
+        with:
+          current_version: ${{ steps.get-latest-tag.outputs.tag }}
+          level: ${{ github.event.inputs.level }}
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.bump-semver.outputs.new_version }}
+          name: Release ${{ steps.bump-semver.outputs.new_version }}
+          draft: false
