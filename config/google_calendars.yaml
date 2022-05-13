@@ -1,0 +1,48 @@
+- cal_id: addressbook#contacts@group.v.calendar.google.com
+  entities:
+    - device_id: verjaardagen
+      ignore_availability: true
+      name: Verjaardagen
+      track: true
+
+- cal_id: nl.be#holiday@group.v.calendar.google.com
+  entities:
+    - device_id: feestdagen_in_belgie
+      ignore_availability: true
+      name: "Feestdagen in Belgi\xEB"
+      track: true
+
+- cal_id: qgrdgq2ejb0g7gantms6qtn8g8@group.calendar.google.com
+  entities:
+    - device_id: afval
+      ignore_availability: true
+      name: Afval
+      track: true
+
+- cal_id: family02450859625082068313@group.calendar.google.com
+  entities:
+    - device_id: gezin
+      ignore_availability: true
+      name: Gezin
+      track: true
+
+- cal_id: helena.standaert@gmail.com
+  entities:
+    - device_id: persoonlijk
+      ignore_availability: true
+      name: Persoonlijk
+      track: false
+
+- cal_id: nancy.vanobbergen@gmail.com
+  entities:
+    - device_id: nancy_vanobbergen_gmail_com
+      ignore_availability: true
+      name: nancy.vanobbergen@gmail.com
+      track: false
+
+- cal_id: helena@pau.be
+  entities:
+    - device_id: work
+      ignore_availability: true
+      name: Work
+      track: false

@@ -1,0 +1,8 @@
+media:
+  name: Media players
+  entities:
+    - media_player.tv
+    - media_player.kantoor
+    - media_player.hub
+    - media_player.badkamer
+    - media_player.home
