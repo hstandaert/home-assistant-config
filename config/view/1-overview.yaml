@@ -1,0 +1,172 @@
+title: Overview
+path: overview
+icon: fas:house
+# type: custom:masonry-layout
+# layout:
+#   width: 350
+#   max_cols: 10
+cards:
+  # ===
+  # Weather
+  # ===
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        template: custom_card_greeting
+        entity: sensor.greeting
+
+      - type: custom:button-card
+        template: card_weather
+        entity: weather.openweathermap
+        variables:
+          ulm_card_weather_name: " "
+          ulm_card_weather_primary_info:
+            - wind_speed
+            - precipitation_probability
+          ulm_card_weather_backdrop:
+            fade: true
+
+      - type: custom:sun-card
+
+  # ===
+  # Media
+  # ===
+  - type: conditional
+    conditions:
+      - entity: group.media_players
+        state: playing
+    card:
+      - type: grid
+        square: false
+        cards:
+          # Tv
+          - type: conditional
+            conditions:
+              - entity: media_player.tv
+                state: playing
+            card:
+              - type: "custom:button-card"
+                template: card_media_player
+                entity: media_player.tv
+                name: Tv
+
+          # Kantoor
+          - type: conditional
+            conditions:
+              - entity: media_player.kantoor
+                state: playing
+            card:
+              - type: "custom:button-card"
+                template: card_media_player
+                entity: media_player.kantoor
+                name: Kantoor
+
+          # Hub
+          - type: conditional
+            conditions:
+              - entity: media_player.hub
+                state: playing
+            card:
+              - type: "custom:button-card"
+                template: card_media_player
+                entity: media_player.hub
+                name: Hub
+
+          # Badkamer
+          - type: conditional
+            conditions:
+              - entity: media_player.badkamer
+                state: playing
+            card:
+              - type: "custom:button-card"
+                template: card_media_player
+                entity: media_player.badkamer
+                name: Badkamer
+
+          # Home
+          - type: conditional
+            conditions:
+              - entity: media_player.home
+                state: playing
+            card:
+              - type: "custom:button-card"
+                template: card_media_player
+                entity: media_player.home
+                name: Woonkamer
+
+  # ===
+  # Calendar
+  # ===
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        template: card_title
+        name: Kalender
+
+      - type: custom:atomic-calendar-revive
+        showWeekDay: true
+        showLocation: true
+        sortByStartTime: true
+        maxDaysToShow: 3
+        showEventIcon: true
+        showCalendarName: true
+        showProgressBar: true
+        entities:
+          - entity: calendar.afval
+            icon: mdi:trash-can-outline
+            color: var(--google-blue)
+            name: Afval
+          - entity: calendar.gezin
+            icon: mdi:human-male-female-child
+            name: Gezin
+            color: var(--google-green)
+          - entity: calendar.feestdagen_in_belgie
+            icon: mdi:calendar-heart
+            name: Gezin
+            color: var(--google-yellow)
+          - entity: calendar.work
+            icon: mdi:calendar-account
+            name: Gezin
+            color: var(--google-red)
+
+  # ===
+  # Quick controls
+  # ===
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        template: card_title
+        name: Apparaten
+
+      - type: grid
+        square: false
+        columns: 2
+        cards:
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.dining_table
+            variables:
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_color: true
+              ulm_card_light_force_background_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.reading_lamp
+            variables:
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_color: true
+              ulm_card_light_force_background_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.led
+            variables:
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_color: true
+              ulm_card_light_force_background_color: true
+          - type: "custom:button-card"
+            template: card_light
+            entity: light.chandelier
+            variables:
+              ulm_card_light_enable_slider: true
+              ulm_card_light_enable_color: true
+              ulm_card_light_force_background_color: true

@@ -1,4 +1,4 @@
-# Loads default set of integrations. Do not remove.
+# Loads default set of integrations.
 default_config:
 
 http:
@@ -8,10 +8,52 @@ http:
     - 127.0.0.1
     - ::1
 
-# Text to speech
 tts:
   - platform: google_translate
 
+# ====
+# Integrations
+# ====
+# Sun
+sun:
+
+# Google calendar
+google:
+  client_id: !secret google_client_id
+  client_secret: !secret google_client_secret
+  calendar_access: read_only
+
+# ====
+# Includes
+# ====
 automation: !include automations.yaml
+group: !include_dir_merge_named group
+input_number: !include input/number.yaml
+light: !include light.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
+template: !include_dir_merge_named template
+
+# ====
+# User Interface
+# ====
+frontend:
+  themes: !include_dir_merge_named themes
+
+lovelace:
+  mode: yaml
+  dashboards:
+    tablet-dashboard:
+      mode: yaml
+      title: Tablet Dashboard
+      show_in_sidebar: true
+      filename: ui-tablet.yaml
+  resources:
+    - url: /hacsfiles/lovelace-layout-card/layout-card.js
+      type: module
+    - url: /hacsfiles/home-assistant-sun-card/home-assistant-sun-card.js
+      type: module
+    - url: /hacsfiles/simple-weather-card/simple-weather-card-bundle.js
+      type: module
+    - url: /hacsfiles/atomic-calendar-revive/atomic-calendar-revive.js
+      type: module
