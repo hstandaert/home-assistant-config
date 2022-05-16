@@ -17,9 +17,6 @@ tts:
 # Sun
 sun:
 
-# Fontawesome
-fontawesome:
-
 # Google calendar
 google:
   client_id: !secret google_client_id
