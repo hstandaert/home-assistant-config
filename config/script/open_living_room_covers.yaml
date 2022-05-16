@@ -1,0 +1,22 @@
+open_living_room_covers:
+  alias: Open covers in living room
+  mode: single
+  sequence:
+    - service: switch.turn_off
+      target:
+        entity_id:
+          - switch.cover_living_room_small_down
+          - switch.cover_living_room_down
+    - service: switch.turn_on
+      target:
+        entity_id:
+          - switch.cover_living_room_small_up
+          - switch.cover_living_room_up
+    - delay:
+        seconds: 33
+    - service: cover.set_cover_position
+      target:
+        entity_id: cover.living_room
+      data:
+        position: 100
+    - service: script.pause_blinds
