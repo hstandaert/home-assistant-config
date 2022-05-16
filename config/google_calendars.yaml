@@ -1,10 +1,3 @@
-- cal_id: addressbook#contacts@group.v.calendar.google.com
-  entities:
-    - device_id: verjaardagen
-      ignore_availability: true
-      name: Verjaardagen
-      track: true
-
 - cal_id: nl.be#holiday@group.v.calendar.google.com
   entities:
     - device_id: feestdagen_in_belgie
@@ -35,7 +28,7 @@
 
 - cal_id: nancy.vanobbergen@gmail.com
   entities:
-    - device_id: nancy_vanobbergen_gmail_com
+    - device_id: nancy
       ignore_availability: true
       name: nancy.vanobbergen@gmail.com
       track: true
@@ -46,4 +39,3 @@
       ignore_availability: true
       name: Work
       track: true
-
