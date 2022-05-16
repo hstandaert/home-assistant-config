@@ -31,18 +31,19 @@
     - device_id: persoonlijk
       ignore_availability: true
       name: Persoonlijk
-      track: false
+      track: true
 
 - cal_id: nancy.vanobbergen@gmail.com
   entities:
     - device_id: nancy_vanobbergen_gmail_com
       ignore_availability: true
       name: nancy.vanobbergen@gmail.com
-      track: false
+      track: true
 
 - cal_id: helena@pau.be
   entities:
     - device_id: work
       ignore_availability: true
       name: Work
-      track: false
+      track: true
+

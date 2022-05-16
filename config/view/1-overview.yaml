@@ -112,6 +112,10 @@ cards:
         showCalendarName: true
         showProgressBar: true
         entities:
+          - entity: calendar.verjaardagen
+            icon: mdi:cake
+            color: var(--google-blue)
+            name: Verjaardagen
           - entity: calendar.afval
             icon: mdi:trash-can-outline
             color: var(--google-blue)
@@ -128,6 +132,14 @@ cards:
             icon: mdi:calendar-account
             name: Gezin
             color: var(--google-red)
+          - entity: calendar.persoonlijk
+            icon: mdi:account
+            color: var(--google-violet)
+            name: Helena
+          - entity: calendar.nancy
+            icon: mdi:account
+            color: var(--google-violet)
+            name: Nancy
 
   # ===
   # Quick controls
