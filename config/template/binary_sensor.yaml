@@ -1,0 +1,12 @@
+binary_sensor:
+  - unique_id: media_players_active
+    name: Media player activity
+    state: >
+      {% set media_players = [
+        states.media_player.kantoor,
+        states.media_player.tv,
+        states.media_player.hub,
+        states.media_player.home,
+        states.media_player.badkamer,
+      ] %}
+      {{ media_players | selectattr('state','eq','playing') | list | count > 0 }}
