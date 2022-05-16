@@ -1,6 +1,7 @@
 binary_sensor:
   - unique_id: media_players_active
     name: Media player activity
+    icon: mdi:play-box-multiple
     state: >
       {% set media_players = [
         states.media_player.kantoor,

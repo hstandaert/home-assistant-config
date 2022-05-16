@@ -6,8 +6,10 @@
 !.gitignore
 !*.md
 
+!cover
 !group
 !input
+!script
 !template
 !ui_lovelace_minimalist
 !ui_lovelace_minimalist/custom_cards

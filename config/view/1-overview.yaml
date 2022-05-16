@@ -33,8 +33,8 @@ cards:
   # ===
   - type: conditional
     conditions:
-      - entity: group.media_players
-        state: playing
+      - entity: binary_sensor.media_players_active
+        state: on
     card:
       - type: grid
         square: false
@@ -182,3 +182,8 @@ cards:
               ulm_card_light_enable_slider: true
               ulm_card_light_enable_color: true
               ulm_card_light_force_background_color: true
+          - type: "custom:button-card"
+            template: card_cover_buttons
+            entity: cover.living_room
+            variables:
+              ulm_card_cover_name: Rolluiken

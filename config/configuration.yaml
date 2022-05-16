@@ -27,6 +27,7 @@ google:
 # Includes
 # ====
 automation: !include automations.yaml
+cover: !include template/cover.yaml
 input_number: !include input/number.yaml
 light: !include light.yaml
 script: !include scripts.yaml

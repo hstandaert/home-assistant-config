@@ -1,0 +1,11 @@
+pause_living_room_covers:
+  alias: Pause covers in living room
+  mode: single
+  sequence:
+    - service: switch.turn_off
+      target:
+        entity_id:
+          - switch.cover_living_room_small_down
+          - switch.cover_living_room_down
+          - switch.cover_living_room_small_up
+          - switch.cover_living_room_up
