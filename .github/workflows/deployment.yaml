@@ -14,23 +14,19 @@ on:
           - patch
 
 env:
-  working-directory: config
-  builds-directory: /data/data/com.termux/files/builds
-  remote-path: ~/.homeassistant
+  local-path: config
   store-builds: 5
 
 jobs:
   deploy:
     name: Deploy
+    environment: production
     runs-on: ubuntu-latest
     steps:
-      - name: Set up environment variables
-        run: |
-          echo "FILENAME=build.$(date +'%Y%m%d-%H%M%S')-${{github.sha}}" >> $GITHUB_ENV
+      - name: ⤵️ Check out repository
+        uses: actions/checkout@v3
 
-      - uses: actions/checkout@v3
-
-      - name: Set up SSH
+      - name: 🔒 Set up SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.PRIVATE_DEPLOY_KEY }}" > ~/.ssh/id_rsa
@@ -41,18 +37,22 @@ jobs:
               UserKnownHostsFile=/dev/null
           EOF
 
-      - name: Copy files to server
+      - name: ⚙️ Update Home Assistant configuration
         run: |
-          tar zcvf - -C ${{ env.working-directory }} . | ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }} "
-            cat > ${{ env.builds-directory }}/build.tar.gz
-            mkdir -p ${{ env.builds-directory }}/${{ env.FILENAME }}
-            tar -xzf ${{ env.builds-directory }}/build.tar.gz -C ${{ env.builds-directory }}/${{ env.FILENAME }}
-            rm ${{ env.builds-directory }}/build.tar.gz
+          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }} "
+            iocage exec homeassistant 'cd ${{ secrets.APPROOT }}; git fetch; git checkout ${{ github.sha }}; chown -R ${{ secrets.USER }}:${{ secrets.GROUP }} .'
+          "
 
-            find ${{ env.remote-path }} -type l -delete
-            cp -rsf ${{ env.builds-directory }}/current/* ${{ env.remote-path }}
+      - name: ♻️ Snapshot iocage jail
+        run: |
+          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }} "
+            iocage snapshot homeassistant
+          "
 
-            pkill -9 hass
+      - name: 🎬 Restart service
+        run: |
+          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }} "
+            iocage restart homeassistant
           "
 
   create-release:
