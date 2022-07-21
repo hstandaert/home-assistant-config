@@ -49,8 +49,6 @@ jobs:
             tar -xzf ${{ env.builds-directory }}/build.tar.gz -C ${{ env.builds-directory }}/${{ env.FILENAME }}
             rm ${{ env.builds-directory }}/build.tar.gz
 
-            ${{ env.builds-directory }}/_symlink
-
             find ${{ env.remote-path }} -type l -delete
             cp -rsf ${{ env.builds-directory }}/current/* ${{ env.remote-path }}
 

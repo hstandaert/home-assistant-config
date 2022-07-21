@@ -2,16 +2,21 @@ name: Continuous Integration
 
 on: [push, pull_request]
 
+env:
+  working-directory: config
+
 jobs:
-  check-configuration:
-    name: Check Configuration
+  validate:
+    name: Validate Home Assistant configuration
     runs-on: ubuntu-latest
+    container: homeassistant/amd64-homeassistant
     steps:
-      - name: ⤵️ Check out
+      - name: ⤵️ Check out repository
         uses: actions/checkout@v3
 
-      - name: 🚀 Run Configuration Check
-        uses: frenck/action-home-assistant@v1
-        with:
-          path: "./config"
-          secrets: ./config/secrets.default.yaml
+      - name: 🔒 Create fake secrets file
+        working-directory: ${{ env.working-directory }}
+        run: cp secrets.default.yaml secrets.yaml
+
+      - name: 🚀 Run check_config
+        run: hass --script check_config -c ./config
