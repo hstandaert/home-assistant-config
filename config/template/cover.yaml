@@ -1,12 +1,13 @@
 - platform: template
   covers:
     living_room:
+      unique_id: living_room
       device_class: blind
       icon_template: "{{ 'mdi:window-shutter-open' if is_state('cover.living_room', 'open') else 'mdi:window-shutter' }}"
       friendly_name: Rolluiken
       open_cover:
-        service: script.open_blinds
+        service: script.open_living_room_covers
       close_cover:
-        service: script.close_blinds
+        service: script.close_living_room_covers
       stop_cover:
-        service: script.pause_blinds
+        service: script.pause_living_room_covers
