@@ -1,0 +1,9 @@
+- platform: group
+  unique_id: dining_table
+  name: Eetkamer
+  entities:
+    - light.hanglamp_1
+    - light.hanglamp_2
+    - light.hanglamp_3
+    - light.hanglamp_4
+    - light.hanglamp_5

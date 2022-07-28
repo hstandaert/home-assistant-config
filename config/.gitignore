@@ -6,9 +6,11 @@
 !.gitignore
 !*.md
 
+!automation
 !cover
 !group
 !input
+!light
 !script
 !template
 !ui_lovelace_minimalist

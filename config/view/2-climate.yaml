@@ -48,6 +48,7 @@ cards:
                 cards:
                   - type: custom:button-card
                     template: card_graph
+                    entity: sensor.woonkamer_temperature
                     variables:
                       ulm_card_graph_color: "var(--google-red)"
                       ulm_card_graph_name: Temperatuur
@@ -55,6 +56,7 @@ cards:
 
                   - type: custom:button-card
                     template: card_graph
+                    entity: sensor.woonkamer_humidity
                     variables:
                       ulm_card_graph_color: "var(--google-blue)"
                       ulm_card_graph_name: Vochtigheid
@@ -83,6 +85,7 @@ cards:
                 cards:
                   - type: custom:button-card
                     template: card_graph
+                    entity: sensor.badkamer_temperature
                     variables:
                       ulm_card_graph_color: "var(--google-red)"
                       ulm_card_graph_name: Temperatuur
@@ -90,6 +93,7 @@ cards:
 
                   - type: custom:button-card
                     template: card_graph
+                    entity: sensor.badkamer_humidity
                     variables:
                       ulm_card_graph_color: "var(--google-blue)"
                       ulm_card_graph_name: Vochtigheid
@@ -118,6 +122,7 @@ cards:
                 cards:
                   - type: custom:button-card
                     template: card_graph
+                    entity: sensor.kantoor_temperature
                     variables:
                       ulm_card_graph_color: "var(--google-red)"
                       ulm_card_graph_name: Temperatuur
@@ -125,6 +130,7 @@ cards:
 
                   - type: custom:button-card
                     template: card_graph
+                    entity: sensor.kantoor_humidity
                     variables:
                       ulm_card_graph_color: "var(--google-blue)"
                       ulm_card_graph_name: Vochtigheid
@@ -153,6 +159,7 @@ cards:
                 cards:
                   - type: custom:button-card
                     template: card_graph
+                    entity: sensor.slaapkamer_lore_temperature
                     variables:
                       ulm_card_graph_color: "var(--google-red)"
                       ulm_card_graph_name: Temperatuur
@@ -160,6 +167,7 @@ cards:
 
                   - type: custom:button-card
                     template: card_graph
+                    entity: sensor.slaapkamer_lore_humidity
                     variables:
                       ulm_card_graph_color: "var(--google-blue)"
                       ulm_card_graph_name: Vochtigheid
@@ -188,6 +196,7 @@ cards:
                 cards:
                   - type: custom:button-card
                     template: card_graph
+                    entity: sensor.slaapkamer_ouders_temperature
                     variables:
                       ulm_card_graph_color: "var(--google-red)"
                       ulm_card_graph_name: Temperatuur
@@ -195,6 +204,7 @@ cards:
 
                   - type: custom:button-card
                     template: card_graph
+                    entity: sensor.slaapkamer_ouders_humidity
                     variables:
                       ulm_card_graph_color: "var(--google-blue)"
                       ulm_card_graph_name: Vochtigheid
@@ -223,6 +233,7 @@ cards:
                 cards:
                   - type: custom:button-card
                     template: card_graph
+                    entity: sensor.veranda_temperature
                     variables:
                       ulm_card_graph_color: "var(--google-red)"
                       ulm_card_graph_name: Temperatuur
@@ -230,6 +241,7 @@ cards:
 
                   - type: custom:button-card
                     template: card_graph
+                    entity: sensor.veranda_humidity
                     variables:
                       ulm_card_graph_color: "var(--google-blue)"
                       ulm_card_graph_name: Vochtigheid

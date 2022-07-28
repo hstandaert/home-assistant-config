@@ -26,11 +26,10 @@ google:
 # ====
 # Includes
 # ====
-automation: !include automations.yaml
+automation: !include_dir_merge_list automation
 cover: !include template/cover.yaml
-input_number: !include input/number.yaml
-light: !include light.yaml
-script: !include scripts.yaml
+light: !include_dir_merge_list light
+script: !include_dir_merge_named script
 scene: !include scenes.yaml
 template: !include_dir_merge_named template
 
@@ -49,11 +48,25 @@ lovelace:
       show_in_sidebar: true
       filename: ui-tablet.yaml
   resources:
-    - url: /hacsfiles/lovelace-layout-card/layout-card.js
+    - url: /hacsfiles/atomic-calendar-revive/atomic-calendar-revive.js
+      type: module
+    - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
+      type: module
+    - url: /hacsfiles/button-card/button-card.js
+      type: module
+    - url: /hacsfiles/lovelace-card-mod/card-mod.js
       type: module
     - url: /hacsfiles/home-assistant-sun-card/home-assistant-sun-card.js
       type: module
-    - url: /hacsfiles/simple-weather-card/simple-weather-card-bundle.js
+    - url: /hacsfiles/light-entity-card/light-entity-card.js
       type: module
-    - url: /hacsfiles/atomic-calendar-revive/atomic-calendar-revive.js
+    - url: /hacsfiles/lovelace-layout-card/layout-card.js
+      type: module
+    - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
+      type: module
+    - url: /hacsfiles/mini-media-player/mini-media-player-bundle.js
+      type: module
+    - url: /hacsfiles/my-cards/my-cards.js
+      type: module
+    - url: /hacsfiles/simple-weather-card/simple-weather-card-bundle.js
       type: module
