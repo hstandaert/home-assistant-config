@@ -11,6 +11,7 @@
 !group
 !input
 !light
+!scene
 !script
 !template
 !ui_lovelace_minimalist

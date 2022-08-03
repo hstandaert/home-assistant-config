@@ -19,4 +19,4 @@ open_living_room_covers:
         entity_id: cover.living_room
       data:
         position: 100
-    - service: script.pause_blinds
+    - service: script.pause_living_room_covers
