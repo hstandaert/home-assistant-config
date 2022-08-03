@@ -1,0 +1,9 @@
+- name: Goodnight
+  entities:
+    group.woonkamer_lights:
+      state: "off"
+    light.eettafel:
+      state: "off"
+    media_player.samsung_tv:
+      state: "off"
+  icon: fas:moon

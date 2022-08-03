@@ -1,0 +1,11 @@
+- name: Tv
+  entities:
+    light.leeslamp:
+      state: "on"
+    light.eettafel:
+      state: "off"
+    light.luchter:
+      state: "off"
+    media_player.samsung_tv:
+      state: "on"
+  icon: fas:tv

@@ -2,7 +2,7 @@
   mode: single
   trigger:
     - platform: state
-      entity_id: media_player.living_room
+      entity_id: media_player.samsung_tv
       to: "on"
   action:
     - service: light.turn_on
@@ -13,7 +13,7 @@
   mode: single
   trigger:
     - platform: state
-      entity_id: media_player.living_room
+      entity_id: media_player.samsung_tv
       to: "off"
   action:
     - service: light.turn_off

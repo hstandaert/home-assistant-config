@@ -1,0 +1,13 @@
+- alias: Set lovelace theme
+  id: set_lovelace_theme
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: event
+      event_type: automation_reload
+    - platform: state
+      entity_id: sun.sun
+  action:
+    - service: frontend.set_theme
+      data:
+        name: minimalist-mobile-tapbar
