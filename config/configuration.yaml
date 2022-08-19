@@ -17,6 +17,9 @@ tts:
 # Sun
 sun:
 
+# Config editor
+config_editor:
+
 # Google calendar
 google:
   client_id: !secret google_client_id
@@ -69,4 +72,6 @@ lovelace:
     - url: /hacsfiles/my-cards/my-cards.js
       type: module
     - url: /hacsfiles/simple-weather-card/simple-weather-card-bundle.js
+      type: module
+    - url: /hacsfiles/config-editor-card/config-editor-card.js
       type: module

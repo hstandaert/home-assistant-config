@@ -2,6 +2,8 @@ binary_sensor:
   - unique_id: media_players_active
     name: Media player activity
     icon: fas:play-circle
+    delay_off:
+      seconds: 30
     state: >
       {% set media_players = [
         states.media_player.kantoor,

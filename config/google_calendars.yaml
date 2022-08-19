@@ -39,3 +39,9 @@
       ignore_availability: true
       name: Work
       track: true
+
+- cal_id: plcs721r5jds25si3ndgb6uk9c@group.calendar.google.com
+  entities:
+  - device_id: todoist
+    ignore_availability: true
+    name: Todoist
