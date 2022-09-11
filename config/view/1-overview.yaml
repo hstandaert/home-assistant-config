@@ -4,6 +4,7 @@ icon: fas:home
 type: custom:masonry-layout
 layout:
   max_cols: 3
+  reflow: true
 cards:
   # ===
   # Weather
@@ -28,9 +29,38 @@ cards:
       - type: custom:sun-card
 
   # ===
+  # People
+  # ===
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        template: card_title
+        name: Personen
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_person
+            variables:
+              ulm_card_person_entity: person.helena
+              ulm_card_person_use_entity_picture: true
+
+
+          - type: "custom:button-card"
+            template: card_person
+            variables:
+              ulm_card_person_entity: person.nancy
+              ulm_card_person_use_entity_picture: true
+
+  # ===
   # Calendar
   # ===
   - type: vertical-stack
+    view_layout:
+      show:
+        mediaquery: "(min-width: 800px)"
     cards:
       - type: custom:button-card
         template: card_title
@@ -70,100 +100,100 @@ cards:
             color: var(--google-blue)
             name: Nancy
 
+  # ===
+  # Media
+  # ===
+  - type: conditional
+    conditions:
+      - entity: binary_sensor.media_player_activity
+        state: on
+    card:
+      type: vertical-stack
+      cards:
+        - type: custom:button-card
+          template: card_title
+          name: Media
+
+        - type: grid
+          columns: 2
+          square: false
+          cards:
+            # Tv
+            - type: conditional
+              conditions:
+                - entity: media_player.tv
+                  state: playing
+              card:
+                type: "custom:button-card"
+                template: card_media_player
+                entity: media_player.tv
+                name: Tv
+                variables:
+                  ulm_card_media_player_enable_art: true
+                  ulm_card_media_player_enable_controls: true
+                  ulm_card_media_player_player_controls_entity: media_player.samsung_tv
+
+            # Kantoor
+            - type: conditional
+              conditions:
+                - entity: media_player.kantoor
+                  state: playing
+              card:
+                type: "custom:button-card"
+                template: card_media_player
+                entity: media_player.kantoor
+                name: Kantoor
+                variables:
+                  ulm_card_media_player_enable_art: true
+                  ulm_card_media_player_enable_controls: true
+
+            # Hub
+            - type: conditional
+              conditions:
+                - entity: media_player.hub
+                  state: playing
+              card:
+                type: "custom:button-card"
+                template: card_media_player
+                entity: media_player.hub
+                name: Hub
+                variables:
+                  ulm_card_media_player_enable_art: true
+                  ulm_card_media_player_enable_controls: true
+
+            # Badkamer
+            - type: conditional
+              conditions:
+                - entity: media_player.badkamer
+                  state: playing
+              card:
+                type: "custom:button-card"
+                template: card_media_player
+                entity: media_player.badkamer
+                name: Badkamer
+                variables:
+                  ulm_card_media_player_enable_art: true
+                  ulm_card_media_player_enable_controls: true
+
+            # Home
+            - type: conditional
+              conditions:
+                - entity: media_player.home
+                  state: playing
+              card:
+                type: "custom:button-card"
+                template: card_media_player
+                entity: media_player.home
+                name: Woonkamer
+                variables:
+                  ulm_card_media_player_enable_art: true
+                  ulm_card_media_player_enable_controls: true
+
+  # ===
+  # Quick controls
+  # ===
   - type: vertical-stack
     cards:
-      # ===
-      # Media
-      # ===
-      - type: conditional
-        conditions:
-          - entity: binary_sensor.media_player_activity
-            state: "on"
-        card:
-          type: vertical-stack
-          cards:
-            - type: custom:button-card
-              template: card_title
-              name: Media
-
-            - type: grid
-              columns: 2
-              square: false
-              cards:
-                # Tv
-                - type: conditional
-                  conditions:
-                    - entity: media_player.tv
-                      state: playing
-                  card:
-                    type: "custom:button-card"
-                    template: card_media_player
-                    entity: media_player.tv
-                    name: Tv
-                    variables:
-                      ulm_card_media_player_enable_art: true
-                      ulm_card_media_player_enable_controls: true
-                      ulm_card_media_player_player_controls_entity: media_player.samsung_tv
-
-                # Kantoor
-                - type: conditional
-                  conditions:
-                    - entity: media_player.kantoor
-                      state: playing
-                  card:
-                    type: "custom:button-card"
-                    template: card_media_player
-                    entity: media_player.kantoor
-                    name: Kantoor
-                    variables:
-                      ulm_card_media_player_enable_art: true
-                      ulm_card_media_player_enable_controls: true
-
-                # Hub
-                - type: conditional
-                  conditions:
-                    - entity: media_player.hub
-                      state: playing
-                  card:
-                    type: "custom:button-card"
-                    template: card_media_player
-                    entity: media_player.hub
-                    name: Hub
-                    variables:
-                      ulm_card_media_player_enable_art: true
-                      ulm_card_media_player_enable_controls: true
-
-                # Badkamer
-                - type: conditional
-                  conditions:
-                    - entity: media_player.badkamer
-                      state: playing
-                  card:
-                    type: "custom:button-card"
-                    template: card_media_player
-                    entity: media_player.badkamer
-                    name: Badkamer
-                    variables:
-                      ulm_card_media_player_enable_art: true
-                      ulm_card_media_player_enable_controls: true
-
-                # Home
-                - type: conditional
-                  conditions:
-                    - entity: media_player.home
-                      state: playing
-                  card:
-                    type: "custom:button-card"
-                    template: card_media_player
-                    entity: media_player.home
-                    name: Woonkamer
-                    variables:
-                      ulm_card_media_player_enable_art: true
-                      ulm_card_media_player_enable_controls: true
-
-      # ===
-      # Quick controls
-      # ===
       - type: custom:button-card
         template: card_title
         name: Apparaten

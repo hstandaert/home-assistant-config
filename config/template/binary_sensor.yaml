@@ -13,3 +13,10 @@ binary_sensor:
         states.media_player.badkamer,
       ] %}
       {{ media_players | selectattr('state','eq','playing') | list | count > 0 }}
+
+
+  - unique_id: anyone_home
+    name: Anyone Home
+    icon: fas:home
+    device_class: presence
+    state: "{{ states.person | selectattr('state','eq','home') | list | count > 0 }}"

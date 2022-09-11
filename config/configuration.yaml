@@ -49,6 +49,7 @@ google:
 # ====
 automation: !include_dir_merge_list automation
 cover: !include template/cover.yaml
+input_boolean: !include input/boolean.yaml
 light: !include_dir_merge_list light
 script: !include_dir_merge_named script
 scene: !include_dir_merge_list scene

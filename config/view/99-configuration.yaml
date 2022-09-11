@@ -1,0 +1,23 @@
+title: Configuration
+path: configuration
+icon: fas:cog
+type: custom:horizontal-layout
+layout:
+  max_cols: 3
+cards:
+  # ===
+  # Modes
+  # ===
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        template: card_title
+        name: Modi
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: 'custom:button-card'
+            template: card_input_boolean
+            entity: input_boolean.guest_mode
