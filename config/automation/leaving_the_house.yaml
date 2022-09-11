@@ -4,13 +4,13 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.anyone_home
-      to: off
+      to: "off"
   action:
     - delay:
         minutes: 1
 
     - condition: state
       entity_id: input_boolean.guest_mode
-      state: off
+      state: "off"
 
     - scene: scene.away
