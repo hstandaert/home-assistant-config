@@ -79,17 +79,13 @@ cards:
             icon: fas:trash-alt
             color: var(--google-blue)
             name: Afval
-          - entity: calendar.gezin
+          - entity: calendar.family
             icon: fas:users
             name: Gezin
             color: var(--google-green)
           - entity: calendar.feestdagen_in_belgie
             icon: fas:calendar-day
-            name: Gezin
-            color: var(--google-yellow)
-          - entity: calendar.work
-            icon: fas:briefcase
-            name: Gezin
+            name: Feestdagen
             color: var(--google-red)
           - entity: calendar.persoonlijk
             icon: fas:user
@@ -97,7 +93,7 @@ cards:
             name: Helena
           - entity: calendar.nancy
             icon: fas:user
-            color: var(--google-blue)
+            color: var(--google-yellow)
             name: Nancy
 
   # ===
