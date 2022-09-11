@@ -1,5 +1,23 @@
 # Loads default set of integrations.
-default_config:
+application_credentials:
+cloud:
+counter:
+dhcp:
+homeassistant_alerts:
+history:
+logbook:
+map:
+mobile_app:
+my:
+network:
+person:
+ssdp:
+system_health:
+tag:
+timer:
+webhook:
+zeroconf:
+zone:
 
 http:
   use_x_forwarded_for: true
