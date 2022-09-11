@@ -7,7 +7,17 @@
       event_type: automation_reload
     - platform: state
       entity_id: sun.sun
+      to: above_horizon
+    - platform: state
+      entity_id: sun.sun
+      to: below_horizon
   action:
     - service: frontend.set_theme
       data:
         name: minimalist-mobile-tapbar
+        mode: >
+          {% if states.sun.sun.state == "above_horizon" %}
+            light
+          {% else %}
+            dark
+          {% endif %}

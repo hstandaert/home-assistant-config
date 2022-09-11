@@ -1,0 +1,16 @@
+- alias: Leaving the house
+  id: leaving_the_house
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.anyone_home
+      to: off
+  action:
+    - delay:
+        minutes: 1
+
+    - condition: state
+      entity_id: input_boolean.guest_mode
+      state: off
+
+    - scene: scene.away
