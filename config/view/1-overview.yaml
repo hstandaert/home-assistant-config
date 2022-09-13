@@ -67,13 +67,10 @@ cards:
         name: Kalender
 
       - type: custom:atomic-calendar-revive
-        showWeekDay: true
         showLocation: true
         sortByStartTime: true
-        maxDaysToShow: 3
-        showEventIcon: true
-        showCalendarName: true
-        showProgressBar: true
+        maxDaysToShow: 1
+        hideDeclined: true
         entities:
           - entity: calendar.afval
             icon: fas:trash-alt
