@@ -1,13 +1,15 @@
-- alias: Coming home
-  id: coming_home
-  mode: single
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.anyone_home
-      to: "on"
-  action:
-    - condition: state
-      entity_id: input_boolean.guest_mode
-      state: "off"
+alias: Coming home
+id: coming_home
+mode: single
 
-    - scene: scene.home
+trigger:
+  - platform: state
+    entity_id: binary_sensor.anyone_home
+    to: "on"
+
+action:
+  - condition: state
+    entity_id: input_boolean.guest_mode
+    state: "off"
+
+  - scene: scene.home

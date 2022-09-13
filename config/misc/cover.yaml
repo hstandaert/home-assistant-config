@@ -2,9 +2,9 @@
   covers:
     living_room:
       unique_id: living_room
-      device_class: blind
-      icon_template: "{{ 'mdi:window-shutter-open' if is_state('cover.living_room', 'open') else 'mdi:window-shutter' }}"
-      friendly_name: Rolluiken
+      friendly_name: Rolluiken Woonkamer
+      device_class: shutter
+      optimistic: true
       open_cover:
         service: script.open_living_room_covers
       close_cover:

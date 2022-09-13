@@ -14,7 +14,6 @@ person:
 ssdp:
 system_health:
 tag:
-timer:
 webhook:
 zeroconf:
 zone:
@@ -38,8 +37,8 @@ sun:
 # ====
 # Includes
 # ====
-automation: !include_dir_merge_list automation
-cover: !include template/cover.yaml
+automation: !include_dir_list automation
+cover: !include misc/cover.yaml
 input_boolean: !include input/boolean.yaml
 light: !include_dir_merge_list light
 script: !include_dir_merge_named script

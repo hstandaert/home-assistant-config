@@ -1,3 +1,7 @@
 guest_mode:
   name: Guest mode
   icon: fas:house-user
+
+night_mode:
+  name: Night mode
+  icon: fas:cloud-moon
