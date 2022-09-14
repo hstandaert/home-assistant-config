@@ -12,4 +12,10 @@ action:
     entity_id: input_boolean.guest_mode
     state: "off"
 
+  - service: input_select.select_option
+    data:
+      option: Home
+    target:
+      entity_id: input_select.heating_modes
+
   - scene: scene.home

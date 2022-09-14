@@ -1,0 +1,16 @@
+alias: Heating badkamer away
+id: heating_badkamer_away
+mode: single
+
+trigger:
+  - platform: state
+    entity_id:
+      - input_select.heating_modes
+    to: Away
+
+action:
+  - service: climate.set_hvac_mode
+    data:
+      hvac_mode: "off"
+    target:
+      entity_id: climate.badkamer

@@ -1,0 +1,33 @@
+alias: Heating kantoor home
+id: heating_kantoor_home
+mode: single
+
+trigger:
+  - platform: state
+    entity_id:
+      - input_select.heating_modes
+    to: Home
+
+action:
+  - choose:
+      - conditions:
+          - condition: time
+            after: "08:00:00"
+            before: "20:00:00"
+        sequence:
+          - service: climate.set_hvac_mode
+            data:
+              hvac_mode: heat
+            target:
+              entity_id: climate.kantoor
+          - service: climate.set_temperature
+            data:
+              temperature: 18
+            target:
+              entity_id: climate.kantoor
+    default:
+      - service: climate.set_hvac_mode
+        data:
+          hvac_mode: "off"
+        target:
+          entity_id: climate.kantoor
