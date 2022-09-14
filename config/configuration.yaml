@@ -82,5 +82,3 @@ lovelace:
       type: module
     - url: /hacsfiles/simple-weather-card/simple-weather-card-bundle.js
       type: module
-    - url: /hacsfiles/config-editor-card/config-editor-card.js
-      type: module

@@ -1,6 +1,10 @@
 - name: Goodnight
   entities:
-    group.woonkamer_lights:
+    light.chandelier:
+      state: "off"
+    light.led:
+      state: "off"
+    light.reading_lamp:
       state: "off"
     light.eettafel:
       state: "off"

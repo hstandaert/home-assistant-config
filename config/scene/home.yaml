@@ -2,7 +2,4 @@
   entities:
     light.eettafel:
       state: "on"
-    group.thermostats:
-      state: "auto"
-      preset_mode: home
   icon: fas:home

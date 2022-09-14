@@ -1,6 +1,10 @@
 - name: Dinner
   entities:
-    light.leeslamp:
+    light.reading_lamp:
+      state: "off"
+    light.chandelier:
+      state: "off"
+    media_player.samsung_tv:
       state: "off"
     light.eettafel:
       brightness: 153

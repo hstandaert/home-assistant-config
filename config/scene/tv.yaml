@@ -1,10 +1,10 @@
 - name: Tv
   entities:
-    light.leeslamp:
+    light.reading_lamp:
       state: "on"
-    light.eettafel:
+    light.dining_table:
       state: "off"
-    light.luchter:
+    light.chandelier:
       state: "off"
     media_player.samsung_tv:
       state: "on"
