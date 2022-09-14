@@ -1,6 +1,6 @@
 title: Devices
 path: devices
-icon: mdi:devices
+icon: fas:laptop-house
 type: custom:masonry-layout
 layout:
   max_cols: 3
@@ -35,6 +35,7 @@ cards:
           exclude:
             - entity_id: "light.reading_lamp_*"
             - entity_id: "light.hanglamp_*"
+            - entity_id: "light.camera_*"
 
   # ===
   # Media
@@ -87,6 +88,7 @@ cards:
           exclude:
             - state: unavailable
             - entity_id: "switch.cover_*"
+            - entity_id: "switch.camera_*"
 
   # ===
   # Others
