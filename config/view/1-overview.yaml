@@ -29,6 +29,34 @@ cards:
       - type: custom:sun-card
 
   # ===
+  # Scenes
+  # ===
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        template: card_title
+        name: Scènes
+
+      - type: "custom:button-card"
+        template: "card_scenes_welcome"
+        variables:
+          entity_1:
+            entity_id: scene.home
+            color: green
+          entity_2:
+            entity_id: scene.dinner
+            color: pink
+          entity_3:
+            entity_id: scene.tv
+            color: blue
+          entity_4:
+            entity_id: scene.goodnight
+            color: purple
+          entity_5:
+            entity_id: scene.away
+            color: red
+
+  # ===
   # People
   # ===
   - type: vertical-stack
@@ -46,7 +74,6 @@ cards:
             variables:
               ulm_card_person_entity: person.helena
               ulm_card_person_use_entity_picture: true
-
 
           - type: "custom:button-card"
             template: card_person
