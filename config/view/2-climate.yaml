@@ -1,248 +1,67 @@
 title: Climate
 path: climate
 icon: fas:cloud-sun
-type: panel
+type: custom:masonry-layout
+layout:
+  max_cols: 3
+  reflow: true
 cards:
+  # ===
+  # Thermostat
+  # ===
   - type: vertical-stack
     cards:
-      - type: custom:layout-card
-        layout_type: custom:grid-layout
-        layout:
-          grid-template-columns: repeat(2, 1fr)
-          grid-template-rows: auto
-          place-content: center start
-        cards:
-          - type: vertical-stack
-            cards:
-              - type: custom:button-card
-                template: card_title
-                name: Weersvoorspelling
+      - type: custom:button-card
+        template: card_title
+        name: Thermostaat
 
-              - type: weather-forecast
-                entity: weather.openweathermap
-
-      - type: custom:layout-card
-        layout_type: custom:horizontal-layout
-        cards:
-          # ===
-          # Woonkamer
-          # ===
-          - type: vertical-stack
-            cards:
-              - type: custom:button-card
-                template: card_title
-                name: Woonkamer
-
-              - type: custom:button-card
+      - type: "custom:auto-entities"
+        card:
+          type: grid
+          columns: 2
+          square: false
+        card_param: "cards"
+        filter:
+          include:
+            - domain: climate
+              options:
+                type: custom:button-card
                 template: card_thermostat
-                entity: climate.woonkamer
+                entity: this.entity_id
                 variables:
-                  ulm_card_thermostat_name: Verwarming
-                  ulm_card_thermostat_enable_horizontal: true
+                  ulm_card_thermostat_enable_background_color: true
                   ulm_card_thermostat_enable_controls: true
                   ulm_card_thermostat_enable_popup: true
+  # ===
+  # Temperature
+  # ===
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        template: card_title
+        name: Temperatuur
 
-              - type: grid
-                square: false
-                columns: 2
-                cards:
-                  - type: custom:button-card
-                    template: card_graph
-                    entity: sensor.woonkamer_temperature
-                    variables:
-                      ulm_card_graph_color: "var(--google-red)"
-                      ulm_card_graph_name: Temperatuur
-                      ulm_card_graph_entity: sensor.woonkamer_temperature
+      - type: "custom:auto-entities"
+        card:
+          type: entities
+        filter:
+          include:
+            - entity_id: sensor.*_temperature
+              integration: tado
 
-                  - type: custom:button-card
-                    template: card_graph
-                    entity: sensor.woonkamer_humidity
-                    variables:
-                      ulm_card_graph_color: "var(--google-blue)"
-                      ulm_card_graph_name: Vochtigheid
-                      ulm_card_graph_entity: sensor.woonkamer_humidity
-          # ===
-          # Badkamer
-          # ===
-          - type: vertical-stack
-            cards:
-              - type: custom:button-card
-                template: card_title
-                name: Badkamer
+  # ===
+  # Temperature
+  # ===
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        template: card_title
+        name: Temperatuur
 
-              - type: custom:button-card
-                template: card_thermostat
-                entity: climate.badkamer
-                variables:
-                  ulm_card_thermostat_name: Verwarming
-                  ulm_card_thermostat_enable_horizontal: true
-                  ulm_card_thermostat_enable_controls: true
-                  ulm_card_thermostat_enable_popup: true
-
-              - type: grid
-                square: false
-                columns: 2
-                cards:
-                  - type: custom:button-card
-                    template: card_graph
-                    entity: sensor.badkamer_temperature
-                    variables:
-                      ulm_card_graph_color: "var(--google-red)"
-                      ulm_card_graph_name: Temperatuur
-                      ulm_card_graph_entity: sensor.badkamer_temperature
-
-                  - type: custom:button-card
-                    template: card_graph
-                    entity: sensor.badkamer_humidity
-                    variables:
-                      ulm_card_graph_color: "var(--google-blue)"
-                      ulm_card_graph_name: Vochtigheid
-                      ulm_card_graph_entity: sensor.badkamer_humidity
-          # ===
-          # Kantoor
-          # ===
-          - type: vertical-stack
-            cards:
-              - type: custom:button-card
-                template: card_title
-                name: Kantoor
-
-              - type: custom:button-card
-                template: card_thermostat
-                entity: climate.kantoor
-                variables:
-                  ulm_card_thermostat_name: Verwarming
-                  ulm_card_thermostat_enable_horizontal: true
-                  ulm_card_thermostat_enable_controls: true
-                  ulm_card_thermostat_enable_popup: true
-
-              - type: grid
-                square: false
-                columns: 2
-                cards:
-                  - type: custom:button-card
-                    template: card_graph
-                    entity: sensor.kantoor_temperature
-                    variables:
-                      ulm_card_graph_color: "var(--google-red)"
-                      ulm_card_graph_name: Temperatuur
-                      ulm_card_graph_entity: sensor.kantoor_temperature
-
-                  - type: custom:button-card
-                    template: card_graph
-                    entity: sensor.kantoor_humidity
-                    variables:
-                      ulm_card_graph_color: "var(--google-blue)"
-                      ulm_card_graph_name: Vochtigheid
-                      ulm_card_graph_entity: sensor.kantoor_humidity
-          # ===
-          # Kamer Kids
-          # ===
-          - type: vertical-stack
-            cards:
-              - type: custom:button-card
-                template: card_title
-                name: Kamer Kids
-
-              - type: custom:button-card
-                template: card_thermostat
-                entity: climate.slaapkamer_lore
-                variables:
-                  ulm_card_thermostat_name: Verwarming
-                  ulm_card_thermostat_enable_horizontal: true
-                  ulm_card_thermostat_enable_controls: true
-                  ulm_card_thermostat_enable_popup: true
-
-              - type: grid
-                square: false
-                columns: 2
-                cards:
-                  - type: custom:button-card
-                    template: card_graph
-                    entity: sensor.slaapkamer_lore_temperature
-                    variables:
-                      ulm_card_graph_color: "var(--google-red)"
-                      ulm_card_graph_name: Temperatuur
-                      ulm_card_graph_entity: sensor.slaapkamer_lore_temperature
-
-                  - type: custom:button-card
-                    template: card_graph
-                    entity: sensor.slaapkamer_lore_humidity
-                    variables:
-                      ulm_card_graph_color: "var(--google-blue)"
-                      ulm_card_graph_name: Vochtigheid
-                      ulm_card_graph_entity: sensor.slaapkamer_lore_humidity
-          # ===
-          # Kamer Ouders
-          # ===
-          - type: vertical-stack
-            cards:
-              - type: custom:button-card
-                template: card_title
-                name: Kamer Ouders
-
-              - type: custom:button-card
-                template: card_thermostat
-                entity: climate.slaapkamer_ouders
-                variables:
-                  ulm_card_thermostat_name: Verwarming
-                  ulm_card_thermostat_enable_horizontal: true
-                  ulm_card_thermostat_enable_controls: true
-                  ulm_card_thermostat_enable_popup: true
-
-              - type: grid
-                square: false
-                columns: 2
-                cards:
-                  - type: custom:button-card
-                    template: card_graph
-                    entity: sensor.slaapkamer_ouders_temperature
-                    variables:
-                      ulm_card_graph_color: "var(--google-red)"
-                      ulm_card_graph_name: Temperatuur
-                      ulm_card_graph_entity: sensor.slaapkamer_ouders_temperature
-
-                  - type: custom:button-card
-                    template: card_graph
-                    entity: sensor.slaapkamer_ouders_humidity
-                    variables:
-                      ulm_card_graph_color: "var(--google-blue)"
-                      ulm_card_graph_name: Vochtigheid
-                      ulm_card_graph_entity: sensor.slaapkamer_ouders_humidity
-          # ===
-          # Veranda
-          # ===
-          - type: vertical-stack
-            cards:
-              - type: custom:button-card
-                template: card_title
-                name: Veranda
-
-              - type: custom:button-card
-                template: card_thermostat
-                entity: climate.veranda
-                variables:
-                  ulm_card_thermostat_name: Verwarming
-                  ulm_card_thermostat_enable_horizontal: true
-                  ulm_card_thermostat_enable_controls: true
-                  ulm_card_thermostat_enable_popup: true
-
-              - type: grid
-                square: false
-                columns: 2
-                cards:
-                  - type: custom:button-card
-                    template: card_graph
-                    entity: sensor.veranda_temperature
-                    variables:
-                      ulm_card_graph_color: "var(--google-red)"
-                      ulm_card_graph_name: Temperatuur
-                      ulm_card_graph_entity: sensor.veranda_temperature
-
-                  - type: custom:button-card
-                    template: card_graph
-                    entity: sensor.veranda_humidity
-                    variables:
-                      ulm_card_graph_color: "var(--google-blue)"
-                      ulm_card_graph_name: Vochtigheid
-                      ulm_card_graph_entity: sensor.veranda_humidity
+      - type: "custom:auto-entities"
+        card:
+          type: entities
+        filter:
+          include:
+            - entity_id: sensor.*_humidity
+              integration: tado
