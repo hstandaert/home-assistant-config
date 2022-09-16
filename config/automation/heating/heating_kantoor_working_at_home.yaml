@@ -3,10 +3,13 @@ id: heating_kantoor_working_at_home
 mode: single
 
 trigger:
-  - platform: state
-    entity_id:
-      - input_select.heating_modes
-    to: Working at home
+  - minutes: /5
+    platform: time_pattern
+
+condition:
+  - condition: state
+    entity_id: input_select.heating_modes
+    state: Working at home
 
 action:
   - choose:

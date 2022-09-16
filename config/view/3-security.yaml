@@ -33,11 +33,11 @@ cards:
                 filename: '/shared/tuin-{{ now().strftime("%Y-%m-%d-%H%M%S") }}.jpg'
 
           - type: picture-entity
-            entity: camera.lsc_smart_indoor_camera
+            entity: camera.veranda
             camera_view: live
             tap_action:
               action: call-service
               service: camera.snapshot
               service_data:
-                entity_id: camera.lsc_smart_indoor_camera
+                entity_id: camera.veranda
                 filename: '/shared/lsccamera.lsc_smart_indoor_camera-{{ now().strftime("%Y-%m-%d-%H%M%S") }}.jpg'
