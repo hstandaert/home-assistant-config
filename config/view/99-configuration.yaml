@@ -18,10 +18,37 @@ cards:
         columns: 2
         square: false
         cards:
-          - type: 'custom:button-card'
+          - type: "custom:button-card"
             template: card_input_boolean
             entity: input_boolean.guest_mode
 
-          - type: 'custom:button-card'
+          - type: "custom:button-card"
             template: card_input_boolean
             entity: input_boolean.night_mode
+
+  # ===
+  # Links
+  # ===
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        template: card_title
+        name: Links
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: custom:button-card
+            template: card_navigate
+            variables:
+              ulm_card_navigate_path: /profile
+              ulm_card_navigate_title: Profile
+              ulm_card_navigate_icon: fas:user
+
+          - type: custom:button-card
+            template: card_navigate
+            variables:
+              ulm_card_navigate_path: /config
+              ulm_card_navigate_title: Configuration
+              ulm_card_navigate_icon: fas:cog
