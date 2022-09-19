@@ -126,7 +126,7 @@ cards:
   - type: conditional
     conditions:
       - entity: binary_sensor.media_player_activity
-        state: on
+        state: "on"
     card:
       type: vertical-stack
       cards:
