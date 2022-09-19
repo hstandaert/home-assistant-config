@@ -52,3 +52,44 @@ cards:
               ulm_card_navigate_path: /config
               ulm_card_navigate_title: Configuration
               ulm_card_navigate_icon: fas:cog
+        name: Verwarming
+
+  # ===
+  # Heating modes
+  # ===
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        template: card_title
+        name: Verwarming
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: "custom:button-card"
+            template: card_vertical_button
+            entity: input_select.heating_modes
+            name: Home
+            icon: fas:home
+            variables:
+              ulm_card_vertical_button_state: Home
+              ulm_card_vertical_button_color: green
+
+          - type: "custom:button-card"
+            template: card_vertical_button
+            entity: input_select.heating_modes
+            name: Working at home
+            icon: fas:briefcase
+            variables:
+              ulm_card_vertical_button_state: Working at home
+              ulm_card_vertical_button_color: yellow
+
+          - type: "custom:button-card"
+            template: card_vertical_button
+            entity: input_select.heating_modes
+            name: Away
+            icon: fas:running
+            variables:
+              ulm_card_vertical_button_state: Away
+              ulm_card_vertical_button_color: red

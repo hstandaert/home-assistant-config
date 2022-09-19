@@ -1,0 +1,33 @@
+alias: Heating woonkamer home
+id: heating_woonkamer_home
+mode: single
+
+trigger:
+  - platform: state
+    entity_id:
+      - input_select.heating_modes
+    to: Home
+
+action:
+  - choose:
+      - conditions:
+          - condition: time
+            after: "07:00:00"
+            before: "22:00:00"
+        sequence:
+          - service: climate.set_hvac_mode
+            data:
+              hvac_mode: heat
+            target:
+              entity_id: climate.woonkamer
+          - service: climate.set_temperature
+            data:
+              temperature: 21.5
+            target:
+              entity_id: climate.woonkamer
+    default:
+      - service: climate.set_hvac_mode
+        data:
+          hvac_mode: "off"
+        target:
+          entity_id: climate.woonkamer
