@@ -41,6 +41,7 @@ automation: !include_dir_list automation
 cover: !include misc/cover.yaml
 input_boolean: !include input/boolean.yaml
 input_number: !include input/number.yaml
+input_select: !include input/select.yaml
 light: !include_dir_merge_list light
 script: !include_dir_merge_named script
 scene: !include_dir_merge_list scene

@@ -1,0 +1,16 @@
+alias: Heating woonkamer working at home
+id: heating_woonkamer_working_at_home
+mode: single
+
+trigger:
+  - platform: state
+    entity_id:
+      - input_select.heating_modes
+    to: Working at home
+
+action:
+  - service: climate.set_hvac_mode
+    data:
+      hvac_mode: "off"
+    target:
+      entity_id: climate.woonkamer

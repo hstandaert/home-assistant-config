@@ -7,6 +7,7 @@
 !*.md
 
 !automation
+!automation/*
 !cover
 !group
 !input
