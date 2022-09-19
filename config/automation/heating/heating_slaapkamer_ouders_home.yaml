@@ -1,5 +1,5 @@
-alias: Heating slaaclimate.slaapkamer_ouders home
-id: heating_slaaclimate.slaapkamer_ouders_home
+alias: Heating slaapkamer_ouders home
+id: heating_slaapkamer_ouders_home
 mode: single
 
 trigger:
@@ -10,6 +10,9 @@ condition:
   - condition: state
     entity_id: input_select.heating_modes
     state: Home
+  - condition: state
+    entity_id: input_boolean.custom_heating
+    state: "off"
 
 action:
   - choose:

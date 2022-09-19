@@ -5,3 +5,7 @@ guest_mode:
 night_mode:
   name: Night mode
   icon: fas:cloud-moon
+
+custom_heating:
+  name: Custom heating
+  icon: fas:fire
