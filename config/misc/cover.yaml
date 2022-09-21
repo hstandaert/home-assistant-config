@@ -5,6 +5,7 @@
       friendly_name: Rolluiken Woonkamer
       device_class: shutter
       optimistic: true
+      position_template: "50"
       open_cover:
         service: script.open_living_room_covers
       close_cover:
