@@ -26,6 +26,10 @@ cards:
             template: card_input_boolean
             entity: input_boolean.night_mode
 
+          - type: "custom:button-card"
+            template: card_input_boolean
+            entity: input_boolean.custom_heating
+
   # ===
   # Links
   # ===
