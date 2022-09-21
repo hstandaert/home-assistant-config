@@ -1,0 +1,27 @@
+alias: Living room cover position
+id: living_room_cover_position
+
+trigger:
+  - platform: state
+    entity_id: timer.living_room_cover
+    from: "idle"
+    to: "active"
+
+action:
+  - repeat:
+      sequence:
+        - service: input_number.set_value
+          target:
+            entity_id: input_number.living_room_cover_position
+          data:
+            value: >
+              {% set end = state_attr('timer.living_room_cover', 'finishes_at') | as_datetime %}
+              {% set remaining_seconds = (end - now()).total_seconds() | timestamp_custom('%S', false) | float %}
+              {{ remaining_seconds / 33 * 100 | int }}
+        - delay:
+            seconds: 1
+      until:
+        # Did it work?
+        - condition: state
+          entity_id: timer.living_room_cover
+          state: "idle"
