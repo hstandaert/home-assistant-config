@@ -3,16 +3,21 @@ id: turn_off_night_mode
 mode: single
 
 trigger:
-  - platform: time
-    at: "07:30:00"
-
-  - platform: sun
-    event: sunrise
+  - platform: time_pattern
+    minutes: "/10"
 
 condition:
   - condition: state
-    entity_id: cover.living_room
-    state: closed
+    entity_id: input_boolean.night_mode
+    state: "on"
+
+  - condition: or
+    conditions:
+      - condition: time
+        after: "07:30:00"
+        before: "07:40:00"
+      - condition: sun
+        after: sunrise
 
 action:
   - service: input_boolean.turn_off

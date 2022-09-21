@@ -8,10 +8,7 @@ trigger:
       - input_boolean.night_mode
     from: "on"
     to: "off"
-condition:
-  - condition: state
-    entity_id: cover.living_room
-    state: closed
+
 action:
   - service: cover.open_cover
     target:
