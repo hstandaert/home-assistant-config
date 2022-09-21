@@ -8,6 +8,11 @@ trigger:
       - input_select.heating_modes
     to: Away
 
+condition:
+  - condition: state
+    entity_id: input_boolean.guest_mode
+    state: "off"
+
 action:
   - service: climate.set_hvac_mode
     data:
