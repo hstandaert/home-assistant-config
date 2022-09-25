@@ -61,7 +61,7 @@ cards:
                 entity: this.entity_id
                 variables:
                   ulm_card_media_player_enable_art: true
-                  ulm_card_media_player_enable_controls: true
+                  ulm_card_media_player_enable_popup: true
 
   # ===
   # Switches
@@ -229,6 +229,36 @@ cards:
                 name: Curr
                 format: precision1
                 hide_unavailable: true
+
+  # ===
+  # NAS
+  # ===
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        template: card_title
+        name: NAS
+
+      - type: "custom:button-card"
+        template: "custom_card_apexcharts"
+        variables:
+          chart_type: radialBar
+          graph_span: 1d
+          entity_1:
+            entity_id: sensor.truenas_system_temperature
+            name: Temp
+            icon: mdi:thermometer
+            color: blue
+          entity_2:
+            entity_id: sensor.truenas_system_cpu_usage
+            name: CPU
+            icon: mdi:cpu-64-bit
+            color: yellow
+          entity_3:
+            entity_id: sensor.truenas_system_memory_usage
+            name: Memory
+            icon: mdi:memory
+            color: green
 
   # ===
   # Others

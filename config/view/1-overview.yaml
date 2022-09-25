@@ -7,7 +7,7 @@ layout:
   reflow: true
 cards:
   # ===
-  # Weather
+  # General info
   # ===
   - type: vertical-stack
     cards:
@@ -27,6 +27,15 @@ cards:
             fade: true
 
       - type: custom:sun-card
+
+      - type: "custom:button-card"
+        template: card_afvalophaling
+        variables:
+          ulm_card_ophaling_vandaag: sensor.afvalinfo_waste_today
+          ulm_card_ophaling_morgen: sensor.afvalinfo_waste_tomorrow
+          ulm_card_datum_gft: sensor.afvalinfo_groente_fruit_en_tuinafval
+          ulm_card_datum_rest: sensor.afvalinfo_restafval
+          ulm_card_datum_papier: sensor.afvalinfo_papier
 
   # ===
   # Scenes
