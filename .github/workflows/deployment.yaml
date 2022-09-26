@@ -4,19 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       level:
-        description: Version bump level
+        description: Version bump
         required: true
-        default: patch
+        default: none
         type: choice
         options:
+          - none
           - major
           - minor
           - patch
-      create-release:
-        description: Create a new release
-        type: boolean
-        required: false
-        default: true
 
 env:
   local-path: config
@@ -63,7 +59,7 @@ jobs:
   create-release:
     name: Create Release
     needs: [deploy]
-    if: ${{ github.event.inputs.create-release == 'true' }}
+    if: ${{ github.event.inputs.level != 'none' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
