@@ -1,3 +1,4 @@
+---
 set_position_living_room_covers:
   alias: Set position for covers in living room
   mode: single
@@ -7,14 +8,16 @@ set_position_living_room_covers:
         # OPEN
         - conditions:
             - condition: template
-              value_template: "{{ position|int > (states('input_number.living_room_cover_position')|int + 9) }}"
+              value_template: >
+                "{{ position|int > (states('input_number.living_room_cover_position')|int + 9) }}"
           sequence:
             - service: script.turn_on
               entity_id:
                 - script.open_living_room_covers
               data_template:
                 variables:
-                  percentage: "{{ position|int - states('input_number.living_room_cover_position')|int }}"
+                  percentage: >
+                    "{{ position|int - states('input_number.living_room_cover_position')|int }}"
             - service: input_number.set_value
               target:
                 entity_id: input_number.living_room_cover_position
@@ -24,14 +27,16 @@ set_position_living_room_covers:
         # CLOSE
         - conditions:
             - condition: template
-              value_template: "{{ position|int < (states('input_number.living_room_cover_position')|int - 9) }}"
+              value_template: >
+                "{{ position|int < (states('input_number.living_room_cover_position')|int - 9) }}"
           sequence:
             - service: script.turn_on
               entity_id:
                 - script.close_living_room_covers
               data_template:
                 variables:
-                  percentage: "{{ states('input_number.living_room_cover_position')|int - position|int }}"
+                  percentage: >
+                    "{{ states('input_number.living_room_cover_position')|int - position|int }}"
             - service: input_number.set_value
               target:
                 entity_id: input_number.living_room_cover_position

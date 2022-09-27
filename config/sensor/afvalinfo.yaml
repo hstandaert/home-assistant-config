@@ -1,3 +1,4 @@
+---
 platform: afvalinfo
 resources:
   - type: gft

@@ -1,3 +1,4 @@
+---
 - platform: group
   unique_id: dining_table
   name: Eetkamer

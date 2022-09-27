@@ -1,3 +1,4 @@
+---
 binary_sensor:
   - unique_id: media_players_active
     name: Media player activity
@@ -13,7 +14,6 @@ binary_sensor:
         states.media_player.badkamer,
       ] %}
       {{ media_players | selectattr('state','eq','playing') | list | count > 0 }}
-
 
   - unique_id: anyone_home
     name: Anyone Home

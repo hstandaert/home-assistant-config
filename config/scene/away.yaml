@@ -1,3 +1,4 @@
+---
 - name: Away
   entities:
     light.dining_table:
