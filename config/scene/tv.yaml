@@ -1,3 +1,4 @@
+---
 - name: Tv
   entities:
     light.reading_lamp:

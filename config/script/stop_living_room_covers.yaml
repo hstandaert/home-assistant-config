@@ -1,3 +1,4 @@
+---
 stop_living_room_covers:
   alias: Stop covers in living room
   mode: single

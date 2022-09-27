@@ -1,9 +1,9 @@
 ---
 ignore: |
-  blueprints/*/homeassistant/*.yaml
-  custom_components/
-  ip_bans.yaml
-  themes/*.yaml
+  config/blueprints/*/homeassistant/*.yaml
+  config/custom_components/
+  config/ip_bans.yaml
+  config/themes/*.yaml
 rules:
   braces:
     level: error
@@ -29,7 +29,7 @@ rules:
   comments:
     level: error
     require-starting-space: true
-    min-spaces-from-content: 2
+    min-spaces-from-content: 1
   comments-indentation:
     level: error
   document-end:
@@ -60,7 +60,7 @@ rules:
       .github/support.yml
       .github/settings.yml
     level: warning
-    max: 88
+    max: 120
     allow-non-breakable-words: true
     allow-non-breakable-inline-mappings: true
   new-line-at-end-of-file:

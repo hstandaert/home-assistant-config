@@ -1,3 +1,4 @@
+---
 guest_mode:
   name: Guest mode
   icon: fas:house-user
