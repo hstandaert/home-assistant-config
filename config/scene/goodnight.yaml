@@ -7,7 +7,7 @@
       state: "off"
     light.reading_lamp:
       state: "off"
-    light.eettafel:
+    light.dining_table:
       state: "off"
     media_player.samsung_tv:
       state: "off"

@@ -21,9 +21,12 @@ condition:
       - condition: time
         after: "07:00:00"
         before: "07:10:00"
-      - condition: sun
-        after: sunrise
-        before: sunset
+      - condition: and
+        conditions:
+          - condition: time
+            before: "07:10:00"
+          - condition: sun
+            after: sunrise
 
 action:
   - service: input_boolean.turn_off

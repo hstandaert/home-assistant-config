@@ -7,7 +7,7 @@
       state: "off"
     media_player.samsung_tv:
       state: "off"
-    light.eettafel:
+    light.dining_table:
       brightness: 153
       color_temp: 200
       state: "on"

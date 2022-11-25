@@ -51,18 +51,15 @@ cards:
         template: "card_scenes_welcome"
         variables:
           entity_1:
-            entity_id: scene.home
-            color: green
-          entity_2:
             entity_id: scene.dinner
             color: pink
-          entity_3:
+          entity_2:
             entity_id: scene.tv
             color: blue
-          entity_4:
+          entity_3:
             entity_id: scene.goodnight
             color: purple
-          entity_5:
+          entity_4:
             entity_id: scene.away
             color: red
 
@@ -84,12 +81,14 @@ cards:
             variables:
               ulm_card_person_entity: person.helena
               ulm_card_person_use_entity_picture: true
+              ulm_card_person_battery: sensor.dn2103_battery_level
 
           - type: "custom:button-card"
             template: card_person
             variables:
               ulm_card_person_entity: person.nancy
               ulm_card_person_use_entity_picture: true
+              ulm_card_person_battery: sensor.moto_g200_5g_battery_level
 
   # ===
   # Calendar
@@ -270,6 +269,4 @@ cards:
             entity: vacuum.roomba
           - type: "custom:button-card"
             template: card_power_outlet
-            entity: switch.babyfoon_noor
-            variables:
-              ulm_card_power_outlet_icon: mdi:cradle
+            entity: switch.blanket

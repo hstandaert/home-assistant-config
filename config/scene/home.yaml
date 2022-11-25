@@ -1,6 +1,0 @@
----
-- name: Home
-  entities:
-    light.eettafel:
-      state: "on"
-  icon: fas:home
