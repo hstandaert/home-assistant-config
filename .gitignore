@@ -5,6 +5,7 @@
 !*.yaml
 !.gitignore
 !*.md
+!.HA_VERSION
 
 !automation
 !automation/*
