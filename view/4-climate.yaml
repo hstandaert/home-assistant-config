@@ -1,0 +1,240 @@
+---
+title: Climate
+path: climate
+icon: fas:thermometer-full
+cards:
+  # ===
+  # Woonkamer
+  # ===
+  - type: vertical-stack
+    title: Woonkamer
+    cards:
+      - type: thermostat
+        entity: climate.woonkamer
+      - type: entities
+        entities:
+          - entity: sensor.woonkamer_humidity
+            name: Vochtigheid
+          - entity: binary_sensor.woonkamer_open_window
+            name: Open raam
+          - entity: binary_sensor.woonkamer_link
+            name: Connectiviteit
+          - entity: sensor.woonkamer_heating
+            name: Verwarming
+          - type: divider
+          - type: buttons
+            entities:
+              - type: button
+                icon: mdi:power
+                name: Reset schema
+                tap_action:
+                  action: call-service
+                  service: automation.trigger
+                  data:
+                    entity_id: automation.heating_woonkamer_home
+        header:
+          type: custom:apexcharts-card
+          series:
+            - entity: climate.woonkamer
+              attribute: current_temperature
+              stroke_width: 2
+              type: area
+            - entity: climate.woonkamer
+              attribute: temperature
+              
+  # ===
+  # Badkamer
+  # ===
+  - type: vertical-stack
+    title: Badkamer
+    cards:
+      - type: thermostat
+        entity: climate.badkamer
+      - type: entities
+        entities:
+          - entity: sensor.badkamer_humidity
+            name: Vochtigheid
+          - entity: binary_sensor.badkamer_open_window
+            name: Open raam
+          - entity: binary_sensor.badkamer_link
+            name: Connectiviteit
+          - entity: sensor.badkamer_heating
+            name: Verwarming
+          - type: divider
+          - type: buttons
+            entities:
+              - type: button
+                icon: mdi:power
+                name: Reset schema
+                tap_action:
+                  action: call-service
+                  service: automation.trigger
+                  data:
+                    entity_id: automation.heating_badkamer_home
+        header:
+          type: custom:apexcharts-card
+          series:
+            - entity: climate.badkamer
+              attribute: current_temperature
+              stroke_width: 2
+              type: area
+            - entity: climate.badkamer
+              attribute: temperature
+              
+  # ===
+  # Kantoor
+  # ===
+  - type: vertical-stack
+    title: Kantoor
+    cards:
+      - type: thermostat
+        entity: climate.kantoor
+      - type: entities
+        entities:
+          - entity: sensor.kantoor_humidity
+            name: Vochtigheid
+          - entity: binary_sensor.kantoor_open_window
+            name: Open raam
+          - entity: binary_sensor.kantoor_link
+            name: Connectiviteit
+          - entity: sensor.kantoor_heating
+            name: Verwarming
+          - type: divider
+          - type: buttons
+            entities:
+              - type: button
+                icon: mdi:power
+                name: Reset schema
+                tap_action:
+                  action: call-service
+                  service: automation.trigger
+                  data:
+                    entity_id: automation.heating_kantoor_home
+        header:
+          type: custom:apexcharts-card
+          series:
+            - entity: climate.kantoor
+              attribute: current_temperature
+              stroke_width: 2
+              type: area
+            - entity: climate.kantoor
+              attribute: temperature
+            
+  # ===
+  # Slaapkamer Kids
+  # ===
+  - type: vertical-stack
+    title: Slaapkamer Kids
+    cards:
+      - type: thermostat
+        entity: climate.slaapkamer_lore
+      - type: entities
+        entities:
+          - entity: sensor.slaapkamer_lore_humidity
+            name: Vochtigheid
+          - entity: binary_sensor.slaapkamer_lore_open_window
+            name: Open raam
+          - entity: binary_sensor.slaapkamer_lore_link
+            name: Connectiviteit
+          - entity: sensor.slaapkamer_lore_heating
+            name: Verwarming
+          - type: divider
+          - type: buttons
+            entities:
+              - type: button
+                icon: mdi:power
+                name: Reset schema
+                tap_action:
+                  action: call-service
+                  service: automation.trigger
+                  data:
+                    entity_id: automation.heating_slaapkamer_lore_home
+        header:
+          type: custom:apexcharts-card
+          series:
+            - entity: climate.slaapkamer_lore
+              attribute: current_temperature
+              stroke_width: 2
+              type: area
+            - entity: climate.slaapkamer_lore
+              attribute: temperature
+              
+  # ===
+  # Slaapkamer Ouders
+  # ===
+  - type: vertical-stack
+    title: Slaapkamer ouders
+    cards:
+      - type: thermostat
+        entity: climate.slaapkamer_ouders
+      - type: entities
+        entities:
+          - entity: sensor.slaapkamer_ouders_humidity
+            name: Vochtigheid
+          - entity: binary_sensor.slaapkamer_ouders_open_window
+            name: Open raam
+          - entity: binary_sensor.slaapkamer_ouders_link
+            name: Connectiviteit
+          - entity: sensor.slaapkamer_ouders_heating
+            name: Verwarming
+          - type: divider
+          - type: buttons
+            entities:
+              - type: button
+                icon: mdi:power
+                name: Reset schema
+                tap_action:
+                  action: call-service
+                  service: automation.trigger
+                  data:
+                    entity_id: automation.heating_slaapkamer_ouders_home
+        header:
+          type: custom:apexcharts-card
+          series:
+            - entity: climate.slaapkamer_ouders
+              attribute: current_temperature
+              stroke_width: 2
+              type: area
+            - entity: climate.slaapkamer_ouders
+              attribute: temperature
+            
+
+  # ===
+  # Veranda
+  # ===
+  - type: vertical-stack
+    title: Veranda
+    cards:
+      - type: thermostat
+        entity: climate.veranda
+      - type: entities
+        entities:
+          - entity: sensor.veranda_humidity
+            name: Vochtigheid
+          - entity: binary_sensor.veranda_open_window
+            name: Open raam
+          - entity: binary_sensor.veranda_link
+            name: Connectiviteit
+          - entity: sensor.veranda_heating
+            name: Verwarming
+          - type: divider
+          - type: buttons
+            entities:
+              - type: button
+                icon: mdi:power
+                name: Reset schema
+                tap_action:
+                  action: call-service
+                  service: automation.trigger
+                  data:
+                    entity_id: automation.heating_veranda_home
+        header:
+          type: custom:apexcharts-card
+          series:
+            - entity: climate.veranda
+              attribute: current_temperature
+              stroke_width: 2
+              type: area
+            - entity: climate.veranda
+              attribute: temperature
+            

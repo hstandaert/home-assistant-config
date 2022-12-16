@@ -5,32 +5,14 @@ http:
     - !secret http_reverse_proxy
     - 127.0.0.1
     - ::1
-
+    
 tts:
   - platform: google_translate
 
 # ====
 # Integrations
 # ====
-application_credentials:
-cloud:
-counter:
-dhcp:
-homeassistant_alerts:
-history:
-logbook:
-map:
-mobile_app:
-my:
-network:
-person:
-ssdp:
-sun:
-system_health:
-tag:
-webhook:
-zeroconf:
-zone:
+default_config:
 
 # ====
 # Includes
@@ -40,11 +22,18 @@ cover: !include misc/cover.yaml
 input_boolean: !include input/boolean.yaml
 input_number: !include input/number.yaml
 input_select: !include input/select.yaml
-light: !include_dir_merge_list light
 script: !include_dir_merge_named script
 sensor: !include_dir_list sensor
 scene: !include_dir_merge_list scene
 template: !include_dir_merge_named template
+
+# ===
+# Camera
+# ===
+camera:
+  - platform: mjpeg
+    mjpeg_url: http://192.168.1.1:2971/camera/stream
+    name: WallPanel Camera
 
 # ====
 # User Interface

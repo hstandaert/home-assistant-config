@@ -2,105 +2,81 @@
 title: Overview
 path: overview
 icon: fas:home
-type: custom:masonry-layout
-layout:
-  max_cols: 3
-  reflow: true
 cards:
   # ===
   # General info
   # ===
   - type: vertical-stack
+    title: Algemeen
     cards:
-      - type: custom:button-card
-        template: custom_card_greeting
-        entity: sensor.greeting
-
-      - type: custom:button-card
-        template: card_weather
-        entity: weather.openweathermap
-        variables:
-          ulm_card_weather_name: " "
-          ulm_card_weather_primary_info:
-            - wind_speed
-            - precipitation_probability
-          ulm_card_weather_backdrop:
-            fade: true
-
-      - type: custom:sun-card
-
-      - type: "custom:button-card"
-        template: card_afvalophaling
-        variables:
-          ulm_card_ophaling_vandaag: sensor.afvalinfo_waste_today
-          ulm_card_ophaling_morgen: sensor.afvalinfo_waste_tomorrow
-          ulm_card_datum_gft: sensor.afvalinfo_groente_fruit_en_tuinafval
-          ulm_card_datum_rest: sensor.afvalinfo_restafval
-          ulm_card_datum_papier: sensor.afvalinfo_papier
+    - type: custom:simple-weather-card
+      entity: weather.openweathermap
+      name: " "
+      backdrop: true
+      primary_info:
+        - wind_bearing
+        - humidity
+      secondary_info:
+        - precipitation
+        - precipitation_probability
 
   # ===
   # Scenes
   # ===
-  - type: vertical-stack
+  - type: horizontal-stack
+    title: Scènes
     cards:
-      - type: custom:button-card
-        template: card_title
-        name: Scènes
-
-      - type: "custom:button-card"
-        template: "card_scenes_welcome"
-        variables:
-          entity_1:
-            entity_id: scene.dinner
-            color: pink
-          entity_2:
-            entity_id: scene.tv
-            color: blue
-          entity_3:
-            entity_id: scene.goodnight
-            color: purple
-          entity_4:
-            entity_id: scene.away
-            color: red
+      - type: button
+        entity: scene.tv
+        icon: fas:couch
+        icon_height: 20px
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+      - type: button
+        entity: scene.dinner
+        icon: fas:utensils
+        icon_height: 20px
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+      - type: button
+        entity: scene.goodnight
+        icon: fas:cloud-moon
+        icon_height: 20px
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+        
 
   # ===
   # People
   # ===
-  - type: vertical-stack
+  - type: grid
+    columns: 2
+    square: false
+    title: Personen
     cards:
-      - type: custom:button-card
-        template: card_title
-        name: Personen
+      - type: tile
+        entity: person.helena
+        show_entity_picture: true
 
-      - type: grid
-        columns: 2
-        square: false
-        cards:
-          - type: "custom:button-card"
-            template: card_person
-            variables:
-              ulm_card_person_entity: person.helena
-              ulm_card_person_use_entity_picture: true
-              ulm_card_person_battery: sensor.dn2103_battery_level
-
-          - type: "custom:button-card"
-            template: card_person
-            variables:
-              ulm_card_person_entity: person.nancy
-              ulm_card_person_use_entity_picture: true
-              ulm_card_person_battery: sensor.moto_g200_5g_battery_level
+      - type: tile
+        entity: person.nancy
+        show_entity_picture: true
 
   # ===
   # Calendar
   # ===
   - type: vertical-stack
+    title: Kalender
     view_layout:
       show:
         mediaquery: "(min-width: 800px)"
     cards:
-      - type: custom:button-card
-        template: card_title
-        name: Kalender
 
       - type: custom:atomic-calendar-revive
         showLocation: true
@@ -130,143 +106,162 @@ cards:
             name: Nancy
 
   # ===
-  # Media
-  # ===
-  - type: conditional
-    conditions:
-      - entity: binary_sensor.media_player_activity
-        state: "on"
-    card:
-      type: vertical-stack
-      cards:
-        - type: custom:button-card
-          template: card_title
-          name: Media
-
-        - type: grid
-          columns: 2
-          square: false
-          cards:
-            # Tv
-            - type: conditional
-              conditions:
-                - entity: media_player.tv
-                  state: playing
-              card:
-                type: "custom:button-card"
-                template: card_media_player
-                entity: media_player.tv
-                name: Tv
-                variables:
-                  ulm_card_media_player_enable_art: true
-                  ulm_card_media_player_enable_controls: true
-                  ulm_card_media_player_player_controls_entity: media_player.samsung_tv
-
-            # Kantoor
-            - type: conditional
-              conditions:
-                - entity: media_player.kantoor
-                  state: playing
-              card:
-                type: "custom:button-card"
-                template: card_media_player
-                entity: media_player.kantoor
-                name: Kantoor
-                variables:
-                  ulm_card_media_player_enable_art: true
-                  ulm_card_media_player_enable_controls: true
-
-            # Hub
-            - type: conditional
-              conditions:
-                - entity: media_player.hub
-                  state: playing
-              card:
-                type: "custom:button-card"
-                template: card_media_player
-                entity: media_player.hub
-                name: Hub
-                variables:
-                  ulm_card_media_player_enable_art: true
-                  ulm_card_media_player_enable_controls: true
-
-            # Badkamer
-            - type: conditional
-              conditions:
-                - entity: media_player.badkamer
-                  state: playing
-              card:
-                type: "custom:button-card"
-                template: card_media_player
-                entity: media_player.badkamer
-                name: Badkamer
-                variables:
-                  ulm_card_media_player_enable_art: true
-                  ulm_card_media_player_enable_controls: true
-
-            # Home
-            - type: conditional
-              conditions:
-                - entity: media_player.home
-                  state: playing
-              card:
-                type: "custom:button-card"
-                template: card_media_player
-                entity: media_player.home
-                name: Woonkamer
-                variables:
-                  ulm_card_media_player_enable_art: true
-                  ulm_card_media_player_enable_controls: true
-
-  # ===
   # Quick controls
   # ===
-  - type: vertical-stack
-    cards:
-      - type: custom:button-card
-        template: card_title
-        name: Apparaten
 
-      - type: grid
-        square: false
-        columns: 2
-        cards:
-          - type: "custom:button-card"
-            template: card_light
-            entity: light.dining_table
-            variables:
-              ulm_card_light_enable_slider: true
-              ulm_card_light_enable_color: true
-              ulm_card_light_force_background_color: true
-          - type: "custom:button-card"
-            template: card_light
-            entity: light.reading_lamp
-            variables:
-              ulm_card_light_enable_slider: true
-              ulm_card_light_enable_color: true
-              ulm_card_light_force_background_color: true
-          - type: "custom:button-card"
-            template: card_light
-            entity: light.led
-            variables:
-              ulm_card_light_enable_slider: true
-              ulm_card_light_enable_color: true
-              ulm_card_light_force_background_color: true
-          - type: "custom:button-card"
-            template: card_light
-            entity: light.chandelier
-            variables:
-              ulm_card_light_enable_slider: true
-              ulm_card_light_enable_color: true
-              ulm_card_light_force_background_color: true
-          - type: "custom:button-card"
-            template: card_cover
-            entity: cover.living_room
-            variables:
-              ulm_card_cover_enable_controls: true
-          - type: custom:button-card
-            template: card_vacuum
-            entity: vacuum.roomba
-          - type: "custom:button-card"
-            template: card_power_outlet
-            entity: switch.blanket
+  - type: grid
+    square: false
+    title: Apparaten
+    columns: 2
+    cards:
+      - type: tile
+        entity: light.dining_table
+      - type: tile
+        entity: light.reading_lamp
+      - type: tile
+        entity: light.chandelier
+      - type: tile
+        entity: switch.blanket
+      - type: tile
+        entity: switch.christmas_tree
+      - type: tile
+        entity: cover.living_room
+        features:
+          - type: cover-open-close
+
+  # ===
+  # Climate
+  # ===
+  - type: vertical-stack
+    title: Verwarming
+    cards:
+      - type: entities
+        entities:
+          - type: custom:multiple-entity-row
+            entity: climate.woonkamer
+            name: "Woonkamer"
+            toggle: true
+            state_color: true
+            entities:
+              - attribute: temperature
+                name: Temp
+                format: precision1
+                hide_unavailable: true
+                hide_if:
+                  below: 6
+              - attribute: current_humidity
+                name: Hum
+                format: precision0
+                hide_unavailable: true
+                unit: "%"
+              - attribute: current_temperature
+                name: Curr
+                format: precision1
+                hide_unavailable: true
+          - type: custom:multiple-entity-row
+            entity: climate.badkamer
+            name: "Badkamer"
+            toggle: true
+            state_color: true
+            entities:
+              - attribute: temperature
+                name: Temp
+                format: precision1
+                hide_unavailable: true
+                hide_if:
+                  below: 6
+              - attribute: current_humidity
+                name: Hum
+                format: precision0
+                hide_unavailable: true
+                unit: "%"
+              - attribute: current_temperature
+                name: Curr
+                format: precision1
+                hide_unavailable: true
+          - type: custom:multiple-entity-row
+            entity: climate.kantoor
+            name: "Kantoor"
+            toggle: true
+            state_color: true
+            entities:
+              - attribute: temperature
+                name: Temp
+                format: precision1
+                hide_unavailable: true
+                hide_if:
+                  below: 6
+              - attribute: current_humidity
+                name: Hum
+                format: precision0
+                hide_unavailable: true
+                unit: "%"
+              - attribute: current_temperature
+                name: Curr
+                format: precision1
+                hide_unavailable: true
+          - type: custom:multiple-entity-row
+            entity: climate.veranda
+            name: "Veranda"
+            toggle: true
+            state_color: true
+            entities:
+              - attribute: temperature
+                name: Temp
+                format: precision1
+                hide_unavailable: true
+                hide_if:
+                  below: 6
+              - attribute: current_humidity
+                name: Hum
+                format: precision0
+                hide_unavailable: true
+                unit: "%"
+              - attribute: current_temperature
+                name: Curr
+                format: precision1
+                hide_unavailable: true
+
+          - type: section
+          - type: custom:multiple-entity-row
+            entity: climate.slaapkamer_lore
+            name: "Slaapkamer Kids"
+            toggle: true
+            state_color: true
+            entities:
+              - attribute: temperature
+                name: Temp
+                format: precision1
+                hide_unavailable: true
+                hide_if:
+                  below: 6
+              - attribute: current_humidity
+                name: Hum
+                format: precision0
+                hide_unavailable: true
+                unit: "%"
+              - attribute: current_temperature
+                name: Curr
+                format: precision1
+                hide_unavailable: true
+          - type: custom:multiple-entity-row
+            entity: climate.slaapkamer_ouders
+            name: "Slaapkamer Ouders"
+            toggle: true
+            state_color: true
+            entities:
+              - attribute: temperature
+                name: Temp
+                format: precision1
+                hide_unavailable: true
+                hide_if:
+                  below: 6
+              - attribute: current_humidity
+                name: Hum
+                format: precision0
+                hide_unavailable: true
+                unit: "%"
+              - attribute: current_temperature
+                name: Curr
+                format: precision1
+                hide_unavailable: true
