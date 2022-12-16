@@ -7,6 +7,6 @@ night_mode:
   name: Night mode
   icon: fas:cloud-moon
 
-custom_heating:
-  name: Custom heating
-  icon: fas:fire
+working_from_home:
+  name: Working from home
+  icon: fas:house-laptop

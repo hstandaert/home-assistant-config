@@ -5,7 +5,7 @@ http:
     - !secret http_reverse_proxy
     - 127.0.0.1
     - ::1
-    
+
 tts:
   - platform: google_translate
 
@@ -26,14 +26,6 @@ script: !include_dir_merge_named script
 sensor: !include_dir_list sensor
 scene: !include_dir_merge_list scene
 template: !include_dir_merge_named template
-
-# ===
-# Camera
-# ===
-camera:
-  - platform: mjpeg
-    mjpeg_url: http://192.168.1.1:2971/camera/stream
-    name: WallPanel Camera
 
 # ====
 # User Interface
