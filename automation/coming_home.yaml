@@ -10,7 +10,7 @@ trigger:
 
 action:
   - condition: state
-    entity_id: input_boolean.guest_mode
+    entity_id: input_boolean.house_mode_guest
     state: "off"
 
   - service: input_select.select_option

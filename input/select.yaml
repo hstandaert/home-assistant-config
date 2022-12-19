@@ -1,7 +1,0 @@
----
-heating_modes:
-  name: Heating modes
-  options:
-    - "Home"
-    - "Working at home"
-    - "Away"

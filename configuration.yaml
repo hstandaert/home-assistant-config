@@ -1,73 +1,11 @@
 ---
-http:
-  use_x_forwarded_for: true
-  trusted_proxies:
-    - !secret http_reverse_proxy
-    - 127.0.0.1
-    - ::1
-
-tts:
-  - platform: google_translate
-
-# ====
-# Integrations
-# ====
-default_config:
-
-# ====
-# Includes
-# ====
-automation: !include_dir_list automation
-cover: !include misc/cover.yaml
-input_boolean: !include input/boolean.yaml
-input_number: !include input/number.yaml
-input_select: !include input/select.yaml
-script: !include_dir_merge_named script
-sensor: !include_dir_list sensor
-scene: !include_dir_merge_list scene
-template: !include_dir_merge_named template
-
-# ====
-# User Interface
-# ====
-frontend:
-  themes: !include_dir_merge_named themes
-
-# ====
-# Dashboards
-# ====
-lovelace:
-  mode: yaml
-  dashboards:
-    tablet-dashboard:
-      mode: yaml
-      title: Tablet Dashboard
-      show_in_sidebar: true
-      filename: ui-tablet.yaml
-  resources:
-    - url: /hacsfiles/atomic-calendar-revive/atomic-calendar-revive.js
-      type: module
-    - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
-      type: module
-    - url: /hacsfiles/button-card/button-card.js
-      type: module
-    - url: /hacsfiles/lovelace-card-mod/card-mod.js
-      type: module
-    - url: /hacsfiles/home-assistant-sun-card/home-assistant-sun-card.js
-      type: module
-    - url: /hacsfiles/light-entity-card/light-entity-card.js
-      type: module
-    - url: /hacsfiles/lovelace-layout-card/layout-card.js
-      type: module
-    - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
-      type: module
-    - url: /hacsfiles/mini-media-player/mini-media-player-bundle.js
-      type: module
-    - url: /hacsfiles/my-cards/my-cards.js
-      type: module
-    - url: /hacsfiles/simple-weather-card/simple-weather-card-bundle.js
-      type: module
-    - url: /hacsfiles/lovelace-multiple-entity-row/multiple-entity-row.js
-      type: module
-    - url: /hacsfiles/apexcharts-card/apexcharts-card.js
-      type: module
+# Welcome to my Home Assistant configuration!
+#
+# This is heavily inspired by @frenck's configuration, so any credits on the
+# code structure goes to him. You can find it at https://github.com/frenck/home-assistant-config
+#
+# The configuration.yaml is only used to bootstrap the system.
+#
+homeassistant:
+  # Load packages
+  packages: !include_dir_named integrations

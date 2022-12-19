@@ -1,12 +1,12 @@
 ---
 alias: Heating (Working from home)
-id: heating_working_from_home
+id: heating_house_mode_working_remote
 mode: single
 
 trigger:
   - platform: state
     entity_id:
-      - input_boolean.working_from_home
+      - input_boolean.house_mode_working_remote
     from: "off"
     to: "on"
 
@@ -28,4 +28,4 @@ action:
       hours: 8
   - service: input_boolean.turn_off
     target:
-      entity_id: input_boolean.working_from_home
+      entity_id: input_boolean.house_mode_working_remote

@@ -1,6 +1,6 @@
 ---
 alias: Turn off night mode
-id: turn_off_night_mode
+id: turn_off_house_mode_night
 mode: single
 
 trigger:
@@ -9,7 +9,7 @@ trigger:
 
 condition:
   - condition: state
-    entity_id: input_boolean.night_mode
+    entity_id: input_boolean.house_mode_night
     state: "on"
 
   - condition: state
@@ -31,4 +31,4 @@ condition:
 action:
   - service: input_boolean.turn_off
     target:
-      entity_id: input_boolean.night_mode
+      entity_id: input_boolean.house_mode_night

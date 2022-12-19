@@ -1,18 +1,38 @@
+---
 name: Continuous Integration
 
-on: [push, pull_request]
+# yamllint disable-line rule:truthy
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: 0 12 * * *
 
 jobs:
-  validate:
-    name: Validate Home Assistant configuration
+  yamllint:
+    name: 🧹 yamllint
     runs-on: ubuntu-latest
-    container: homeassistant/amd64-homeassistant
     steps:
       - name: ⤵️ Check out repository
         uses: actions/checkout@v3
 
-      - name: 🔒 Create fake secrets file
-        run: cp secrets.default.yaml secrets.yaml
+      - name: 🚀 Run yamllint
+        uses: frenck/action-yamllint@v1.3.1
 
-      - name: 🚀 Run check_config
-        run: hass --script check_config -c ./config
+  home-assistant:
+    name: "Home Assistant Core ${{ matrix.version }} Configuration Check"
+    needs: [yamllint]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ["stable", "beta", "dev"]
+    steps:
+      - name: ⤵️ Check out repository
+        uses: actions/checkout@v3
+
+      - name: 🚀 Run Home Assistant Configuration Check
+        uses: frenck/action-home-assistant@v1.4
+        with:
+          path: "."
+          secrets: ./secrets.default.yaml
+          version: "${{ matrix.version }}"

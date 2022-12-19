@@ -6,7 +6,7 @@ mode: single
 trigger:
   - platform: state
     entity_id:
-      - input_boolean.night_mode
+      - input_boolean.house_mode_night
     from: "on"
     to: "off"
 
