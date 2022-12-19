@@ -1,0 +1,35 @@
+---
+alias: Open covers in living room
+mode: single
+
+fields:
+  percentage:
+    description: "The position of the cover"
+    default: "100"
+    example: "50"
+
+sequence:
+  - service: switch.turn_off
+    target:
+      entity_id:
+        - switch.cover_living_room_small_down
+        - switch.cover_living_room_down
+
+  - delay:
+      milliseconds: 1000
+
+  - service: switch.turn_on
+    target:
+      entity_id:
+        - switch.cover_living_room_small_up
+        - switch.cover_living_room_up
+
+  - delay:
+      # Takes 33s to open
+      milliseconds: "{{ percentage|int * 330 }}"
+
+  - service: switch.turn_off
+    target:
+      entity_id:
+        - switch.cover_living_room_small_up
+        - switch.cover_living_room_up

@@ -1,0 +1,35 @@
+---
+alias: Turn on night mode
+id: turn_on_house_mode_night
+mode: single
+
+trigger:
+  - platform: time_pattern
+    minutes: "/10"
+
+condition:
+  - condition: state
+    entity_id: input_boolean.house_mode_night
+    state: "off"
+
+  - condition: state
+    entity_id: binary_sensor.anyone_home
+    state: "on"
+
+  - condition: or
+    conditions:
+      - condition: time
+        after: "22:00:00"
+        before: "22:10:00"
+      - condition: and
+        conditions:
+          - condition: time
+            after: "17:00:00"
+          - condition: sun
+            after: sunset
+            after_offset: 30
+
+action:
+  - service: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.house_mode_night

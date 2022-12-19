@@ -1,0 +1,11 @@
+---
+# Welcome to my Home Assistant configuration!
+#
+# This is heavily inspired by @frenck's configuration, so any credits on the
+# code structure goes to him. You can find it at https://github.com/frenck/home-assistant-config
+#
+# The configuration.yaml is only used to bootstrap the system.
+#
+homeassistant:
+  # Load packages
+  packages: !include_dir_named integrations

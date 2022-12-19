@@ -1,7 +1,0 @@
----
-living_room_cover_position:
-  name: Living room cover position
-  min: 0
-  max: 100
-  step: 1
-  unit_of_measurement: "%"

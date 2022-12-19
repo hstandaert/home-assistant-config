@@ -1,5 +1,0 @@
----
-custom_card_greeting:
-  template: card_title
-  name: >
-    [[[ return entity.state ]]]

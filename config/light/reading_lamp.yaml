@@ -1,8 +1,0 @@
----
-- platform: group
-  name: Leeslamp
-  unique_id: reading_lamp
-  entities:
-    - light.reading_lamp_1
-    - light.reading_lamp_2
-    - light.reading_lamp_3

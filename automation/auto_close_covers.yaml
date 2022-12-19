@@ -1,0 +1,16 @@
+---
+alias: Auto close covers
+id: auto_close_covers
+mode: single
+
+trigger:
+  - platform: state
+    entity_id:
+      - input_boolean.house_mode_night
+    from: "off"
+    to: "on"
+
+action:
+  - service: cover.close_cover
+    target:
+      entity_id: cover.living_room
