@@ -1,0 +1,55 @@
+---
+alias: Automatic HVAC
+id: auto_hvac
+
+trigger:
+  - platform: homeassistant
+    event: start
+
+  - platform: event
+    event_type: automation_reloaded
+
+  - platform: state
+    entity_id: binary_sensor.anyone_home
+    from: ~
+
+variables:
+  anchors:
+    - &target
+      target:
+        entity_id:
+          - climate.badkamer
+          - climate.kantoor
+          - climate.slaapkamer_lore
+          - climate.slaapkamer_ouders
+          - climate.veranda
+          - climate.woonkamer
+
+    - &turn_on
+      <<: *target
+      alias: "Turn on heating"
+      service: climate.set_hvac_mode
+      data:
+        hvac_mode: "auto"
+
+    - &turn_off
+      <<: *target
+      alias: "Turn off heating"
+      service: climate.set_hvac_mode
+      data:
+        hvac_mode: "off"
+
+action:
+  - choose:
+      - alias: "When no-one is home"
+        condition: state
+        entity_id: binary_sensor.anyone_home
+        state: "off"
+        sequence:
+          - *turn_off
+      - alias: "When someone is home"
+        condition: state
+        entity_id: binary_sensor.anyone_home
+        state: "on"
+        sequence:
+          - *turn_on
