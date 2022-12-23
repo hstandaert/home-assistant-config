@@ -50,16 +50,26 @@ action:
   - alias: "choose alias (name)"
     choose:
       - conditions:
-          - condition: sun
+          - alias: "When the sun is up"
+            condition: sun
             before: sunset
             after: sunrise
             after_offset: *sunrise_offset
+          - alias: "The covers are closed"
+            condition: state
+            entity_id: cover.living_room
+            state: closed
         sequence:
           - *open
 
       - conditions:
-          - condition: sun
+          - alias: "When the sun is set"
+            condition: sun
             after: sunset
             after_offset: *sunset_offset
+          - alias: "The covers are open"
+            condition: state
+            entity_id: cover.living_room
+            state: open
         sequence:
           - *close
