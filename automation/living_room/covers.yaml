@@ -1,0 +1,65 @@
+---
+alias: Covers
+description: >-
+  Controls the living room covers and automatically opens/closes them on
+  set times.
+id: "749d28e5-d9ba-46cb-b1b3-298e378ee450"
+mode: queued
+
+trigger:
+  - platform: homeassistant
+    event: start
+
+  - platform: event
+    event_type:
+      - automation_reloaded
+
+  - platform: sun
+    event: sunrise
+    offset: &sunrise_offset "00:30:00"
+
+  - platform: sun
+    event: sunset
+    offset: &sunset_offset "01:00:00"
+
+  - platform: state
+    entity_id: binary_sensor.anyone_home
+    from: "off"
+    to: "on"
+
+condition:
+  - condition: state
+    entity_id: binary_sensor.anyone_home
+    state: "on"
+
+variables:
+  anchors:
+    - &target
+      target:
+        entity_id: cover.living_room
+
+    - &close
+      <<: *target
+      service: cover.close_cover
+
+    - &open
+      <<: *target
+      service: cover.open_cover
+
+action:
+  - alias: "choose alias (name)"
+    choose:
+      - conditions:
+          - condition: sun
+            before: sunset
+            after: sunrise
+            after_offset: *sunrise_offset
+        sequence:
+          - *open
+
+      - conditions:
+          - condition: sun
+            after: sunset
+            after_offset: *sunset_offset
+        sequence:
+          - *close
