@@ -1,0 +1,26 @@
+---
+alias: Electrical blanket
+description: >-
+  Because we like to be warm when going to bed, we automatically turn on the heating
+  blanket at a certain time
+id: "35453a32-ee1d-405e-b302-35656b2de25c"
+mode: single
+
+trigger:
+  - platform: time
+    at: "21:00:00"
+
+condition:
+  - condition: state
+    entity_id: binary_sensor.anyone_home
+    state: "on"
+
+  - alias: "When it's cold in the bedroom"
+    condition: numeric_state
+    entity_id: sensor.slaapkamer_ouders_temperature
+    below: 18
+
+action:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.blanket

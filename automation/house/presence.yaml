@@ -1,0 +1,40 @@
+---
+alias: Presence
+description: >-
+  Turns off all the lights and devices when leaving the house
+id: "820a790e-db97-43ac-98b5-f5a8a678c6b6"
+mode: single
+
+trigger:
+  - platform: state
+    entity_id: binary_sensor.anyone_home
+    to: "off"
+
+condition:
+  - condition: state
+    entity_id: input_boolean.house_mode_guest
+    state: "off"
+
+action:
+  - delay:
+      minutes: 1
+
+  - alias: "Turn off all the lights"
+    service: light.turn_off
+    target:
+      entity_id: all
+
+  - alias: "Stop playing on Google devices"
+    service: media_player.media_stop
+    target:
+      entity_id:
+        - media_player.badkamer
+        - media_player.home
+        - media_player.hub
+        - media_player.kantoor
+        - media_player.tv
+
+  - alias: "Turn off TV"
+    service: media_player.turn_off
+    target:
+      entity_id: media_player.living_room
