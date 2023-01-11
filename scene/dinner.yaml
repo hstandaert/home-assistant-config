@@ -5,7 +5,7 @@
       state: "off"
     light.chandelier:
       state: "off"
-    media_player.samsung_tv:
+    media_player.living_room:
       state: "off"
     light.dining_table:
       brightness: 153

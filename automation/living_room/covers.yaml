@@ -47,8 +47,7 @@ variables:
       service: cover.open_cover
 
 action:
-  - alias: "choose alias (name)"
-    choose:
+  - choose:
       - conditions:
           - alias: "When the sun is up"
             condition: sun

@@ -1,0 +1,20 @@
+---
+alias: Set lovelace theme
+description: >-
+  Sets the front-end theme from light to dark at set times
+id: "c25de69a-e785-40d5-94bf-7506f2b61961"
+
+trigger:
+  - platform: homeassistant
+    event: start
+  - platform: event
+    event_type: automation_reload
+  - platform: state
+    entity_id: sun.sun
+
+action:
+  - service: frontend.set_theme
+    data:
+      name: Google Theme
+      mode: >
+        {{ "light" if is_state("sun.sun", "above_horizon") else "dark" }}

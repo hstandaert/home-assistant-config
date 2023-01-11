@@ -1,0 +1,30 @@
+---
+alias: "Living Room Vacuum"
+description: >-
+  Controls the living room vacuum.
+
+id: "88c6f127-5b1f-439e-b911-5a5bed90f45a"
+mode: queued
+
+trigger:
+  - platform: state
+    entity_id:
+      - binary_sensor.anyone_home
+      - vacuum.living_room
+
+condition:
+  - alias: "When house not in guest mode"
+    condition: state
+    entity_id: input_boolean.house_mode_guest
+    state: "off"
+
+  - alias: "When everyone left the house"
+    condition: state
+    entity_id: binary_sensor.anyone_home
+    state: "off"
+
+action:
+  - alias: "Start cleaning!"
+    service: vacuum.start
+    target:
+      entity_id: vacuum.roomba

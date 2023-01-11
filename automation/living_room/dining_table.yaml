@@ -1,0 +1,45 @@
+---
+alias: Dining table brightness
+description: >-
+  Sets the colour and brightness for the light above the dining table.
+
+  Since we can't set the brightness when the light is on, we'll have to update it when
+  the light is turned on. Not ideal, but does the job.
+id: "6d79af7d-b9e3-4da6-8b29-a1c307603b1e"
+mode: queued
+
+trigger:
+  - platform: state
+    entity_id: light.dining_table
+    to: "on"
+
+variables:
+  anchors:
+    - &action
+      service: light.turn_on
+      target:
+        entity_id: light.dining_table
+
+action:
+  - choose:
+      - conditions:
+          - alias: "When sun is down"
+            condition: sun
+            after: sunset
+            after_offset: "01:00:00"
+
+          - alias: "After 8 o'clock"
+            condition: time
+            after: "20:00:00"
+        sequence:
+          - alias: "Low light"
+            <<: *action
+            data:
+              color_temp: 430
+              brightness_pct: 40
+    default:
+      - alias: "Bright light"
+        <<: *action
+        data:
+          color_temp: 153
+          brightness_pct: 80
