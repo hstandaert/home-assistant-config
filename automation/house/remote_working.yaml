@@ -5,32 +5,56 @@ mode: single
 
 trigger:
   - platform: state
+    id: turn_on
     entity_id:
       - input_boolean.house_mode_working_remote
     from: "off"
     to: "on"
+
+  - platform: time
+    id: turn_off
+    at: "17:00:00"
 
 condition:
   - condition: state
     entity_id: binary_sensor.anyone_home
     state: "on"
 
+variables:
+  anchors:
+    - &turn_on
+      sequence:
+        - service: climate.set_temperature
+          data:
+            temperature: 21.5
+          target:
+            entity_id: climate.kantoor
+
+    - &turn_off
+      sequence:
+        - service: climate.set_preset_mode
+          data:
+            preset_mode: "home"
+          target:
+            entity_id: climate.kantoor
+
+        - service: input_boolean.turn_off
+          target:
+            entity_id: input_boolean.house_mode_working_remote
+
 action:
-  - service: climate.set_temperature
-    data:
-      temperature: 21.5
-    target:
-      entity_id: climate.kantoor
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: turn_on
 
-  - delay:
-      hours: 8
+        <<: *turn_on
 
-  - service: climate.set_preset_mode
-    data:
-      temperature: 21.5
-    target:
-      entity_id: climate.kantoor
+      - conditions:
+          - condition: trigger
+            id: turn_off
+          - condition: state
+            entity_id: input_boolean.house_mode_working_remote
+            state: "on"
 
-  - service: input_boolean.turn_off
-    target:
-      entity_id: input_boolean.house_mode_working_remote
+        <<: *turn_off
