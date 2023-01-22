@@ -30,16 +30,16 @@ variables:
     - &turn_on
       <<: *target
       alias: Turn on heating
-      service: climate.set_hvac_mode
+      service: climate.set_preset_mode
       data:
-        hvac_mode: auto
+        preset_mode: "home"
 
     - &turn_off
       <<: *target
       alias: Turn off heating
-      service: climate.set_hvac_mode
+      service: climate.set_preset_mode
       data:
-        hvac_mode: "off"
+        preset_mode: "away"
 
 action:
   - choose:
