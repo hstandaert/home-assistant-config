@@ -15,11 +15,6 @@ trigger:
     id: turn_off
     at: "17:00:00"
 
-condition:
-  - condition: state
-    entity_id: binary_sensor.anyone_home
-    state: "on"
-
 variables:
   anchors:
     - &turn_on
@@ -47,6 +42,10 @@ action:
       - conditions:
           - condition: trigger
             id: turn_on
+
+          - condition: state
+            entity_id: binary_sensor.anyone_home
+            state: "on"
 
         <<: *turn_on
 
