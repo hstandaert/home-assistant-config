@@ -15,11 +15,6 @@ condition:
     entity_id: binary_sensor.anyone_home
     state: "on"
 
-  - alias: "When it's cold in the bedroom"
-    condition: numeric_state
-    entity_id: sensor.slaapkamer_ouders_temperature
-    below: 18
-
 action:
   - service: switch.turn_on
     target:
