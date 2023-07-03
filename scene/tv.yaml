@@ -3,10 +3,6 @@
   entities:
     light.reading_lamp:
       state: "on"
-    light.dining_table:
-      state: "off"
-    light.chandelier:
-      state: "off"
-    media_player.samsung_tv:
+    media_player.tv:
       state: "on"
   icon: fas:tv
