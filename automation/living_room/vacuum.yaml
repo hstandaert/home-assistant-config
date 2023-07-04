@@ -10,7 +10,7 @@ trigger:
   - platform: state
     entity_id:
       - binary_sensor.anyone_home
-      - vacuum.living_room
+      - vacuum.rosie
 
 condition:
   - alias: "When house not in guest mode"
@@ -27,4 +27,4 @@ action:
   - alias: "Start cleaning!"
     service: vacuum.start
     target:
-      entity_id: vacuum.roomba
+      entity_id: vacuum.rosie
