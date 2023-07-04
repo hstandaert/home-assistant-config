@@ -5,4 +5,4 @@
       state: "on"
     media_player.tv:
       state: "on"
-  icon: fas:tv
+  icon: mdi:remote-tv
