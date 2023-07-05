@@ -7,5 +7,6 @@
 # The configuration.yaml is only used to bootstrap the system.
 #
 homeassistant:
+  external_url: !secret external_url
   # Load packages
   packages: !include_dir_named integrations
