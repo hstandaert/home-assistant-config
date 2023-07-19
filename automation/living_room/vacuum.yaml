@@ -10,7 +10,6 @@ trigger:
   - platform: state
     entity_id:
       - binary_sensor.anyone_home
-      - vacuum.rosie
 
 condition:
   - alias: "When house not in guest mode"
@@ -18,13 +17,37 @@ condition:
     entity_id: input_boolean.house_mode_guest
     state: "off"
 
-  - alias: "When everyone left the house"
-    condition: state
-    entity_id: binary_sensor.anyone_home
-    state: "off"
+variables:
+  anchors:
+    - &target
+      target:
+        entity_id: vacuum.rosie
+
+    - &turn_on
+      <<: *target
+      service: vacuum.start
+
+    - &return
+      <<: *target
+      service: vacuum.return_to_base
 
 action:
-  - alias: "Start cleaning!"
-    service: vacuum.start
-    target:
-      entity_id: vacuum.rosie
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id: binary_sensor.anyone_home
+            state: "on"
+          - condition: not
+            conditions:
+              - condition: state
+                entity_id: vacuum.rosie
+                state: docked
+        sequence:
+          - *return
+
+      - conditions:
+          - condition: state
+            entity_id: binary_sensor.anyone_home
+            state: "off"
+        sequence:
+          - *turn_on
