@@ -1,0 +1,22 @@
+---
+alias: Turn off all devices
+description: >-
+  A re-usable snippet that turns off all lights, media and switches.
+icon: mdi:power-plug-off
+mode: single
+
+sequence:
+  - alias: "Turn off all the lights"
+    service: light.turn_off
+    target:
+      entity_id: all
+
+  - alias: "Stop playing media"
+    service: media_player.media_stop
+    target:
+      entity_id: all
+
+  - alias: "Turn off switches"
+    service: switch.turn_off
+    target:
+      entity_id: all
