@@ -1,0 +1,7 @@
+---
+# The rest_command component can expose regular REST commands as services.
+# Services can be called from a script or in automation.
+#
+# https://www.home-assistant.io/integrations/rest_command/
+#
+rest_command: !include_dir_named ../rest
