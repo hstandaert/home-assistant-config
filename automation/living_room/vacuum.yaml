@@ -7,15 +7,29 @@ id: "88c6f127-5b1f-439e-b911-5a5bed90f45a"
 mode: queued
 
 trigger:
-  - platform: state
+  - id: presence
+    platform: state
     entity_id:
       - binary_sensor.anyone_home
+  - id: arm
+    platform: time
+    at: "00:00:00"
+  - id: disarm
+    platform: state
+    entity_id:
+      - vacuum.rosie
+    to: docked
 
 condition:
   - alias: "When house not in guest mode"
     condition: state
     entity_id: input_boolean.house_mode_guest
     state: "off"
+
+  - alias: "When the vacuum is armed"
+    condition: state
+    entity_id: input_boolean.vacuum_armed
+    state: "on"
 
 variables:
   anchors:
@@ -31,9 +45,23 @@ variables:
       <<: *target
       service: vacuum.return_to_base
 
+    - &input_boolean
+      target:
+        entity_id: input_boolean.vacuum_armed
+
+    - &arm
+      <<: *input_boolean
+      service: input_boolean.turn_on
+
+    - &disarm
+      <<: *input_boolean
+      service: input_boolean.turn_off
+
 action:
   - choose:
       - conditions:
+          - condition: trigger
+            id: presence
           - condition: state
             entity_id: binary_sensor.anyone_home
             state: "on"
@@ -46,8 +74,22 @@ action:
           - *return
 
       - conditions:
+          - condition: trigger
+            id: presence
           - condition: state
             entity_id: binary_sensor.anyone_home
             state: "off"
         sequence:
           - *turn_on
+
+      - conditions:
+          - condition: trigger
+            id: arm
+        sequence:
+          - *arm
+
+      - conditions:
+          - condition: trigger
+            id: disarm
+        sequence:
+          - *disarm

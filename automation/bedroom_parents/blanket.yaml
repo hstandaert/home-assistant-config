@@ -17,7 +17,7 @@ condition:
 
   - condition: numeric_state
     entity_id: sensor.openweathermap_feels_like_temperature
-    below: 16
+    below: 14
 
 action:
   - service: switch.turn_on
