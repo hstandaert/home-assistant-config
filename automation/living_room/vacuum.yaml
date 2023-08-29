@@ -26,11 +26,6 @@ condition:
     entity_id: input_boolean.house_mode_guest
     state: "off"
 
-  - alias: "When the vacuum is armed"
-    condition: state
-    entity_id: input_boolean.vacuum_armed
-    state: "on"
-
 variables:
   anchors:
     - &target
@@ -79,6 +74,9 @@ action:
           - condition: state
             entity_id: binary_sensor.anyone_home
             state: "off"
+          - condition: state
+            entity_id: input_boolean.vacuum_armed
+            state: "on"
         sequence:
           - *turn_on
 
