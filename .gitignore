@@ -19,6 +19,7 @@ core
 image
 ip_bans.yaml
 secrets.yaml
+.HA_VERSION
 
 # Built-in blueprints ignores
 blueprints/*/homeassistant
