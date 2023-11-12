@@ -1,0 +1,27 @@
+---
+#
+# A washing machine “load running” sensor by monitoring an energy meter connected to the washer
+#
+sensor:
+  - unique_id: washing_machine
+    name: Washing Machine
+    icon: mdi:washing-machine
+    state: >-
+      {% if is_state("sensor.wasmachine_washer_machine_state", "run") -%}
+        on
+      {%- else -%}
+        off
+      {%- endif %}
+    attributes:
+      job: >-
+        {% if is_state("sensor.wasmachine_washer_machine_state", "run") -%}
+          {{ states("sensor.wasmachine_washer_job_state") }}
+        {%- else -%}
+          off
+        {%- endif %}
+      completion_time: >-
+        {% if is_state("sensor.wasmachine_washer_machine_state", "run") -%}
+          {{ states("sensor.wasmachine_washer_completion_time") }}
+        {%- else -%}
+          0
+        {%- endif %}
