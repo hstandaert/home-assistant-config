@@ -15,13 +15,13 @@ sensor:
     attributes:
       job: >-
         {% if is_state("sensor.wasmachine_washer_machine_state", "run") -%}
-          {{ states("sensor.wasmachine_washer_job_state") }}
+          {{ states("sensor.wasmachine_washer_job_state")|capitalize }}
         {%- else -%}
-          off
+          none
         {%- endif %}
       completion_time: >-
         {% if is_state("sensor.wasmachine_washer_machine_state", "run") -%}
-          {{ states("sensor.wasmachine_washer_completion_time") }}
+          {{ as_timestamp(states("sensor.wasmachine_washer_completion_time"))| timestamp_custom('%H:%M') }}
         {%- else -%}
           0
         {%- endif %}
