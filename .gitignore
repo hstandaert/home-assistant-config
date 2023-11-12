@@ -12,14 +12,16 @@ __pycache__
 .cloud
 .storage
 deps
+lsiopy
 
 # Specific file ignores
 core
 image
 ip_bans.yaml
 secrets.yaml
+.HA_VERSION
 
-# Build-in blueprints ignores
+# Built-in blueprints ignores
 blueprints/*/homeassistant
 
 # ESPHome ignores
@@ -42,6 +44,3 @@ www/community
 
 # Specific keeps
 !.gitkeep
-
-# Temporary ignores
-.old_config

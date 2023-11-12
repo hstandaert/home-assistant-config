@@ -21,7 +21,9 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
+          script_stop: true
           script: |
             cd ${{ secrets.SERVER_PATH }}
+            git checkout ${{ github.ref_name }}
             git pull
             sudo docker restart HomeAssistant

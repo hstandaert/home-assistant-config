@@ -1,0 +1,65 @@
+---
+alias: "Washing machine"
+description: >-
+  Sends notifications when the washing machine is done.
+
+id: "237c603b-ccac-4976-8d10-cd0c7f8000c1"
+mode: queued
+
+trigger:
+  - id: job_finished
+    platform: state
+    entity_id:
+      - switch.wasmachine
+    from: "on"
+    to: "off"
+
+  - id: notify
+    platform: time_pattern
+    minutes: /15
+
+condition:
+  - alias: "When house not in guest mode"
+    condition: state
+    entity_id: input_boolean.house_mode_guest
+    state: "off"
+
+variables:
+  anchors:
+    - &input_boolean
+      target:
+        entity_id: input_boolean.washing_machine_finished
+
+    - &enable_notifications
+      <<: *input_boolean
+      service: input_boolean.turn_on
+
+    - &disable_notifications
+      <<: *input_boolean
+      service: input_boolean.turn_off
+
+    - &notify
+      service: notify.notify
+      data:
+        message: De wasmachine is klaar en moet geleegd worden
+
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: job_finished
+        sequence:
+          - *enable_notifications
+          - *notify
+
+      - conditions:
+          - condition: trigger
+            id: notify
+          - condition: state
+            entity_id: binary_sensor.anyone_home
+            state: "on"
+          - condition: state
+            entity_id: input_boolean.washing_machine_finished
+            state: "on"
+        sequence:
+          - *notify
