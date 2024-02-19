@@ -1,0 +1,11 @@
+---
+# The switch integration allows you to control things by defining templates
+# that can be turned on and off. This is useful when you want to control
+# a switch based on the state of another entity, or when you want to create
+# a switch that is not tied to a physical device.
+#
+# https://www.home-assistant.io/integrations/switch.template/
+#
+switch:
+  - platform: template
+    switches: !include_dir_merge_named ../entities/switch
