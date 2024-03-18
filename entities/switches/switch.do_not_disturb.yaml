@@ -1,0 +1,22 @@
+---
+#
+# Switch to turn dnd on and off
+#
+- platform: template
+  switches:
+    do_not_disturb:
+      value_template: >
+        {{ is_state('sensor.sm_s928b_do_not_disturb_sensor', 'priority_only') }}
+      turn_on:
+        service: notify.mobile_app_sm_s928b
+        data:
+          message: command_dnd
+          data:
+            command: "priority_only"
+
+      turn_off:
+        service: notify.mobile_app_sm_s928b
+        data:
+          message: command_dnd
+          data:
+            command: "off"
