@@ -1,13 +1,13 @@
 ---
 # Welcome to my Home Assistant configuration!
 #
-# This is heavily inspired by @frenck's configuration, so any credits on the code
-# structure goes to him.
-# You can find it at https://github.com/frenck/home-assistant-config
-#
 # The configuration.yaml is only used to bootstrap the system.
 #
-homeassistant:
-  external_url: !secret external_url
-  # Load packages
-  packages: !include_dir_named integrations
+automation: !include integrations/automation.yaml
+default_config: !include integrations/default_config.yaml
+google_translate: !include integrations/google_translate.yaml
+http: !include integrations/http.yaml
+rest_command: !include integrations/rest_command.yaml
+scene: !include integrations/scene.yaml
+script: !include integrations/script.yaml
+template: !include integrations/template.yaml
