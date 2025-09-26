@@ -23,6 +23,7 @@ secrets.yaml
 
 # Built-in blueprints ignores
 blueprints/*/homeassistant
+automations.yaml
 
 # ESPHome ignores
 esphome/.*/
