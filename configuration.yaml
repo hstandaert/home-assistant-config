@@ -10,3 +10,27 @@ http:
   trusted_proxies: !secret http_trusted_proxies
   ip_ban_enabled: false
   login_attempts_threshold: 5
+
+automation blanket:
+  - alias: Electrical blanket
+    description: >-
+      Because we like to be warm when going to bed, we automatically turn on the heating
+      blanket at a certain time
+    mode: single
+    trigger:
+      - platform: time
+        at: "21:00:00"
+
+    condition:
+      - condition: numeric_state
+        entity_id: zone.home
+        below: 1
+
+      - condition: numeric_state
+        entity_id: sensor.openweathermap_feels_like_temperature
+        below: 16
+
+    action:
+      - service: switch.turn_on
+        target:
+          entity_id: switch.electrical_blanket
