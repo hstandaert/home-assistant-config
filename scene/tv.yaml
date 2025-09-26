@@ -1,8 +1,0 @@
----
-- name: Tv
-  entities:
-    light.reading_lamp:
-      state: "on"
-    media_player.tv:
-      state: "on"
-  icon: mdi:remote-tv
