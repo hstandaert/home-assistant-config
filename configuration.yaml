@@ -24,7 +24,7 @@ automation blanket:
     condition:
       - condition: numeric_state
         entity_id: zone.home
-        below: 1
+        above: 0
 
       - condition: numeric_state
         entity_id: sensor.openweathermap_feels_like_temperature
