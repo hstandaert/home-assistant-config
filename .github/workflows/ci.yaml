@@ -32,6 +32,10 @@ jobs:
       - name: ⤵️ Check out repository
         uses: actions/checkout@v3
 
+      - name: 🧹 Mock generated files
+        run: |
+          touch automations.yaml
+
       - name: 🚀 Run Home Assistant Configuration Check
         uses: frenck/action-home-assistant@v1.4
         with:
