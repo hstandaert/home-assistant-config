@@ -1,12 +1,37 @@
 ---
 # Welcome to my Home Assistant configuration!
 #
-# This is heavily inspired by @frenck's configuration, so any credits on the
-# code structure goes to him. You can find it at https://github.com/frenck/home-assistant-config
-#
 # The configuration.yaml is only used to bootstrap the system.
 #
-homeassistant:
-  external_url: !secret external_url
-  # Load packages
-  packages: !include_dir_named integrations
+default_config:
+automation: !include automations.yaml
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies: !secret http_trusted_proxies
+  ip_ban_enabled: false
+  login_attempts_threshold: 5
+
+automation blanket:
+  - alias: Electrical blanket
+    description: >-
+      Because we like to be warm when going to bed, we automatically turn on the heating
+      blanket at a certain time
+    mode: single
+    trigger:
+      - platform: time
+        at: "21:00:00"
+
+    condition:
+      - condition: numeric_state
+        entity_id: zone.home
+        above: 0
+
+      - condition: numeric_state
+        entity_id: sensor.openweathermap_feels_like_temperature
+        below: 16
+
+    action:
+      - service: switch.turn_on
+        target:
+          entity_id: switch.electrical_blanket
