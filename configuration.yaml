@@ -3,6 +3,7 @@
 #
 # The configuration.yaml is only used to bootstrap the system.
 #
+default_config:
 automation: !include automations.yaml
 
 http:
