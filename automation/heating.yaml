@@ -1,0 +1,39 @@
+alias: Heating
+id: heating
+description: >-
+  When we leave home, we turn off the heating and when we come home, we turn it back on.
+mode: single
+trigger:
+  - platform: numeric_state
+    entity_id: zone.home
+    above: 0
+
+  - platform: numeric_state
+    entity_id: zone.home
+    below: 1
+
+action:
+  - choose:
+      - conditions:
+          - condition: numeric_state
+            entity_id: zone.home
+            below: 1
+        sequence:
+          - action: climate.set_hvac_mode
+            data:
+              hvac_mode: "off"
+            target:
+              entity_id:
+                - climate.office_heater
+                - climate.woonkamer
+      - conditions:
+          - condition: numeric_state
+            entity_id: zone.home
+            above: 0
+        sequence:
+          - action: climate.set_hvac_mode
+            data:
+              hvac_mode: "auto"
+            target:
+              entity_id:
+                - climate.woonkamer
