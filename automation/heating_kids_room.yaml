@@ -1,0 +1,58 @@
+---
+alias: Heating Kids Room
+id: heating_kids_room
+description: >
+  Turn the kids' room heaters on at 19:00 and off at 07:00, only when the
+  respective house_mode input booleans are enabled.
+mode: single
+trigger:
+  - platform: time
+    at: "19:00:00"
+    id: turn_on
+  - platform: time
+    at: "07:00:00"
+    id: turn_off
+condition:
+  - condition: numeric_state
+    entity_id: zone.home
+    above: 0
+action:
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.id == 'turn_on' }}"
+        sequence:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_boolean.house_mode_boys
+                    state: "on"
+                sequence:
+                  - service: climate.set_hvac_mode
+                    target:
+                      entity_id: climate.heating_boys
+                    data:
+                      hvac_mode: heat
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_boolean.house_mode_girls
+                    state: "on"
+                sequence:
+                  - service: climate.set_hvac_mode
+                    target:
+                      entity_id: climate.heating_girls
+                    data:
+                      hvac_mode: heat
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.id == 'turn_off' }}"
+        sequence:
+          - service: climate.set_hvac_mode
+            target:
+              entity_id:
+                - climate.heating_boys
+                - climate.heating_girls
+            data:
+              hvac_mode: "off"
+    default: []
