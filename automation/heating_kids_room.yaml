@@ -33,6 +33,11 @@ action:
                       entity_id: climate.heating_boys
                     data:
                       hvac_mode: heat
+                  - service: climate.set_temperature
+                    target:
+                      entity_id: climate.heating_boys
+                    data:
+                      temperature: 17
           - choose:
               - conditions:
                   - condition: state
@@ -44,6 +49,11 @@ action:
                       entity_id: climate.heating_girls
                     data:
                       hvac_mode: heat
+                  - service: climate.set_temperature
+                    target:
+                      entity_id: climate.heating_girls
+                    data:
+                      temperature: 17
       - conditions:
           - condition: template
             value_template: "{{ trigger.id == 'turn_off' }}"
