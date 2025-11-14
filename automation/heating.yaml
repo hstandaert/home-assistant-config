@@ -8,17 +8,27 @@ trigger:
   - platform: numeric_state
     entity_id: zone.home
     above: 0
+    id: turn_on
 
   - platform: numeric_state
     entity_id: zone.home
     below: 1
+    id: turn_off
+
+  - platform: time
+    at: "00:00:00"
+    id: reset
+
+condition:
+  - condition: state
+    entity_id: input_boolean.house_mode_guest
+    state: "off"
 
 action:
   - choose:
       - conditions:
-          - condition: numeric_state
-            entity_id: zone.home
-            below: 1
+          - condition: template
+            value_template: "{{ trigger.id == 'turn_off' }}"
         sequence:
           - action: climate.set_hvac_mode
             data:
@@ -26,11 +36,12 @@ action:
             target:
               entity_id:
                 - climate.office_heater
+                - climate.heating_boys
+                - climate.heating_girls
                 - climate.woonkamer
       - conditions:
-          - condition: numeric_state
-            entity_id: zone.home
-            above: 0
+          - condition: template
+            value_template: "{{ trigger.id == 'turn_on' or trigger.id == 'reset' }}"
         sequence:
           - action: climate.set_hvac_mode
             data:

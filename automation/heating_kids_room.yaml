@@ -12,57 +12,74 @@ trigger:
   - platform: time
     at: "07:00:00"
     id: turn_off
+
 condition:
   - condition: numeric_state
     entity_id: zone.home
     above: 0
+
 action:
   - choose:
       - conditions:
           - condition: template
             value_template: "{{ trigger.id == 'turn_on' }}"
         sequence:
+          # Boys room
           - choose:
               - conditions:
                   - condition: state
                     entity_id: input_boolean.house_mode_boys
                     state: "on"
                 sequence:
-                  - service: climate.set_hvac_mode
+                  - action: climate.set_hvac_mode
                     target:
                       entity_id: climate.heating_boys
                     data:
                       hvac_mode: heat
-                  - service: climate.set_temperature
+                  - action: climate.set_temperature
                     target:
                       entity_id: climate.heating_boys
                     data:
-                      temperature: 17
+                      temperature: 19
+            default:
+              - action: climate.set_hvac_mode
+                target:
+                  entity_id:
+                    - climate.heating_boys
+                data:
+                  hvac_mode: "off"
+          # Girls room
           - choose:
               - conditions:
                   - condition: state
                     entity_id: input_boolean.house_mode_girls
                     state: "on"
                 sequence:
-                  - service: climate.set_hvac_mode
+                  - action: climate.set_hvac_mode
                     target:
                       entity_id: climate.heating_girls
                     data:
                       hvac_mode: heat
-                  - service: climate.set_temperature
+                  - action: climate.set_temperature
                     target:
                       entity_id: climate.heating_girls
                     data:
-                      temperature: 17
+                      temperature: 19
+            default:
+              - action: climate.set_hvac_mode
+                target:
+                  entity_id:
+                    - climate.heating_girls
+                data:
+                  hvac_mode: "off"
       - conditions:
           - condition: template
             value_template: "{{ trigger.id == 'turn_off' }}"
         sequence:
-          - service: climate.set_hvac_mode
+          - action: climate.set_hvac_mode
             target:
               entity_id:
                 - climate.heating_boys
                 - climate.heating_girls
             data:
               hvac_mode: "off"
-    default: []
