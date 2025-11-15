@@ -38,6 +38,11 @@ action:
                 - climate.office_heater
                 - climate.heating_boys
                 - climate.heating_girls
+          - action: climate.set_preset_mode
+            data:
+              preset_mode: "away"
+            target:
+              entity_id:
                 - climate.woonkamer
       - conditions:
           - condition: template
