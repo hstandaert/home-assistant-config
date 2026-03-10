@@ -26,6 +26,7 @@ condition:
 
 action:
   - choose:
+      # Turn off heating
       - conditions:
           - condition: template
             value_template: "{{ trigger.id == 'turn_off' }}"
@@ -38,28 +39,26 @@ action:
                 - climate.office_heater
                 - climate.heating_boys
                 - climate.heating_girls
-          - action: climate.set_preset_mode
-            data:
-              preset_mode: "away"
-            target:
-              entity_id:
-                - climate.woonkamer
           - action: climate.set_hvac_mode
             data:
               hvac_mode: "auto"
             target:
               entity_id:
                 - climate.woonkamer
+          - action: switch.turn_on
+            target:
+              entity_id: switch.tado_thuis_away_mode
+
+      # Turn on heating
       - conditions:
           - condition: template
             value_template: "{{ trigger.id == 'turn_on' }}"
         sequence:
-          - action: climate.set_preset_mode
-            data:
-              preset_mode: "home"
+          - action: switch.turn_off
             target:
-              entity_id:
-                - climate.woonkamer
+              entity_id: switch.tado_thuis_away_mode
+
+      # Reset heating
       - conditions:
           - condition: template
             value_template: "{{ trigger.id == 'reset' }}"
