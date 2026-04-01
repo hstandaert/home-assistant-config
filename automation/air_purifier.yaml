@@ -1,0 +1,38 @@
+---
+alias: Air purifier
+id: air_purifier
+description: >-
+  Turn on bedroom air purifier in the evening for clean sleep air, and off after a few hours
+  so it doesn't disturb sleep with noise.
+mode: single
+trigger:
+  - platform: time
+    at: "20:00:00"
+    id: turn_on
+
+  - platform: time
+    at: "22:00:00"
+    id: turn_off
+
+condition:
+  - condition: numeric_state
+    entity_id: zone.home
+    above: 0
+
+action:
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.id == 'turn_on' }}"
+        sequence:
+          - service: switch.turn_on
+            target:
+              entity_id: switch.air_purifier_bedroom
+
+      - conditions:
+          - condition: template
+            value_template: "{{ trigger.id in ['turn_off_night', 'turn_off_morning'] }}"
+        sequence:
+          - service: switch.turn_off
+            target:
+              entity_id: switch.air_purifier_bedroom
