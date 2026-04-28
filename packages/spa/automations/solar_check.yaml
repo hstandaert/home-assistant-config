@@ -1,0 +1,62 @@
+---
+# Spa Solar Check - Solar Sanitizer automation
+
+- alias: Spa Solar Check - Solar Sanitizer
+  id: spa_solar_check
+  description: >-
+    Automatically runs spa sanitizer when solar generation exceeds consumption
+    (via P1 meter excess delivery).
+
+    Trigger: When net delivery (solar surplus, negative vermogen) is -100W or lower
+    for 5 minutes.
+
+    Turns OFF when: Grid consumption resumes (vermogen >0W for 10 min) OR
+    daily target reached.
+
+    Safety: Checks that sanitizer is OFF and daily runtime hasn't reached target
+    before activating. Always starts pump first, waits 5s, then sanitizer.
+  mode: single
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.p1_meter_vermogen
+      below: -100
+      for:
+        minutes: 5
+      id: solar_surplus_detected
+    - platform: numeric_state
+      entity_id: sensor.p1_meter_vermogen
+      above: 0
+      for:
+        minutes: 10
+      id: grid_consumption_detected
+
+  condition:
+    - condition: state
+      entity_id: switch.intex_chevron_6p_salt_system
+      state: "off"
+    - condition: template
+      value_template: >-
+        {% set runtime = states('sensor.spa_sanitizer_runtime_today') | float(0) %}
+        {% set target = states('input_number.spa_target_hours') | float(0) %}
+        {{ runtime < target }}
+
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.id == 'solar_surplus_detected' }}"
+          sequence:
+            - service: switch.turn_on
+              target:
+                entity_id: switch.intex_chevron_6p_filter
+            - delay: "00:00:05"
+            - service: switch.turn_on
+              target:
+                entity_id: switch.intex_chevron_6p_salt_system
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.id == 'grid_consumption_detected' }}"
+          sequence:
+            - service: switch.turn_off
+              target:
+                entity_id: switch.intex_chevron_6p_salt_system

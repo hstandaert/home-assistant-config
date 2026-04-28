@@ -1,9 +1,0 @@
----
-alias: Turn Off Electrical Blanket After 30 Minutes
-icon: mdi:timer
-sequence:
-  - delay:
-      minutes: 30
-  - action: switch.turn_off
-    target:
-      entity_id: switch.electrical_blanket

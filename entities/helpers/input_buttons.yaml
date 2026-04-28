@@ -1,7 +1,0 @@
----
-# Spa button helpers
-# spa_usage_complete: Press when you exit the spa. Triggers a 2-hour sanitizer
-# boost to oxidize organic matter and prevent biofilm growth.
-spa_usage_complete:
-  name: "Spa Usage Complete"
-  icon: mdi:water-plus

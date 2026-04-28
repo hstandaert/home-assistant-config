@@ -5,19 +5,14 @@
 #
 default_config:
 
-automation: !include automations.yaml
-automation split: !include_dir_list automation
-
-http:
-  use_x_forwarded_for: true
-  trusted_proxies: !secret http_trusted_proxies
-  ip_ban_enabled: false
-  login_attempts_threshold: 5
-
-script: !include_dir_named scripts
+# Integrations
 recorder: !include integrations/recorder.yaml
+http: !include integrations/http.yaml
 
-input_number: !include entities/helpers/input_numbers.yaml
-input_button: !include entities/helpers/input_buttons.yaml
-
-sensor: !include_dir_merge_list entities/sensors/
+# Packages
+homeassistant:
+  packages:
+    spa: !include packages/spa/main.yaml
+    heating: !include packages/heating/main.yaml
+    air_purifier: !include packages/air_purifier/main.yaml
+    electrical_blanket: !include packages/electrical_blanket/main.yaml

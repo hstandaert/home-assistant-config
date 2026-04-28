@@ -1,0 +1,6 @@
+---
+# Spa Usage Complete button helper
+
+spa_usage_complete:
+  name: "Spa Usage Complete"
+  icon: mdi:water-plus

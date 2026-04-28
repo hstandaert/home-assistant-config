@@ -1,7 +1,6 @@
 ---
-# History stats configuration for spa sanitizer
-# Tracks cumulative "on" time for the sanitizer switch during the day
-# Resets at midnight using today_at() + now()
+# Spa Sanitizer Runtime Today Minutes (history_stats - modern template sensor)
+
 - platform: history_stats
   name: "Spa Sanitizer Runtime Today Minutes"
   entity_id: switch.intex_chevron_6p_salt_system

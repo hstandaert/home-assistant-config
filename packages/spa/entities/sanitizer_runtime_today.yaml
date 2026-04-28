@@ -1,0 +1,17 @@
+---
+# Spa Sanitizer Runtime Today (modern template sensor)
+
+- sensor:
+    - unique_id: sensor_spa_sanitizer_runtime_today
+      unit_of_measurement: h
+      default_entity_id: sensor.spa_sanitizer_runtime_today
+      icon: mdi:progress-clock
+      name: Spa Sanitizer Runtime Today
+      state: >-
+        {%- set minutes_state = states('sensor.spa_sanitizer_runtime_today_minutes') -%}
+        {%- if minutes_state and minutes_state not in ('unknown', 'unavailable', 'none') -%}
+          {%- set minutes = minutes_state | float(0) -%}
+          {{ (minutes / 60) | round(2) }}
+        {%- else -%}
+          0.0
+        {%- endif -%}

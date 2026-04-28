@@ -1,0 +1,5 @@
+---
+# Electrical Blanket package main manifest
+
+automation: !include_dir_merge_list automations/
+script: !include_dir_merge_named scripts/

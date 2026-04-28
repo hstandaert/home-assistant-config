@@ -1,0 +1,45 @@
+---
+# Spa Hygiene Guarantee - Evening Safety Net automation
+
+- alias: Spa Hygiene Guarantee - Evening Safety Net
+  id: spa_hygiene_guarantee
+  description: >-
+    Evening backup automation to ensure sanitizer runs sufficient daily runtime.
+
+    Trigger: Every day at 20:00 (shortly after sunset).
+
+    Condition: If daily runtime is still below target hours, runs sanitizer
+    to reach the target. Safety net for cloudy/rainy days.
+
+    Action: Starts pump first, waits 5s, then runs sanitizer until target reached
+    (with 4-hour timeout safety).
+  mode: single
+  trigger:
+    - platform: time
+      at: "20:00:00"
+      id: evening_check
+
+  condition:
+    - condition: template
+      value_template: >-
+        {% set runtime = states('sensor.spa_sanitizer_runtime_today') | float(0) %}
+        {% set target = states('input_number.spa_target_hours') | float(0) %}
+        {{ runtime < target }}
+
+  action:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.intex_chevron_6p_filter
+    - delay: "00:00:05"
+    - service: switch.turn_on
+      target:
+        entity_id: switch.intex_chevron_6p_salt_system
+    - wait_template: >-
+        {% set current = states('sensor.spa_sanitizer_runtime_today') | float(0) %}
+        {% set target = states('input_number.spa_target_hours') | float(0) %}
+        {{ current >= target }}
+      timeout: "04:00:00"
+      continue_on_timeout: true
+    - service: switch.turn_off
+      target:
+        entity_id: switch.intex_chevron_6p_salt_system

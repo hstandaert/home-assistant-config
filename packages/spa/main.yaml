@@ -1,0 +1,9 @@
+---
+# Spa package main manifest
+# Includes all spa-related configurations
+
+automation: !include_dir_merge_list automations/
+input_number: !include_dir_merge_named helpers/input_number/
+input_button: !include_dir_merge_named helpers/input_button/
+template: !include_dir_merge_list entities/
+sensor: !include_dir_merge_list sensors/

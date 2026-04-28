@@ -1,0 +1,4 @@
+---
+# Heating package main manifest
+
+automation: !include_dir_merge_list automations/
