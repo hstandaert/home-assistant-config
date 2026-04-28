@@ -1,0 +1,19 @@
+---
+# Spa template entities
+# spa_sanitizer_runtime_today: Daily cumulative runtime of sanitizer in hours.
+# Resets at midnight. Converts history_stats minutes value to hours for display.
+- platform: template
+  sensors:
+    spa_sanitizer_runtime_today:
+      unique_id: sensor_spa_sanitizer_runtime_today
+      friendly_name: "Spa Sanitizer Runtime Today"
+      unit_of_measurement: "h"
+      icon_template: "mdi:progress-clock"
+      value_template: >-
+        {%- set minutes_state = states('sensor.spa_sanitizer_runtime_today_minutes') -%}
+        {%- if minutes_state and minutes_state not in ('unknown', 'unavailable', 'none') -%}
+          {%- set minutes = minutes_state | float(0) -%}
+          {{ (minutes / 60) | round(2) }}
+        {%- else -%}
+          0.0
+        {%- endif -%}

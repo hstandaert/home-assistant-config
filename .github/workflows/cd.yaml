@@ -26,4 +26,4 @@ jobs:
             cd ${{ secrets.SERVER_PATH }}
             git checkout ${{ github.ref_name }}
             git pull
-            sudo docker restart HomeAssistant
+            sudo docker restart homeassistant
