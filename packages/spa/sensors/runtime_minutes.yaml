@@ -1,11 +1,11 @@
 ---
-# Spa Sanitizer Runtime Today Minutes (history_stats - modern template sensor)
+# Spa Sanitizer Runtime Today (history_stats - returns hours)
 
 - platform: history_stats
-  name: "Spa Sanitizer Runtime Today Minutes"
+  name: "Spa Sanitizer Runtime Today"
   entity_id: switch.intex_chevron_6p_salt_system
   state: "on"
   type: time
   start: "{{ today_at() }}"
   end: "{{ now() }}"
-  unique_id: sensor_spa_sanitizer_runtime_today_minutes
+  unique_id: sensor_spa_sanitizer_runtime_today
