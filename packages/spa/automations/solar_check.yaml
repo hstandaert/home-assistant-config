@@ -34,6 +34,9 @@
     - condition: state
       entity_id: switch.intex_chevron_6p_salt_system
       state: "off"
+    - condition: state
+      entity_id: switch.intex_chevron_6p_heater_toggle
+      state: "off"
     - condition: template
       value_template: >-
         {% set runtime = states('sensor.spa_sanitizer_runtime_today') | float(0) %} {%
