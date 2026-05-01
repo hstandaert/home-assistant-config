@@ -57,9 +57,6 @@
                 hvac_mode: "auto"
               target:
                 entity_id:
-                  - climate.office_heater
-                  - climate.heating_boys
-                  - climate.heating_girls
                   - climate.woonkamer
             - action: switch.turn_off
               target:
