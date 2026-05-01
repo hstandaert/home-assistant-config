@@ -11,10 +11,10 @@
     5 minutes.
 
     Turns OFF when: Grid consumption resumes (vermogen >0W for 10 min) OR daily target
-    reached.
+    reached (monitored continuously).
 
-    Safety: Checks that sanitizer is OFF and daily runtime hasn't reached target before
-    activating. Always starts pump first, waits 5s, then sanitizer.
+    Safety: Checks that sanitizer is OFF, heater is OFF, and daily runtime hasn't reached
+    target before activating. Always starts pump first, waits 5s, then sanitizer.
   mode: single
   trigger:
     - platform: numeric_state
@@ -29,6 +29,12 @@
       for:
         minutes: 10
       id: grid_consumption_detected
+    - platform: template
+      value_template: >-
+        {% set current = states('sensor.spa_sanitizer_runtime_today') | float(0) %} {%
+        set target = states('input_number.spa_target_hours') | float(0) %} {{ current >=
+        target }}
+      id: target_reached
 
   condition:
     - condition: state
@@ -63,6 +69,16 @@
         - conditions:
             - condition: template
               value_template: "{{ trigger.id == 'grid_consumption_detected' }}"
+          sequence:
+            - service: switch.turn_off
+              target:
+                entity_id: switch.intex_chevron_6p_salt_system
+            - service: switch.turn_off
+              target:
+                entity_id: switch.intex_chevron_6p_filter
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.id == 'target_reached' }}"
           sequence:
             - service: switch.turn_off
               target:
