@@ -1,0 +1,7 @@
+---
+# House mode: Boys
+# Specific mode for boys' room(s) - can trigger room-specific automations
+
+house_mode_boys:
+  name: House Mode Boys
+  icon: mdi:face-man

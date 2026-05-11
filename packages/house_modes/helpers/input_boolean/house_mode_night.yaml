@@ -1,0 +1,7 @@
+---
+# House mode: Night
+# Manual toggle to trigger bedtime reset. Also auto-triggers at midnight.
+
+house_mode_night:
+  name: House Mode Night
+  icon: mdi:weather-night

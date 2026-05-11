@@ -5,6 +5,10 @@
 #
 default_config:
 
+# Themes
+frontend:
+  themes: !include_dir_merge_named themes/
+
 # Integrations
 recorder: !include integrations/recorder.yaml
 http: !include integrations/http.yaml
@@ -16,3 +20,4 @@ homeassistant:
     heating: !include packages/heating/main.yaml
     air_purifier: !include packages/air_purifier/main.yaml
     electrical_blanket: !include packages/electrical_blanket/main.yaml
+    house_modes: !include packages/house_modes/main.yaml

@@ -1,0 +1,6 @@
+---
+# House Modes package
+# Centralized logic for managing house operational modes (Night, Away, etc.)
+
+automation: !include_dir_merge_list automations/
+input_boolean: !include_dir_merge_named helpers/input_boolean/

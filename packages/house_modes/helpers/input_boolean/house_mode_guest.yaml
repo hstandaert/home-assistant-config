@@ -1,0 +1,7 @@
+---
+# House mode: Guest
+# Indicates guest(s) are staying over - can trigger specific automations/lighting
+
+house_mode_guest:
+  name: House Mode Guest
+  icon: mdi:home-account

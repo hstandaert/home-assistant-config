@@ -1,0 +1,32 @@
+---
+# Bedtime reset automation
+
+- alias: Bedtime Reset
+  id: bedtime_reset
+  description: >-
+    Reset the home for bedtime: turn off all lights, trigger electrical blanket
+    off script, and turn off bedroom air purifier. Triggered manually via
+    input_boolean.house_mode_night or automatically at midnight as a fallback.
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: input_boolean.house_mode_night
+      to: "on"
+      id: manual
+    - platform: time
+      at: "00:00:00"
+      id: midnight_fallback
+
+  condition:
+    - condition: numeric_state
+      entity_id: zone.home
+      above: 0
+
+  action:
+    - service: light.turn_off
+      target:
+        entity_id: "light.*"
+    - service: script.turn_off_electrical_blanket_after_30_minutes
+    - service: switch.turn_off
+      target:
+        entity_id: switch.air_purifier_bedroom

@@ -1,0 +1,7 @@
+---
+# House mode: Girls
+# Specific mode for girls' room(s) - can trigger room-specific automations
+
+house_mode_girls:
+  name: House Mode Girls
+  icon: mdi:face-woman
