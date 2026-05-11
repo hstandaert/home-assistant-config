@@ -1,0 +1,9 @@
+---
+# Spa Heater Smart Mode helper
+# When ON, gates heater to solar surplus and night tariff windows only.
+# Manual override remains possible by toggling this off.
+
+spa_heater_smart_mode:
+  name: "Spa Heater Smart Mode"
+  icon: mdi:water-thermometer
+  initial: false

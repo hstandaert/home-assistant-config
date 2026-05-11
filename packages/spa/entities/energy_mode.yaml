@@ -1,0 +1,29 @@
+---
+# Spa Energy Mode sensor
+# Classifies current energy availability into four mutually exclusive states:
+#   solar_full    — solar surplus covers heater (vermogen < heater threshold)
+#   solar_partial — solar surplus covers sanitizer only (vermogen < sanitizer threshold)
+#   cheap         — night tariff active, no solar surplus
+#   expensive     — day tariff, no solar surplus
+#
+# All spa automations reference this sensor instead of duplicating inline templates.
+
+- sensor:
+    - name: "Spa Energy Mode"
+      unique_id: spa_energy_mode
+      state: >-
+        {% set vermogen = states('sensor.p1_meter_vermogen') | float(0) %}
+        {% set heater_threshold = states('input_number.spa_heater_solar_threshold') | float(-2000) %}
+        {% set sanitizer_threshold = states('input_number.spa_solar_threshold') | float(-100) %}
+        {% if vermogen < heater_threshold %}solar_full
+        {% elif vermogen < sanitizer_threshold %}solar_partial
+        {% elif states('sensor.p1_meter_tarief') == '2' %}cheap
+        {% else %}expensive{% endif %}
+      icon: >-
+        {% set vermogen = states('sensor.p1_meter_vermogen') | float(0) %}
+        {% set heater_threshold = states('input_number.spa_heater_solar_threshold') | float(-2000) %}
+        {% set sanitizer_threshold = states('input_number.spa_solar_threshold') | float(-100) %}
+        {% if vermogen < heater_threshold %}mdi:solar-power
+        {% elif vermogen < sanitizer_threshold %}mdi:solar-power-variant
+        {% elif states('sensor.p1_meter_tarief') == '2' %}mdi:lightning-bolt
+        {% else %}mdi:currency-eur-off{% endif %}

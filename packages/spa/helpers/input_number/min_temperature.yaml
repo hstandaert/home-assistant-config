@@ -1,0 +1,13 @@
+---
+# Spa Minimum Water Temperature helper
+# Emergency floor — heater is enabled regardless of energy mode when water
+# temperature drops below this value. Prevents costly reheat from cold baseline.
+
+spa_min_temperature:
+  name: "Spa Minimum Temperature"
+  icon: mdi:thermometer-low
+  unit_of_measurement: "°C"
+  min: 15
+  max: 35
+  step: 1
+  initial: 32

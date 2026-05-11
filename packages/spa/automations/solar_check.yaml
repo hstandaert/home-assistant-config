@@ -4,56 +4,63 @@
 - alias: Spa Solar Check - Solar Sanitizer
   id: spa_solar_check
   description: >-
-    Automatically runs spa sanitizer when solar generation exceeds consumption (via P1
-    meter excess delivery).
+    Automatically runs spa sanitizer when solar generation covers consumption.
 
-    Trigger: When net delivery (solar surplus, negative vermogen) is -100W or lower for
-    5 minutes.
+    Trigger: When sensor.spa_energy_mode transitions to solar_full or solar_partial,
+    sustained for 5 minutes. Stops when mode transitions to cheap or expensive
+    (10-minute debounce for expensive, immediate for cheap/tariff change) OR when
+    daily runtime target is reached.
 
-    Turns OFF when: Grid consumption resumes (vermogen >0W for 10 min) OR daily target
-    reached (monitored continuously).
-
-    Safety: Checks that sanitizer is OFF, heater is OFF, and daily runtime hasn't reached
-    target before activating. Always starts pump first, waits 5s, then sanitizer.
+    Safety: Checks sanitizer is OFF, heater is OFF, and daily runtime is below target
+    before activating. Start conditions are scoped to the solar_start branch only —
+    stop branches always execute to ensure the sanitizer is never left running.
+    Always starts pump first, waits 5s, then sanitizer.
   mode: single
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.p1_meter_vermogen
-      below: -100
+    - platform: state
+      entity_id: sensor.spa_energy_mode
+      to: "solar_full"
       for:
         minutes: 5
-      id: solar_surplus_detected
-    - platform: numeric_state
-      entity_id: sensor.p1_meter_vermogen
-      above: 0
+      id: solar_start
+    - platform: state
+      entity_id: sensor.spa_energy_mode
+      to: "solar_partial"
+      for:
+        minutes: 5
+      id: solar_start
+    - platform: state
+      entity_id: sensor.spa_energy_mode
+      to: "cheap"
+      id: solar_end
+    - platform: state
+      entity_id: sensor.spa_energy_mode
+      to: "expensive"
       for:
         minutes: 10
-      id: grid_consumption_detected
+      id: solar_end
     - platform: template
       value_template: >-
-        {% set current = states('sensor.spa_sanitizer_runtime_today') | float(0) %} {%
-        set target = states('input_number.spa_target_hours') | float(0) %} {{ current >=
-        target }}
+        {% set current = states('sensor.spa_sanitizer_runtime_today') | float(0) %}
+        {% set target = states('input_number.spa_target_hours') | float(0) %}
+        {{ current >= target }}
       id: target_reached
-
-  condition:
-    - condition: state
-      entity_id: switch.intex_chevron_6p_salt_system
-      state: "off"
-    - condition: state
-      entity_id: switch.intex_chevron_6p_heater_toggle
-      state: "off"
-    - condition: template
-      value_template: >-
-        {% set runtime = states('sensor.spa_sanitizer_runtime_today') | float(0) %} {%
-        set target = states('input_number.spa_target_hours') | float(0) %} {{ runtime <
-        target }}
 
   action:
     - choose:
         - conditions:
             - condition: template
-              value_template: "{{ trigger.id == 'solar_surplus_detected' }}"
+              value_template: "{{ trigger.id == 'solar_start' }}"
+            - condition: state
+              entity_id: switch.intex_chevron_6p_salt_system
+              state: "off"
+            - condition: state
+              entity_id: switch.intex_chevron_6p_heater_toggle
+              state: "off"
+            - condition: template
+              value_template: >-
+                {{ states('sensor.spa_sanitizer_runtime_today') | float(0) <
+                   states('input_number.spa_target_hours') | float(0) }}
           sequence:
             - service: switch.turn_on
               target:
@@ -68,17 +75,7 @@
                 entity_id: switch.intex_chevron_6p_salt_system
         - conditions:
             - condition: template
-              value_template: "{{ trigger.id == 'grid_consumption_detected' }}"
-          sequence:
-            - service: switch.turn_off
-              target:
-                entity_id: switch.intex_chevron_6p_salt_system
-            - service: switch.turn_off
-              target:
-                entity_id: switch.intex_chevron_6p_filter
-        - conditions:
-            - condition: template
-              value_template: "{{ trigger.id == 'target_reached' }}"
+              value_template: "{{ trigger.id in ['solar_end', 'target_reached'] }}"
           sequence:
             - service: switch.turn_off
               target:

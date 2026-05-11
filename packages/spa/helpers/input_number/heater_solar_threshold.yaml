@@ -1,0 +1,13 @@
+---
+# Spa Heater Solar Export Threshold helper
+# Minimum solar export (negative = export) required to enable heater via solar.
+# Default -2000W matches heater consumption (~2000W).
+
+spa_heater_solar_threshold:
+  name: "Spa Heater Solar Threshold"
+  icon: mdi:solar-power
+  unit_of_measurement: "W"
+  min: -5000
+  max: 0
+  step: 100
+  initial: -2000
