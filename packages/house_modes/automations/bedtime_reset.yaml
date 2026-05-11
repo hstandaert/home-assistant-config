@@ -25,7 +25,9 @@
   action:
     - service: light.turn_off
       target:
-        entity_id: "light.*"
+        floor_id:
+          - gelijkvloers
+          - bovenverdieping
     - service: script.turn_off_electrical_blanket_after_30_minutes
     - service: switch.turn_off
       target:
