@@ -1,0 +1,53 @@
+---
+# Auto Night Mode automation
+
+- alias: Auto Night Mode
+  id: auto_night_mode
+  description: >-
+    Automatically activates night mode when all phones present at home are charging
+    or full after 21:00.
+
+    Trigger: Either phone transitions to charging or full state.
+
+    Conditions: Time between 21:00 and 01:00, house_mode_night is off, at least one
+    phone is home, and every phone that is home is charging or fully charged. Phones
+    not home are excluded — prevents blocking when one person is away. The home check
+    also guards against phones charging in a car outside.
+
+    Action: Turns on input_boolean.house_mode_night, which triggers bedtime_reset.
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: sensor.sm_s928b_battery_state
+      to:
+        - "charging"
+        - "full"
+      id: phone_charging
+    - platform: state
+      entity_id: sensor.sm_a556b_battery_state
+      to:
+        - "charging"
+        - "full"
+      id: phone_charging
+
+  condition:
+    - condition: time
+      after: "21:00:00"
+      before: "01:00:00"
+    - condition: state
+      entity_id: input_boolean.house_mode_night
+      state: "off"
+    - condition: template
+      value_template: >-
+        {% set s928b_home = is_state('device_tracker.sm_s928b', 'home') %}
+        {% set a556b_home = is_state('device_tracker.sm_a556b', 'home') %}
+        {% set s928b_charging = states('sensor.sm_s928b_battery_state') in ['charging', 'full'] %}
+        {% set a556b_charging = states('sensor.sm_a556b_battery_state') in ['charging', 'full'] %}
+        {{ (s928b_home or a556b_home)
+           and (not s928b_home or s928b_charging)
+           and (not a556b_home or a556b_charging) }}
+
+  action:
+    - service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.house_mode_night

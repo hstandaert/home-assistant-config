@@ -1,0 +1,63 @@
+---
+# Morning Reset automation
+
+- alias: Morning Reset
+  id: morning_reset
+  description: >-
+    Automatically deactivates night mode when a phone is unplugged in the morning,
+    signalling someone has woken up.
+
+    Trigger: Either phone transitions to discharging or not_charging between 05:00
+    and 10:00. Fallback: time trigger at 07:00 in case no unplug event fires (e.g.
+    phone died overnight).
+
+    Conditions: house_mode_night is on. For phone unplug triggers, at least one phone
+    must be home to guard against car-charging events.
+
+    Action: Turns off input_boolean.house_mode_night.
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: sensor.sm_s928b_battery_state
+      to:
+        - "discharging"
+        - "not_charging"
+      id: phone_unplugged
+    - platform: state
+      entity_id: sensor.sm_a556b_battery_state
+      to:
+        - "discharging"
+        - "not_charging"
+      id: phone_unplugged
+    - platform: time
+      at: "08:00:00"
+      id: morning_fallback
+
+  condition:
+    - condition: state
+      entity_id: input_boolean.house_mode_night
+      state: "on"
+
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.id == 'phone_unplugged' }}"
+            - condition: time
+              after: "05:00:00"
+              before: "10:00:00"
+            - condition: template
+              value_template: >-
+                {{ is_state('device_tracker.sm_s928b', 'home')
+                   or is_state('device_tracker.sm_a556b', 'home') }}
+          sequence:
+            - service: input_boolean.turn_off
+              target:
+                entity_id: input_boolean.house_mode_night
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.id == 'morning_fallback' }}"
+          sequence:
+            - service: input_boolean.turn_off
+              target:
+                entity_id: input_boolean.house_mode_night
