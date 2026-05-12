@@ -12,6 +12,7 @@
 
     Disables heater (smart mode ON, heater currently ON, temp above minimum floor) when:
     - Energy mode becomes expensive or solar_partial.
+    - Smart mode is turned on while energy mode is already expensive or solar_partial.
 
     Emergency override (regardless of smart mode or energy mode):
     - Water temperature drops below input_number.spa_min_temperature for 5 minutes.
@@ -43,6 +44,10 @@
       for:
         minutes: 5
       id: temp_below_minimum
+    - platform: state
+      entity_id: input_boolean.spa_heater_smart_mode
+      to: "on"
+      id: smart_mode_on
 
   action:
     - choose:
@@ -70,6 +75,22 @@
             - condition: state
               entity_id: input_boolean.spa_heater_smart_mode
               state: "on"
+            - condition: state
+              entity_id: switch.intex_chevron_6p_heater_toggle
+              state: "on"
+            - condition: numeric_state
+              entity_id: sensor.intex_chevron_6p_spa_temperature
+              above: input_number.spa_min_temperature
+          sequence:
+            - service: switch.turn_off
+              target:
+                entity_id: switch.intex_chevron_6p_heater_toggle
+
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.id == 'smart_mode_on' }}"
+            - condition: template
+              value_template: "{{ states('sensor.spa_energy_mode') in ['expensive', 'solar_partial'] }}"
             - condition: state
               entity_id: switch.intex_chevron_6p_heater_toggle
               state: "on"
