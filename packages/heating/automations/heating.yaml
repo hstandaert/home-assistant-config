@@ -45,9 +45,11 @@
               target:
                 entity_id:
                   - climate.woonkamer
-            - action: switch.turn_on
+            - action: select.select_option
               target:
-                entity_id: switch.tado_thuis_away_mode
+                entity_id: select.tado_thuis_presence_mode
+              data:
+                option: away
         - conditions:
             - condition: template
               value_template: "{{ trigger.id == 'turn_on' }}"
@@ -58,9 +60,11 @@
               target:
                 entity_id:
                   - climate.woonkamer
-            - action: switch.turn_off
+            - action: select.select_option
               target:
-                entity_id: switch.tado_thuis_away_mode
+                entity_id: select.tado_thuis_presence_mode
+              data:
+                option: home
         - conditions:
             - condition: template
               value_template: "{{ trigger.id == 'reset' }}"
