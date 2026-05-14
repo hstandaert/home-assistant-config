@@ -7,29 +7,26 @@
     Controls heater based on energy availability when smart mode is enabled.
 
     Enables heater (smart mode ON, heater currently OFF) when:
-    - Energy mode is solar_full (solar covers heater wattage), OR
-    - Energy mode is cheap (night tariff active).
+    - Energy mode is solar_full (solar covers heater wattage).
 
     Disables heater (smart mode ON, heater currently ON, temp above minimum floor) when:
     - Energy mode becomes expensive or solar_partial.
     - Smart mode is turned on while energy mode is already expensive or solar_partial.
 
+    Caps smart mode heating at input_number.spa_min_temperature (standby target):
+    - When temperature rises above spa_min_temperature and energy mode is NOT solar_full,
+      heater is turned off. During solar_full, free surplus allows heating to the spa's
+      own thermostat setpoint (37°).
+
     Emergency override (regardless of smart mode or energy mode):
     - Water temperature drops below input_number.spa_min_temperature for 5 minutes.
       Prevents costly reheat from a cold baseline.
-
-    The spa's built-in thermostat handles the upper temperature cutoff — no HA condition
-    needed on the enable side.
   mode: single
   trigger:
     - platform: state
       entity_id: sensor.spa_energy_mode
       to: "solar_full"
       id: energy_solar_full
-    - platform: state
-      entity_id: sensor.spa_energy_mode
-      to: "cheap"
-      id: energy_cheap
     - platform: state
       entity_id: sensor.spa_energy_mode
       to: "expensive"
@@ -44,6 +41,10 @@
       for:
         minutes: 5
       id: temp_below_minimum
+    - platform: numeric_state
+      entity_id: sensor.intex_chevron_6p_spa_temperature
+      above: input_number.spa_min_temperature
+      id: temp_above_minimum
     - platform: state
       entity_id: input_boolean.spa_heater_smart_mode
       to: "on"
@@ -53,12 +54,15 @@
     - choose:
         - conditions:
             - condition: template
-              value_template: "{{ trigger.id in ['energy_solar_full', 'energy_cheap'] }}"
+              value_template: "{{ trigger.id == 'energy_solar_full' }}"
             - condition: state
               entity_id: input_boolean.spa_heater_smart_mode
               state: "on"
             - condition: state
               entity_id: switch.intex_chevron_6p_heater_toggle
+              state: "off"
+            - condition: state
+              entity_id: switch.intex_chevron_6p_salt_system
               state: "off"
           sequence:
             - service: switch.turn_on
@@ -104,9 +108,31 @@
 
         - conditions:
             - condition: template
+              value_template: "{{ trigger.id == 'temp_above_minimum' }}"
+            - condition: state
+              entity_id: input_boolean.spa_heater_smart_mode
+              state: "on"
+            - condition: state
+              entity_id: switch.intex_chevron_6p_heater_toggle
+              state: "on"
+            - condition: not
+              conditions:
+                - condition: state
+                  entity_id: sensor.spa_energy_mode
+                  state: "solar_full"
+          sequence:
+            - service: switch.turn_off
+              target:
+                entity_id: switch.intex_chevron_6p_heater_toggle
+
+        - conditions:
+            - condition: template
               value_template: "{{ trigger.id == 'temp_below_minimum' }}"
             - condition: state
               entity_id: switch.intex_chevron_6p_heater_toggle
+              state: "off"
+            - condition: state
+              entity_id: switch.intex_chevron_6p_salt_system
               state: "off"
           sequence:
             - service: switch.turn_on
