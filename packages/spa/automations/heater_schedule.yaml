@@ -24,6 +24,10 @@
   trace:
     stored_traces: 50
   mode: single
+  condition:
+    - condition: state
+      entity_id: input_boolean.spa_heater_smart_mode
+      state: "on"
   trigger:
     - platform: state
       entity_id: sensor.spa_energy_mode
@@ -58,9 +62,6 @@
             - condition: template
               value_template: "{{ trigger.id == 'energy_solar_full' }}"
             - condition: state
-              entity_id: input_boolean.spa_heater_smart_mode
-              state: "on"
-            - condition: state
               entity_id: switch.intex_chevron_6p_heater_toggle
               state: "off"
             - condition: state
@@ -78,9 +79,6 @@
         - conditions:
             - condition: template
               value_template: "{{ trigger.id in ['energy_expensive', 'energy_solar_partial'] }}"
-            - condition: state
-              entity_id: input_boolean.spa_heater_smart_mode
-              state: "on"
             - condition: state
               entity_id: switch.intex_chevron_6p_heater_toggle
               state: "on"
@@ -111,9 +109,6 @@
         - conditions:
             - condition: template
               value_template: "{{ trigger.id == 'temp_above_minimum' }}"
-            - condition: state
-              entity_id: input_boolean.spa_heater_smart_mode
-              state: "on"
             - condition: state
               entity_id: switch.intex_chevron_6p_heater_toggle
               state: "on"
