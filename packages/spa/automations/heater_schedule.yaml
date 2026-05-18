@@ -21,6 +21,8 @@
     Emergency override (regardless of smart mode or energy mode):
     - Water temperature drops below input_number.spa_min_temperature for 5 minutes.
       Prevents costly reheat from a cold baseline.
+  trace:
+    stored_traces: 50
   mode: single
   trigger:
     - platform: state
