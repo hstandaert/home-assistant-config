@@ -6,4 +6,3 @@
 spa_heater_smart_mode:
   name: "Spa Heater Smart Mode"
   icon: mdi:water-thermometer
-  initial: false
