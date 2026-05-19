@@ -9,6 +9,10 @@ default_config:
 frontend:
   themes: !include_dir_merge_named themes/
 
+# Visual editor
+script: !include scripts.yaml
+automation: !include automations.yaml
+
 # Integrations
 recorder: !include integrations/recorder.yaml
 http: !include integrations/http.yaml
