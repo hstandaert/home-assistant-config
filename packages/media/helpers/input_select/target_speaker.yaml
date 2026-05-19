@@ -1,0 +1,12 @@
+---
+# Target speaker helper
+# This helper allows selecting the target speaker for media playback.
+# It can be used in automations or scripts to direct media to the chosen speaker.
+
+target_speaker:
+  name: Waar moet het spelen?
+  options:
+    - Woonkamer
+    - Kantoor
+    - Benedenverdieping
+  icon: mdi:speaker-wireless
