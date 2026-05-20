@@ -16,9 +16,9 @@
       id: turn_off
 
   condition:
-    - condition: numeric_state
-      entity_id: zone.home
-      above: 0
+    - condition: state
+      entity_id: binary_sensor.someone_home
+      state: "on"
 
   action:
     - choose:

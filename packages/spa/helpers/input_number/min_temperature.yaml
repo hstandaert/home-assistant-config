@@ -10,4 +10,3 @@ spa_min_temperature:
   min: 15
   max: 35
   step: 1
-  initial: 32

@@ -8,13 +8,13 @@
     on.
   mode: single
   trigger:
-    - platform: numeric_state
-      entity_id: zone.home
-      above: 0
+    - platform: state
+      entity_id: binary_sensor.someone_home
+      to: "on"
       id: turn_on
-    - platform: numeric_state
-      entity_id: zone.home
-      below: 1
+    - platform: state
+      entity_id: binary_sensor.someone_home
+      to: "off"
       id: turn_off
     - platform: time
       at: "00:00:00"

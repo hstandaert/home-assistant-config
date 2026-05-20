@@ -1,0 +1,16 @@
+---
+# Presence sensor — true when at least one tracked phone is in the home zone.
+# All automations reference this instead of zone.home numeric_state checks.
+
+- name: "Someone Home"
+  unique_id: someone_home
+  device_class: presence
+  state: >-
+    {{ is_state('device_tracker.sm_s928b', 'home')
+        or is_state('device_tracker.sm_a556b', 'home') }}
+  icon: >-
+    {% if is_state('binary_sensor.someone_home', 'on') %}
+      mdi:home-account
+    {% else %}
+      mdi:home-outline
+    {% endif %}

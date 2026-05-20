@@ -10,4 +10,3 @@ spa_heater_solar_threshold:
   min: -5000
   max: 0
   step: 100
-  initial: -2000

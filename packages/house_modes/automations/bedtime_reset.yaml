@@ -18,9 +18,9 @@
       id: midnight_fallback
 
   condition:
-    - condition: numeric_state
-      entity_id: zone.home
-      above: 0
+    - condition: state
+      entity_id: binary_sensor.someone_home
+      state: "on"
 
   action:
     - service: light.turn_off
