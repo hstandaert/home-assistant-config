@@ -23,4 +23,3 @@
     - service: switch.turn_on
       target:
         entity_id: switch.electrical_blanket
-    - service: script.turn_off_electrical_blanket_after_30_minutes
