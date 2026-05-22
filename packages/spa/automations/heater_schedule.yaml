@@ -4,26 +4,47 @@
 - alias: Spa Heater - Smart Schedule
   id: spa_heater_schedule
   description: >-
-    Controls heater based on energy availability when smart mode is enabled.
+    Controls heater based on energy availability. Requires smart mode to be enabled.
+    No spa interactions occur when smart mode is off — see spa_heater_emergency_override
+    for the temperature floor safety net.
 
-    Enables heater (smart mode ON, heater currently OFF) when:
-    - Energy mode is solar_full (solar covers heater wattage).
+    All turn-off actions are blocked while input_boolean.spa_heater_emergency_active is on.
+    The emergency override automation owns the full recovery lifecycle.
 
-    Disables heater (smart mode ON, heater currently ON, temp above minimum floor) when:
-    - Energy mode becomes expensive or solar_partial.
+    Enables heater (heater currently OFF, salt system OFF) when:
+    - Energy mode transitions to solar_full.
+    - Smart mode is turned on while energy mode is already solar_full.
+
+    Disables heater (heater currently ON, temp above minimum floor, emergency NOT active) when:
+    - Energy mode becomes expensive.
+    - Grid consumption is detected (p1_meter_vermogen > 0 for 2 minutes) and energy
+      mode is not solar_full (guards against sensor lag during cloud cover).
     - Smart mode is turned on while energy mode is already expensive or solar_partial.
 
     Caps smart mode heating at input_number.spa_min_temperature (standby target):
     - When temperature rises above spa_min_temperature and energy mode is NOT solar_full,
       heater is turned off. During solar_full, free surplus allows heating to the spa's
       own thermostat setpoint (37°).
-
-    Emergency override (regardless of smart mode or energy mode):
-    - Water temperature drops below input_number.spa_min_temperature for 5 minutes.
-      Prevents costly reheat from a cold baseline.
   trace:
     stored_traces: 50
-  mode: single
+  mode: queued
+  variables:
+    _cond_emergency_off: &cond_emergency_off
+      condition: state
+      entity_id: input_boolean.spa_heater_emergency_active
+      state: "off"
+    _cond_heater_on: &cond_heater_on
+      condition: state
+      entity_id: switch.intex_chevron_6p_heater_toggle
+      state: "on"
+    _cond_temp_above_min: &cond_temp_above_min
+      condition: numeric_state
+      entity_id: sensor.intex_chevron_6p_spa_temperature
+      above: input_number.spa_min_temperature
+    _action_turn_heater_off: &action_turn_heater_off
+      service: switch.turn_off
+      target:
+        entity_id: switch.intex_chevron_6p_heater_toggle
   condition:
     - condition: state
       entity_id: input_boolean.spa_heater_smart_mode
@@ -37,16 +58,12 @@
       entity_id: sensor.spa_energy_mode
       to: "expensive"
       id: energy_expensive
-    - platform: state
-      entity_id: sensor.spa_energy_mode
-      to: "solar_partial"
-      id: energy_solar_partial
     - platform: numeric_state
-      entity_id: sensor.intex_chevron_6p_spa_temperature
-      below: input_number.spa_min_temperature
+      entity_id: sensor.p1_meter_vermogen
+      above: 0
       for:
-        minutes: 5
-      id: temp_below_minimum
+        minutes: 2
+      id: grid_consuming
     - platform: numeric_state
       entity_id: sensor.intex_chevron_6p_spa_temperature
       above: input_number.spa_min_temperature
@@ -58,9 +75,13 @@
 
   action:
     - choose:
+        # Turn heater on when solar covers full load (when smart mode is enabled)
         - conditions:
             - condition: template
-              value_template: "{{ trigger.id == 'energy_solar_full' }}"
+              value_template: "{{ trigger.id in ['energy_solar_full', 'smart_mode_on'] }}"
+            - condition: state
+              entity_id: sensor.spa_energy_mode
+              state: "solar_full"
             - condition: state
               entity_id: switch.intex_chevron_6p_heater_toggle
               state: "off"
@@ -76,66 +97,50 @@
               target:
                 entity_id: switch.intex_chevron_6p_heater_toggle
 
+        # Turn heater off when energy becomes expensive and temperature is above minimum floor
         - conditions:
             - condition: template
-              value_template: "{{ trigger.id in ['energy_expensive', 'energy_solar_partial'] }}"
-            - condition: state
-              entity_id: switch.intex_chevron_6p_heater_toggle
-              state: "on"
-            - condition: numeric_state
-              entity_id: sensor.intex_chevron_6p_spa_temperature
-              above: input_number.spa_min_temperature
+              value_template: "{{ trigger.id == 'energy_expensive' }}"
+            - *cond_emergency_off
+            - *cond_heater_on
+            - *cond_temp_above_min
           sequence:
-            - service: switch.turn_off
-              target:
-                entity_id: switch.intex_chevron_6p_heater_toggle
+            - *action_turn_heater_off
 
+        # Turn heater off when grid is consumed, but only if not in solar_full (guards against sensor lag)
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.id == 'grid_consuming' }}"
+            - condition: template
+              value_template: "{{ states('sensor.spa_energy_mode') != 'solar_full' }}"
+            - *cond_emergency_off
+            - *cond_heater_on
+            - *cond_temp_above_min
+          sequence:
+            - *action_turn_heater_off
+
+        # Turn heater off when smart mode is enabled during expensive or partial solar
         - conditions:
             - condition: template
               value_template: "{{ trigger.id == 'smart_mode_on' }}"
             - condition: template
               value_template: "{{ states('sensor.spa_energy_mode') in ['expensive', 'solar_partial'] }}"
-            - condition: state
-              entity_id: switch.intex_chevron_6p_heater_toggle
-              state: "on"
-            - condition: numeric_state
-              entity_id: sensor.intex_chevron_6p_spa_temperature
-              above: input_number.spa_min_temperature
+            - *cond_emergency_off
+            - *cond_heater_on
+            - *cond_temp_above_min
           sequence:
-            - service: switch.turn_off
-              target:
-                entity_id: switch.intex_chevron_6p_heater_toggle
+            - *action_turn_heater_off
 
+        # Cap heating at min temperature when not in solar_full mode
         - conditions:
             - condition: template
               value_template: "{{ trigger.id == 'temp_above_minimum' }}"
-            - condition: state
-              entity_id: switch.intex_chevron_6p_heater_toggle
-              state: "on"
+            - *cond_emergency_off
+            - *cond_heater_on
             - condition: not
               conditions:
                 - condition: state
                   entity_id: sensor.spa_energy_mode
                   state: "solar_full"
           sequence:
-            - service: switch.turn_off
-              target:
-                entity_id: switch.intex_chevron_6p_heater_toggle
-
-        - conditions:
-            - condition: template
-              value_template: "{{ trigger.id == 'temp_below_minimum' }}"
-            - condition: state
-              entity_id: switch.intex_chevron_6p_heater_toggle
-              state: "off"
-            - condition: state
-              entity_id: switch.intex_chevron_6p_salt_system
-              state: "off"
-          sequence:
-            - service: switch.turn_on
-              target:
-                entity_id: switch.intex_chevron_6p_power_switch
-            - delay: "00:00:05"
-            - service: switch.turn_on
-              target:
-                entity_id: switch.intex_chevron_6p_heater_toggle
+            - *action_turn_heater_off

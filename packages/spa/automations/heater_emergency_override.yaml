@@ -1,0 +1,96 @@
+---
+# Spa Heater - Emergency Override automation
+
+- alias: Spa Heater - Emergency Override
+  id: spa_heater_emergency_override
+  description: >-
+    Emergency heater lifecycle — works regardless of smart mode.
+
+    Activates heater (sets spa_heater_emergency_active) when:
+    - Temperature drops below spa_min_temperature for 5 minutes.
+    - Heater is currently off.
+    - Salt system is off (hardware constraint: both cannot run simultaneously).
+
+    Deactivates heater (clears spa_heater_emergency_active) when:
+    - Temperature recovers above spa_min_temperature while emergency is active.
+
+    When salt system is running during an emergency, a persistent notification
+    is created — manual intervention required.
+
+    heater_schedule blocks all turn-off actions while spa_heater_emergency_active is on,
+    preventing it from fighting this automation during recovery.
+  trace:
+    stored_traces: 20
+  mode: single
+  variables:
+    _cond_trigger_below_min: &cond_trigger_below_min
+      condition: template
+      value_template: "{{ trigger.id == 'temp_below_minimum' }}"
+    _cond_heater_off: &cond_heater_off
+      condition: state
+      entity_id: switch.intex_chevron_6p_heater_toggle
+      state: "off"
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.intex_chevron_6p_spa_temperature
+      below: input_number.spa_min_temperature
+      for:
+        minutes: 5
+      id: temp_below_minimum
+    - platform: numeric_state
+      entity_id: sensor.intex_chevron_6p_spa_temperature
+      above: input_number.spa_min_temperature
+      id: temp_above_minimum
+  action:
+    - choose:
+        # Emergency activation — turn heater on and set flag
+        - conditions:
+            - *cond_trigger_below_min
+            - *cond_heater_off
+            - condition: state
+              entity_id: switch.intex_chevron_6p_salt_system
+              state: "off"
+          sequence:
+            - service: input_boolean.turn_on
+              target:
+                entity_id: input_boolean.spa_heater_emergency_active
+            - service: switch.turn_on
+              target:
+                entity_id: switch.intex_chevron_6p_power_switch
+            - delay: "00:00:05"
+            - service: switch.turn_on
+              target:
+                entity_id: switch.intex_chevron_6p_heater_toggle
+
+        # Salt system is ON — cannot activate heater, alert for manual intervention
+        - conditions:
+            - *cond_trigger_below_min
+            - *cond_heater_off
+            - condition: state
+              entity_id: switch.intex_chevron_6p_salt_system
+              state: "on"
+          sequence:
+            - service: persistent_notification.create
+              data:
+                title: "Spa - Emergency Override Failed"
+                message: >-
+                  Spa temperature has dropped below minimum
+                  ({{ states('input_number.spa_min_temperature') | int }}°C) but the heater
+                  cannot be activated because the salt system is currently running.
+                  Manual intervention required.
+                notification_id: spa_emergency_salt_conflict
+
+        # Temperature recovered — turn heater off and clear flag
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.id == 'temp_above_minimum' }}"
+            - condition: state
+              entity_id: input_boolean.spa_heater_emergency_active
+              state: "on"
+          sequence:
+            - service: switch.turn_off
+              target:
+                entity_id: switch.intex_chevron_6p_heater_toggle
+            - service: input_boolean.turn_off
+              target:
+                entity_id: input_boolean.spa_heater_emergency_active

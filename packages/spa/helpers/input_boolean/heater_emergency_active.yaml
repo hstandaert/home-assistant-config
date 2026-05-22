@@ -1,0 +1,9 @@
+---
+# Spa Heater Emergency Active helper
+# Set ON by heater_emergency_override when it activates the heater.
+# Cleared when temperature recovers above spa_min_temperature.
+# Used by heater_schedule to block all turn-off actions during emergency recovery.
+
+spa_heater_emergency_active:
+  name: "Spa Heater Emergency Active"
+  icon: mdi:thermometer-alert
