@@ -1,14 +1,14 @@
 ---
-# Spa Hygiene Guarantee - Night Tariff Safety Net automation
+# Spa Salt System - Hygiene Guarantee automation
 
-- alias: Spa Hygiene Guarantee - Night Tariff Safety Net
-  id: spa_hygiene_guarantee
+- alias: Spa Salt System - Hygiene Guarantee
+  id: spa_salt_system_hygiene_guarantee
   description: >-
     Backup automation to ensure sanitizer reaches daily runtime target.
 
     Trigger: When night tariff activates (sensor.p1_meter_tarief transitions to "2").
     Runs on cheap electricity instead of the previous fixed 20:00 trigger (which fired
-    during expensive day rate).
+    during expensive day rate). Independent of heater smart mode.
 
     Condition: Only runs if daily runtime is still below target hours.
 

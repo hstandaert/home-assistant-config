@@ -6,6 +6,11 @@
   entity_id: switch.intex_chevron_6p_salt_system
   state: "on"
   type: time
-  start: "{{ today_at() }}"
+  start: >-
+    {% if now().hour < 5 %}
+      {{ today_at('05:00:00') - timedelta(days=1) }}
+    {% else %}
+      {{ today_at('05:00:00') }}
+    {% endif %}
   end: "{{ now() }}"
   unique_id: sensor_spa_sanitizer_runtime_today

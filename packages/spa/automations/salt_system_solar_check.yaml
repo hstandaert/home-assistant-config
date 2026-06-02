@@ -1,20 +1,22 @@
 ---
-# Spa Solar Check - Solar Sanitizer automation
+# Spa Salt System - Solar Check automation
 
-- alias: Spa Solar Check - Solar Sanitizer
-  id: spa_solar_check
+- alias: Spa Salt System - Solar Check
+  id: spa_salt_system_solar_check
   description: >-
     Automatically runs spa sanitizer when solar generation covers consumption.
 
     Trigger: When sensor.spa_energy_mode transitions to solar_full or solar_partial,
-    sustained for 5 minutes. Stops when mode transitions to cheap or expensive
-    (10-minute debounce for expensive, immediate for cheap/tariff change) OR when
-    daily runtime target is reached.
+    sustained for 5 minutes. Also triggers when heater turns off (2-minute debounce)
+    while energy mode is still solar_full or solar_partial — this covers the gap where
+    solar_start doesn't re-fire after the heater stops. Stops when mode transitions to
+    cheap or expensive (10-minute debounce for expensive, immediate for cheap/tariff
+    change) OR when daily runtime target is reached.
 
     Safety: Checks sanitizer is OFF, heater is OFF, and daily runtime is below target
-    before activating. Start conditions are scoped to the solar_start branch only —
-    stop branches always execute to ensure the sanitizer is never left running.
-    Always starts pump first, waits 5s, then sanitizer.
+    before activating. Start conditions are scoped to the solar_start/heater_stopped
+    branch only — stop branches always execute to ensure the sanitizer is never left
+    running. Always starts pump first, waits 5s, then sanitizer.
   mode: single
   trigger:
     - platform: state
@@ -29,6 +31,12 @@
       for:
         minutes: 5
       id: solar_start
+    - platform: state
+      entity_id: switch.intex_chevron_6p_heater_toggle
+      to: "off"
+      for:
+        minutes: 2
+      id: heater_stopped
     - platform: state
       entity_id: sensor.spa_energy_mode
       to: "cheap"
@@ -50,7 +58,10 @@
     - choose:
         - conditions:
             - condition: template
-              value_template: "{{ trigger.id == 'solar_start' }}"
+              value_template: "{{ trigger.id in ['solar_start', 'heater_stopped'] }}"
+            - condition: template
+              value_template: >-
+                {{ states('sensor.spa_energy_mode') in ['solar_full', 'solar_partial'] }}
             - condition: state
               entity_id: switch.intex_chevron_6p_salt_system
               state: "off"

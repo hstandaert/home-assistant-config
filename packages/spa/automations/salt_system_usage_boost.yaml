@@ -1,8 +1,8 @@
 ---
-# Spa Usage Boost - Post-Usage Sanitizer automation
+# Spa Salt System - Usage Boost automation
 
-- alias: Spa Usage Boost - Post-Usage Sanitizer
-  id: spa_usage_boost
+- alias: Spa Salt System - Usage Boost
+  id: spa_salt_system_usage_boost
   description: >-
     Manually triggered sanitizer boost to oxidize organic matter after spa usage.
 
