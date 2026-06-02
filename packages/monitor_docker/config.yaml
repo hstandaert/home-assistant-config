@@ -1,0 +1,53 @@
+---
+# Monitor Docker configuration
+
+- name: Docker
+  containers:
+    - homeassistant
+    - pihole
+    - mariadb
+    - rdt-client
+    - stremio
+    - nginxproxymanager
+    - prowlarr
+    - sonarr
+    - radarr
+    - big-bear-dozzle
+    - big-bear-paperless-ngx
+    - big-bear-paperless-ngx-db
+    - big-bear-paperless-ngx-broker
+    - big-bear-paperless-ngx-gotenberg
+    - big-bear-paperless-ngx-tika
+    - jellyfin
+    - bazarr
+    - qbittorrent
+  rename:
+    homeassistant: Home Assistant
+    pihole: Pi-hole
+    mariadb: MariaDB
+    rdt-client: RDT Client
+    stremio: Stremio
+    nginxproxymanager: Nginx Proxy Manager
+    prowlarr: Prowlarr
+    sonarr: Sonarr
+    radarr: Radarr
+    big-bear-dozzle: Dozzle
+    big-bear-paperless-ngx: Paperless-NGX
+    big-bear-paperless-ngx-db: Paperless DB
+    big-bear-paperless-ngx-broker: Paperless Broker
+    big-bear-paperless-ngx-gotenberg: Paperless Gotenberg
+    big-bear-paperless-ngx-tika: Paperless Tika
+    jellyfin: Jellyfin
+    bazarr: Bazarr
+    qbittorrent: qBittorrent
+  monitored_conditions:
+    - version
+    - containers_running
+    - containers_total
+    - state
+    - status
+    - memory
+    - memory_percentage
+    - cpu_percentage
+    - network_speed_up
+    - network_speed_down

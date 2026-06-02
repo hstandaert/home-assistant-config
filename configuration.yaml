@@ -25,4 +25,5 @@ homeassistant:
     heating: !include packages/heating/main.yaml
     house_modes: !include packages/house_modes/main.yaml
     media: !include packages/media/main.yaml
+    monitor_docker: !include packages/monitor_docker/main.yaml
     spa: !include packages/spa/main.yaml

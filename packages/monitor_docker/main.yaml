@@ -1,0 +1,4 @@
+---
+# Monitor Docker package
+
+monitor_docker: !include config.yaml
