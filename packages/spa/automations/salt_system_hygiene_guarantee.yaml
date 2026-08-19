@@ -31,15 +31,15 @@
   action:
     - service: switch.turn_on
       target:
-        entity_id: switch.intex_chevron_6p_power_switch
+        entity_id: switch.garden_intex_chevron_6p_power
     - delay: "00:00:05"
     - service: switch.turn_on
       target:
-        entity_id: switch.intex_chevron_6p_filter
+        entity_id: switch.garden_intex_chevron_6p_filtration
     - delay: "00:00:05"
     - service: switch.turn_on
       target:
-        entity_id: switch.intex_chevron_6p_salt_system
+        entity_id: switch.garden_intex_chevron_6p_electrolytic_sterilization
     - wait_template: >-
         {% set current = states('sensor.spa_sanitizer_runtime_today') | float(0) %}
         {% set target = states('input_number.spa_target_hours') | float(0) %}
@@ -48,7 +48,7 @@
       continue_on_timeout: true
     - service: switch.turn_off
       target:
-        entity_id: switch.intex_chevron_6p_salt_system
+        entity_id: switch.garden_intex_chevron_6p_electrolytic_sterilization
     - service: switch.turn_off
       target:
-        entity_id: switch.intex_chevron_6p_filter
+        entity_id: switch.garden_intex_chevron_6p_filtration

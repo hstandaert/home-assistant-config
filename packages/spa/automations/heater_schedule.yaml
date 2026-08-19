@@ -3,6 +3,7 @@
 
 - alias: Spa Heater - Smart Schedule
   id: spa_heater_schedule
+
   description: >-
     Controls heater based on energy availability. Requires smart mode to be enabled.
     No spa interactions occur when smart mode is off — see spa_heater_emergency_override
@@ -35,16 +36,16 @@
       state: "off"
     _cond_heater_on: &cond_heater_on
       condition: state
-      entity_id: switch.intex_chevron_6p_heater_toggle
-      state: "on"
+      entity_id: water_heater.garden_intex_chevron_6p
+      state: "electric"
     _cond_temp_above_min: &cond_temp_above_min
       condition: numeric_state
       entity_id: sensor.intex_chevron_6p_spa_temperature
       above: input_number.spa_min_temperature
     _action_turn_heater_off: &action_turn_heater_off
-      service: switch.turn_off
+      service: water_heater.turn_off
       target:
-        entity_id: switch.intex_chevron_6p_heater_toggle
+        entity_id: water_heater.garden_intex_chevron_6p
   condition:
     - condition: state
       entity_id: input_boolean.spa_heater_smart_mode
@@ -83,19 +84,21 @@
               entity_id: sensor.spa_energy_mode
               state: "solar_full"
             - condition: state
-              entity_id: switch.intex_chevron_6p_heater_toggle
+              entity_id: water_heater.garden_intex_chevron_6p
               state: "off"
             - condition: state
-              entity_id: switch.intex_chevron_6p_salt_system
+              entity_id: switch.garden_intex_chevron_6p_electrolytic_sterilization
               state: "off"
           sequence:
             - service: switch.turn_on
               target:
-                entity_id: switch.intex_chevron_6p_power_switch
+                entity_id: switch.garden_intex_chevron_6p_power
             - delay: "00:00:05"
-            - service: switch.turn_on
+            - service: water_heater.set_operation_mode
+              data:
+                operation_mode: electric
               target:
-                entity_id: switch.intex_chevron_6p_heater_toggle
+                entity_id: water_heater.garden_intex_chevron_6p
 
         # Turn heater off when energy becomes expensive and temperature is above minimum floor
         - conditions:

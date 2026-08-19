@@ -3,7 +3,7 @@
 
 - platform: history_stats
   name: "Spa Sanitizer Runtime Today"
-  entity_id: switch.intex_chevron_6p_salt_system
+  entity_id: switch.garden_intex_chevron_6p_electrolytic_sterilization
   state: "on"
   type: time
   start: >-

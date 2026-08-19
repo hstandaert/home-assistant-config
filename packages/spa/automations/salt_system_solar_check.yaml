@@ -32,7 +32,7 @@
         minutes: 5
       id: solar_start
     - platform: state
-      entity_id: switch.intex_chevron_6p_heater_toggle
+      entity_id: water_heater.garden_intex_chevron_6p
       to: "off"
       for:
         minutes: 2
@@ -63,10 +63,10 @@
               value_template: >-
                 {{ states('sensor.spa_energy_mode') in ['solar_full', 'solar_partial'] }}
             - condition: state
-              entity_id: switch.intex_chevron_6p_salt_system
+              entity_id: switch.garden_intex_chevron_6p_electrolytic_sterilization
               state: "off"
             - condition: state
-              entity_id: switch.intex_chevron_6p_heater_toggle
+              entity_id: water_heater.garden_intex_chevron_6p
               state: "off"
             - condition: template
               value_template: >-
@@ -75,22 +75,22 @@
           sequence:
             - service: switch.turn_on
               target:
-                entity_id: switch.intex_chevron_6p_power_switch
+                entity_id: switch.garden_intex_chevron_6p_power
             - delay: "00:00:05"
             - service: switch.turn_on
               target:
-                entity_id: switch.intex_chevron_6p_filter
+                entity_id: switch.garden_intex_chevron_6p_filtration
             - delay: "00:00:05"
             - service: switch.turn_on
               target:
-                entity_id: switch.intex_chevron_6p_salt_system
+                entity_id: switch.garden_intex_chevron_6p_electrolytic_sterilization
         - conditions:
             - condition: template
               value_template: "{{ trigger.id in ['solar_end', 'target_reached'] }}"
           sequence:
             - service: switch.turn_off
               target:
-                entity_id: switch.intex_chevron_6p_salt_system
+                entity_id: switch.garden_intex_chevron_6p_electrolytic_sterilization
             - service: switch.turn_off
               target:
-                entity_id: switch.intex_chevron_6p_filter
+                entity_id: switch.garden_intex_chevron_6p_filtration
