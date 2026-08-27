@@ -27,7 +27,8 @@
       heater is turned off. During solar_full, free surplus allows heating to the spa's
       own thermostat setpoint (37°).
   trace:
-    stored_traces: 50
+    stored_traces: 200
+
   mode: queued
   variables:
     _cond_emergency_off: &cond_emergency_off
@@ -54,16 +55,21 @@
     - platform: state
       entity_id: sensor.spa_energy_mode
       to: "solar_full"
+      for:
+        minutes: 1
       id: energy_solar_full
     - platform: state
       entity_id: sensor.spa_energy_mode
-      to: "expensive"
+      not_to:
+        - "solar_full"
+      for:
+        minutes: 1
       id: energy_expensive
     - platform: numeric_state
       entity_id: sensor.p1_meter_vermogen
       above: 0
       for:
-        minutes: 2
+        minutes: 1
       id: grid_consuming
     - platform: numeric_state
       entity_id: sensor.intex_chevron_6p_spa_temperature
