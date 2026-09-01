@@ -1,0 +1,5 @@
+---
+sensor:
+  - platform: worxlandroid
+    host: !secret worx_host
+    pin: !secret worx_pin

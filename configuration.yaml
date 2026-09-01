@@ -27,3 +27,4 @@ homeassistant:
     media: !include packages/media/main.yaml
     monitor_docker: !include packages/monitor_docker/main.yaml
     spa: !include packages/spa/main.yaml
+    worx: !include packages/worx/main.yaml
