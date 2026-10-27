@@ -15,7 +15,6 @@ automation: !include automations.yaml
 
 # Integrations
 recorder: !include integrations/recorder.yaml
-http: !include integrations/http.yaml
 
 # Packages
 homeassistant:
